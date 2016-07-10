@@ -1,12 +1,15 @@
 import React from 'react'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
-import Nav from './appnav'
-import Dashboard from './dashboard'
-import Student from './students'
-import Employees from './employees'
-import Parents from './parents'
-import App from './app'
-import Login from './login'
+
+import App from './App'
+import Nav from './Appnav'
+import Login from './Login'
+
+import Dashboard from './Dashboard'
+import Student from './Students'
+import Employees from './Employees'
+import Parents from './Parents'
+
 
 module.exports = (
   <Route component={App} >	

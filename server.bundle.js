@@ -66,11 +66,11 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _api = __webpack_require__(19);
+	var _api = __webpack_require__(22);
 
 	var _api2 = _interopRequireDefault(_api);
 
-	var _path = __webpack_require__(20);
+	var _path = __webpack_require__(23);
 
 	var _path2 = _interopRequireDefault(_path);
 
@@ -804,6 +804,10 @@
 
 	var _cAlerts2 = _interopRequireDefault(_cAlerts);
 
+	var _actions = __webpack_require__(19);
+
+	var _reactRedux = __webpack_require__(21);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -815,18 +819,15 @@
 	var AppLogin = function (_React$Component) {
 		_inherits(AppLogin, _React$Component);
 
-		function AppLogin() {
+		function AppLogin(props) {
 			_classCallCheck(this, AppLogin);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppLogin).call(this));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AppLogin).call(this, props));
 
 			_this.state = {
 				username: '',
-				pwd: '',
-				hasError: false,
-				errorMsg: ''
+				pwd: ''
 			};
-
 			return _this;
 		}
 
@@ -834,33 +835,34 @@
 			key: 'onSubmit',
 			value: function onSubmit(e) {
 				e.preventDefault();
-				var err = "Invalid username/password!";
+				var creds = { username: this.state.username, password: this.state.pwd };
+				this.props.dispatch((0, _actions.gologin)(creds));
+				//    console.log(creds)
+				//    var err="Invalid username/password!"
 
-				if (_lodash2.default.isEmpty(this.state.username)) {
-					this.setState({ hasError: true, errorMsg: err });
-					return;
-				} else if (_lodash2.default.isEmpty(this.state.pwd)) {
-					this.setState({ hasError: true, errorMsg: err });
-					return;
-				}
+				// if (_.isEmpty(this.state.username)){
+				// 	this.setState({ hasError: true, errorMsg: err });	
+				// 	return
+				// }else if (_.isEmpty(this.state.pwd)){
+				// 	this.setState({ hasError: true, errorMsg: err });	
+				// 	return
+				// }	
 
-				this.setState({ hasError: false });
-				this.context.router.replace("/dashboard");
+				//    	this.setState({hasError:false})     	
+				//    	this.context.router.replace("/dashboard")
 			}
 		}, {
 			key: 'onChange',
 			value: function onChange(e) {
 				if (_lodash2.default.isEqual(e.target.name, "username")) {
-					this.setState({ hasError: false, errorMsg: '', username: e.target.value });
+					this.setState({ username: e.target.value });
 				} else if (_lodash2.default.isEqual(e.target.name, "pwd")) {
-					this.setState({ hasError: false, errorMsg: '', pwd: e.target.value });
+					this.setState({ pwd: e.target.value });
 				}
 			}
 		}, {
 			key: 'closeAlert',
-			value: function closeAlert() {
-				this.setState({ hasError: false });
-			}
+			value: function closeAlert() {}
 		}, {
 			key: 'render',
 			value: function render() {
@@ -882,7 +884,6 @@
 								'div',
 								{ className: 'account-wall' },
 								_react2.default.createElement('img', { className: 'profile-img', src: 'images/logo.gif' }),
-								_react2.default.createElement(_cAlerts2.default, { mType: 'danger', hideAlert: this.closeAlert.bind(this), hasError: this.state.hasError, message: this.state.errorMsg }),
 								_react2.default.createElement(
 									'form',
 									{ className: 'form-signin', onSubmit: this.onSubmit.bind(this) },
@@ -906,11 +907,6 @@
 									),
 									_react2.default.createElement('span', { className: 'clearfix' })
 								)
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#', className: 'text-center new-account' },
-								'Create an account '
 							)
 						)
 					)
@@ -924,6 +920,20 @@
 	AppLogin.contextTypes = {
 		router: _react2.default.PropTypes.object.isRequired
 	};
+	AppLogin.PropTypes = {
+		errorMsg: _react2.default.PropTypes.string
+	};
+	AppLogin.defaultProps = {
+		errorMsg: ''
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			errorMsg: state.errorMsg
+		};
+	};
+
+	AppLogin = (0, _reactRedux.connect)(mapStateToProps)(AppLogin);
 	exports.default = AppLogin;
 
 /***/ },
@@ -1016,17 +1026,117 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.LOGIN_FAILED = exports.LOGIN_SUCCESS = exports.LOGIN_ATTEMPT = undefined;
+	exports.loginAttempt = loginAttempt;
+	exports.loginSuccess = loginSuccess;
+	exports.loginFailed = loginFailed;
+	exports.gologin = gologin;
+
+	var _isomorphicFetch = __webpack_require__(20);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var LOGIN_ATTEMPT = exports.LOGIN_ATTEMPT = "LOGIN_ATTEMPT";
+	var LOGIN_SUCCESS = exports.LOGIN_SUCCESS = "LOGIN_SUCCESS";
+	var LOGIN_FAILED = exports.LOGIN_FAILED = "LOGIN_FAILED";
+
+	function loginAttempt(creds) {
+		return {
+			type: LOGIN_ATTEMPT,
+			isFetching: true,
+			isAuthenticated: false,
+			creds: creds
+		};
+	}
+	function loginSuccess(user) {
+		return {
+			type: LOGIN_SUCCESS,
+			isFetching: false,
+			isAuthenticated: true,
+			user: user
+		};
+	}
+	function loginFailed(message) {
+		return {
+			type: LOGIN_FAILED,
+			isFetching: false,
+			isAuthenticated: false,
+			message: message
+		};
+	}
+	function gologin(creds) {
+
+		var config = {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username: creds.username,
+				password: creds.password
+			})
+		};
+
+		var t = JSON.stringify({
+			username: creds.username,
+			password: creds.password
+		});
+		console.log(t);
+
+		return function (dispatch) {
+			dispatch(loginAttempt(creds));
+			return (0, _isomorphicFetch2.default)('http://localhost:3000/login', config).then(function (response) {
+				return response.json().then(function (data) {
+					return { data: data, response: response };
+				});
+			}).then(function (_ref) {
+				var data = _ref.data;
+				var response = _ref.response;
+
+				console.log(data);
+			}).catch(function (error) {
+				console.log('request failed', error);
+			});
+		};
+	}
+
+	//https://www.youtube.com/watch?v=DVEsNYS1Cgo
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("isomorphic-fetch");
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-redux");
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
 	var _express = __webpack_require__(2);
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _path = __webpack_require__(20);
+	var _path = __webpack_require__(23);
 
 	var _path2 = _interopRequireDefault(_path);
 
-	var _fs = __webpack_require__(21);
+	var _fs = __webpack_require__(24);
 
 	var _fs2 = _interopRequireDefault(_fs);
 
@@ -1050,13 +1160,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, ""))
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = require("fs");
