@@ -1,25 +1,39 @@
 import { LOGIN_ATTEMPT, LOGIN_SUCCESS, LOGIN_FAILED} from '../actions'
-const login = (state , action)=>{
+
+const initialstate = {
+	isFetching: false,
+	isAuthenticated: false,
+	hasError: false,
+	username: '',
+	message: ''
+}
+
+
+const loginreducer = (state = initialstate , action)=>{
 	switch(action.type){
 		case LOGIN_ATTEMPT:
 			return Object.assign({}, state,{
 				isFetching: true,
 				isAuthenticated: false,
-				user: actions.creds
+				username: action.username,
+				hasError: false
 			})
 
 		case LOGIN_SUCCESS:
 			return Object.assign({}, state,{
 				isFetching: false,
 				isAuthenticated: true,
-				user: actions.user,
-				errorMsg: ''
+				username: action.username,
+				hasError: false
 			})
 		case LOGIN_FAILED:
 			return Object.assign({}, state,{
 				isFetching: false,
-				isAuthenticated: false,				
-				errorMsg: actions.message
+				isAuthenticated: false,		
+				username: action.username,		
+				message: action.message,
+				hasError: true
+
 			})
 		default:
 			return state
@@ -27,4 +41,4 @@ const login = (state , action)=>{
 
 }
 
-export default login
+export default loginreducer

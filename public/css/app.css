@@ -187,3 +187,7 @@ ul.nav-style > li.active-nav > a{
 .nav-style2 > li > a:active{
     color:#fff;
 }
+
+.addTop{
+    margin-top: 10px;
+}

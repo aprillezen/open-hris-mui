@@ -6,9 +6,7 @@ class Appnav extends React.Component{
 		return(
 			<div>
 				<NavBar/>				
-			 	<div className="content-wrapper">
-					{ this.props.children }
-			 	</div>
+				{ this.props.children }
 			 </div>
 
 		)

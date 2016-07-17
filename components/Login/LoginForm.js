@@ -1,42 +1,29 @@
 import React, {PropTypes} from 'react'
 import _ from 'lodash'
-import MsgAlert from './Alerts'
-import { gologin } from '../actions'
+import LoginAlert from './LoginAlert'
+import LoginButton from './LoginButton'
+
 
 
 class LoginForm extends React.Component{
 	
 	onSubmit(e){	
-	     e.preventDefault()
-	    var user = { username: this.refs.username.value, password : this.refs.pwd.value}	    
-	    console.log(user)
-	    this.props.dispatch(gologin(user));
-	 // console.log(creds)
-	 // var err="Invalid username/password!"
-
-		// if (_.isEmpty(this.state.username)){
-		// 	this.setState({ hasError: true, errorMsg: err });	
-		// 	return
-		// }else if (_.isEmpty(this.state.pwd)){
-		// 	this.setState({ hasError: true, errorMsg: err });	
-		// 	return
-		// }	
-     	
-  //    	this.setState({hasError:false})     	 
-  //    	this.context.router.replace("/dashboard")
-  
-   	console.log(this.props)
-
-	}
-
-	
-	closeAlert(){
-		
+	    e.preventDefault()
+	   
+		if (_.isEmpty(this.refs.username.value)){
+			this.props.failedLogin("Please enter your username!")	
+			return
+		}else if (_.isEmpty(this.refs.pwd.value)){
+			this.props.failedLogin("Please enter your password")	
+			return
+		}	
+  		this.props.trylogin(this.refs.username.value,this.refs.pwd.value);
+  		this.refs.pwd.value=''
 	}
 
 	render(){		
 
-		//const { fields: { username, password, validation_message }, handleSubmit, submitting } = this.props;
+		const { isAuthenticated, isFetching, hasError, message } = this.props
 
 		return(			
 			<div className="container">
@@ -48,28 +35,21 @@ class LoginForm extends React.Component{
 			                <form className="form-signin" onSubmit={this.onSubmit.bind(this)}>				                	
 				                <input ref="username" type="text" className="form-control" placeholder="Email" autoFocus="autoFocus" />
 				                <input ref="pwd" type="password" className="form-control" placeholder="Password" />
-				                <button className="btn-lg btn-block btn-save" type="submit">
-				                    Sign in</button>
+				                <LoginButton isLogging={isFetching} />
 				                <label className="checkbox pull-left">
 				                    <input type="checkbox" value="remember-me" />
 				                    Remember me
 				                </label>
 				                <a href="#" className="pull-right need-help">Need help? </a><span className="clearfix"></span>
 			                </form>
+			                <LoginAlert hasError={hasError} message={message}/>
 			            </div>
 			            
 			        </div>
 			    </div>
 			</div>
-
-
-			)
+		)
 	}
 }
-
-LoginForm.contextTypes = {
-	router: PropTypes.object.isRequired,
-}
-
 
 export default LoginForm

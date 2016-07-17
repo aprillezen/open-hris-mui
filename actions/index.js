@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux'
 import fetch from 'isomorphic-fetch'
 
 export const LOGIN_ATTEMPT="LOGIN_ATTEMPT";
@@ -6,20 +7,20 @@ export const LOGIN_FAILED="LOGIN_FAILED";
 
 
 
-export function loginAttempt(user){
+export function loginAttempt(username){
 	return{
 		type: LOGIN_ATTEMPT,
 		isFetching: true,
 		isAuthenticated: false,
-		user
+		username
 	}
 }
-export function loginSuccess(user){		
+export function loginSuccess(username){		
 	return{		
 		type: LOGIN_SUCCESS,
 		isFetching: false,
 		isAuthenticated: true,
-		user
+		username
 	}
 
 }	
@@ -28,18 +29,13 @@ export function loginFailed(message){
 		type: LOGIN_FAILED,
 		isFetching: false,
 		isAuthenticated: false,	
+		hasError: true,
 		message	
 	}
 }	
 
-export function validate(creds){
-	return dispatch=>{
 
-		
-	}
-}
-
-export function gologin(user){
+export function gologin(username, password){
 
 	let config = {
 	    method: 'POST',
@@ -48,29 +44,40 @@ export function gologin(user){
         	 'Content-Type': 'application/json',
 	    },
 	    body: JSON.stringify({
-	    	username: user.username,
-	    	password: user.password,
+	    	username: username,
+	    	password: password,
 	    })
   	}	
 
-  	let t = JSON.stringify({
-	    	username: user.username,
-	    	password: user.password,
-	    	})
-  	console.log(t);
-
+	//console.log(config)
 	return dispatch=>{
-		dispatch(loginAttempt(user))	
-		return fetch('http://localhost:3000/login', config)
-			.then(response=>response.json()
-				.then(data=>({ data, response }))
-			 ).then(({ data, response })=>{
-			 	console.log(data);
-			 })
-			.catch(error => { 
-				dispatch(loginFailed('Database error'))
-				console.log('request failed', error) 
-			})
+		dispatch(loginAttempt(username))	
+		return setTimeout(()=>{
+			dispatch(loginSuccess(username))
+			//console.log("siccess")
+			dispatch(push('/dashboard'))
+
+		}, 5000)
+
+
+			// fetch('http://localhost:3000/login', config)
+			// .then(response=>response.json()
+			// 	.then(data=>({ data, response }))
+			//  ).then(({ data, response })=>{
+			//  	//console.log(data)
+			//  	if (parseInt(data.status)==1){
+			//  		//console.log(parseInt(data.status))
+			// 		dispatch(push('/dashboard'))
+			//  	}else{
+			//  		dispatch(loginFailed(data.message))
+			//  	}
+			 	
+			//  })
+			// .catch(error => { 
+			// 	dispatch(loginFailed('Database error'))
+			// 	console.log('request failed', error) 
+			// })
+		
 	}
 }
 
