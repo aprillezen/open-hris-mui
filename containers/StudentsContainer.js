@@ -1,4 +1,4 @@
-import StudentsLists from '../components/Student/StudentsLists'
+import StudentsLists from '../components/Student/List'
 import { connect } from 'react-redux'
 
 const StudentsContainer = connect()(StudentsLists)

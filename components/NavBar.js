@@ -23,18 +23,11 @@ export default React.createClass({
 					        <li><NavLink to="/student">Students</NavLink></li>
 					        <li><NavLink to="/employees">Employees</NavLink></li>
 					        <li><NavLink to="/parents">Parents</NavLink></li>
-					        <li className="dropdown">
-					          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span className="caret"></span></a>
-					          <ul className="dropdown-menu">
-					            <li><a href="#">Batch</a></li>
-					            <li><a href="#">Class</a></li>
-					            <li><a href="#">Section</a></li>				            
-					            <li><a href="#">Subject</a></li>			            
-					          </ul>
-					        </li>
+
+					        
 					      </ul>				     
 					      <ul className="nav navbar-nav nav-style navbar-right">
-					        <li><a href="#">Settings</a></li>
+					        <li><NavLink to="/settings">Settings</NavLink></li>
 					        <li className="dropdown">
 					          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
 					          <ul className="dropdown-menu">

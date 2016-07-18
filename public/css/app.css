@@ -188,6 +188,17 @@ ul.nav-style > li.active-nav > a{
     color:#fff;
 }
 
+.row-addTop{
+    margin-top: 20px;
+}
+
 .addTop{
     margin-top: 10px;
 }
+
+.minusTop{
+    margin-top: -26px;
+}
+
+
+
