@@ -13,7 +13,9 @@ import StudentList from '../containers/StudentsContainer'
 import AddStudent from '../components/Student/Add'
 import Settings from './Settings'
 import BatchContainer from '../containers/BatchContainer'
+import BatchFormContainer from '../containers/BatchFormContainer'
 import StudClass from '../components/Settings/StudClass'
+
 
 module.exports = (
   <Route component={App} >	
@@ -30,6 +32,7 @@ module.exports = (
       <Route path='/settings' component={Settings}>
           <IndexRoute component={BatchContainer}/>  
           <Route path='/settings/batch' component={BatchContainer} />
+          <Route path='/settings/createbatch' component={BatchFormContainer} />
           <Route path='/settings/classes' component={StudClass} />
       </Route>  	  		
   	</Route>

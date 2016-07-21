@@ -3,7 +3,7 @@ import express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
-import routes from './app/routes'
+import routes from './modules/Routes'
 import apis from './api'
 import path from 'path'
 
