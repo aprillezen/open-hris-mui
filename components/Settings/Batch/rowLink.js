@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 class RowLink extends Component{
 
 	handleClick(e){
-		console.log(this.props.rowData)
+		console.log(this.props)		
+		this.context.router.push('/settings/batch/'+this.props.rowData.id)
 	}
 	render(){
 
@@ -23,6 +24,10 @@ class RowLink extends Component{
 				</div>
 			)
 	}
+}
+
+RowLink.contextTypes = {
+	router : React.PropTypes.object
 }
 
 export default RowLink

@@ -64,13 +64,21 @@
 
 	var _reactRouterRedux = __webpack_require__(242);
 
-	var _reduxThunk = __webpack_require__(494);
+	var _reduxThunk = __webpack_require__(497);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _login = __webpack_require__(495);
+	var _login = __webpack_require__(498);
 
 	var _login2 = _interopRequireDefault(_login);
+
+	var _batchreducer = __webpack_require__(499);
+
+	var _batchreducer2 = _interopRequireDefault(_batchreducer);
+
+	var _batchFormreducer = __webpack_require__(500);
+
+	var _batchFormreducer2 = _interopRequireDefault(_batchFormreducer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,6 +86,8 @@
 
 	var rootReducer = (0, _redux.combineReducers)({
 		login: _login2.default,
+		batch: _batchreducer2.default,
+		batchForm: _batchFormreducer2.default,
 		routing: _reactRouterRedux.routerReducer
 	});
 
@@ -26733,7 +26743,11 @@
 
 	var _BatchContainer2 = _interopRequireDefault(_BatchContainer);
 
-	var _StudClass = __webpack_require__(493);
+	var _BatchFormContainer = __webpack_require__(494);
+
+	var _BatchFormContainer2 = _interopRequireDefault(_BatchFormContainer);
+
+	var _StudClass = __webpack_require__(496);
 
 	var _StudClass2 = _interopRequireDefault(_StudClass);
 
@@ -26761,6 +26775,7 @@
 	            { path: '/settings', component: _Settings2.default },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _BatchContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/settings/batch', component: _BatchContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/settings/createbatch', component: _BatchFormContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/settings/classes', component: _StudClass2.default })
 	        )
 	    ),
@@ -55907,7 +55922,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _Batch = __webpack_require__(490);
@@ -55916,9 +55931,29 @@
 
 	var _reactRedux = __webpack_require__(254);
 
+	var _BatchActions = __webpack_require__(493);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var BatchContainer = (0, _reactRedux.connect)()(_Batch2.default);
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			isFetching: state.batch.isFetching,
+			isFailed: state.batch.isFailed,
+			message: state.batch.message,
+			batches: state.batch.batches
+
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			initialize: function initialize() {
+				dispatch((0, _BatchActions.initBatch)());
+			}
+		};
+	};
+
+	var BatchContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Batch2.default);
 
 	exports.default = BatchContainer;
 
@@ -55962,8 +55997,44 @@
 		}
 
 		_createClass(Batch, [{
+			key: 'handleCreateBatch',
+			value: function handleCreateBatch(e) {
+				//alert("1")
+				this.context.router.push('/settings/createbatch');
+				//push('/settings/createbatch')
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.props.initialize();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _props = this.props;
+				var isFetching = _props.isFetching;
+				var batches = _props.batches;
+
+				var data = _react2.default.createElement('div', null);
+				if (isFetching) {
+					data = _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement('i', { className: 'fa fa-refresh fa-spin fa-3x fa-fw' }),
+						_react2.default.createElement(
+							'span',
+							{ className: 'sr-only' },
+							'Loading...'
+						)
+					);
+				} else {
+					data = _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_griddleReact2.default, { results: batches, tableClassName: 'griddle-table', showTableHeading: false, useGriddleStyles: false, columnMetadata: _colConfig.colmetadata, columns: _colConfig.cols })
+					);
+				}
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'panel panel-default' },
@@ -55980,7 +56051,7 @@
 							{ className: 'pull-right minusTop' },
 							_react2.default.createElement(
 								'button',
-								{ type: 'button', className: 'btn btn-success' },
+								{ onClick: this.handleCreateBatch.bind(this), type: 'button', className: 'btn btn-success' },
 								'Create Batch'
 							)
 						)
@@ -55988,7 +56059,7 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'panel-body' },
-						_react2.default.createElement(_griddleReact2.default, { results: _colConfig.fakedata, tableClassName: 'griddle-table', showTableHeading: false, useGriddleStyles: false, columnMetadata: _colConfig.colmetadata, columns: _colConfig.cols })
+						data
 					)
 				);
 			}
@@ -55996,6 +56067,10 @@
 
 		return Batch;
 	}(_react.Component);
+
+	Batch.contextTypes = {
+		router: _react2.default.PropTypes.object
+	};
 
 	exports.default = Batch;
 
@@ -56008,7 +56083,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.colmetadata = exports.cols = exports.fakedata = undefined;
+	exports.colmetadata = exports.cols = undefined;
 
 	var _rowLink = __webpack_require__(492);
 
@@ -56016,35 +56091,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var fakedata = exports.fakedata = [{
-		"id": 0,
-		"batchname": "Magdalo",
-		"startdate": "06/10/2016",
-		"enddate": "06/10/2016",
-		"yearfrom": "2016",
-		"yearto": "2017"
-	}, {
-		"id": 1,
-		"batchname": "Kalayaan",
-		"startdate": "06/10/2015",
-		"enddate": "06/10/2015",
-		"yearfrom": "2015",
-		"yearto": "2016"
-	}, {
-		"id": 3,
-		"batchname": "Masigla",
-		"startdate": "06/10/2015",
-		"enddate": "06/10/2015",
-		"yearfrom": "2015",
-		"yearto": "2016"
-	}, {
-		"id": 4,
-		"batchname": "Parasogot",
-		"startdate": "06/10/2015",
-		"enddate": "06/10/2015",
-		"yearfrom": "2015",
-		"yearto": "2016"
-	}];
 	var cols = exports.cols = ["id"];
 
 	var colmetadata = exports.colmetadata = [{
@@ -56155,6 +56201,319 @@
 
 /***/ },
 /* 493 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.loadBatchForm = loadBatchForm;
+	exports.saveBatchForm = saveBatchForm;
+	exports.saveFailedBatchForm = saveFailedBatchForm;
+	exports.saveSuccessBatchForm = saveSuccessBatchForm;
+	exports.createBatch = createBatch;
+	exports.loadBatch = loadBatch;
+	exports.loadSuccess = loadSuccess;
+	exports.loadFailed = loadFailed;
+	exports.initBatch = initBatch;
+	var LOAD_BATCH = exports.LOAD_BATCH = "LOAD_BATCH";
+	var LOAD_FAILED = exports.LOAD_FAILED = "LOAD_FAILED";
+	var LOAD_SUCCESS = exports.LOAD_SUCCESS = "LOAD_SUCCESS";
+	var LOAD_BATCH_FORM = exports.LOAD_BATCH_FORM = "LOAD_BATCH_FORM";
+	var SAVE_BATCH_FORM = exports.SAVE_BATCH_FORM = "SAVE_BATCH_FORM";
+	var SAVE_FAILED_BATCH_FORM = exports.SAVE_FAILED_BATCH_FORM = "SAVE_FAILED_BATCH_FORM";
+	var SAVE_SUCCESS_BATCH_FORM = exports.SAVE_SUCCESS_BATCH_FORM = "SAVE_SUCCESS_BATCH_FORM";
+
+	function loadBatchForm() {
+		return {
+			type: LOAD_BATCH_FORM,
+			isSaving: false
+		};
+	}
+
+	function saveBatchForm(batch) {
+		return {
+			type: SAVE_BATCH_FORM,
+			isSaving: true,
+			hasError: false,
+			batch: batch
+		};
+	}
+
+	function saveFailedBatchForm(message) {
+		return {
+			type: SAVE_FAILED_BATCH_FORM,
+			isSaving: false,
+			hasError: true,
+			message: message
+		};
+	}
+
+	function saveSuccessBatchForm(batch) {
+		return {
+			type: SAVE_SUCCESS_BATCH_FORM,
+			isSaving: false,
+			hasError: false,
+			batch: batch
+		};
+	}
+	function createBatch(batch) {
+
+		var data = { "id": 0,
+			"batchname": "Rizal",
+			"startdate": "06/10/2016",
+			"enddate": "06/10/2016",
+			"yearfrom": "2016",
+			"yearto": "2017"
+		};
+
+		return function (dispatch) {
+			dispatch(saveBatchForm(data));
+			return setTimeout(function () {
+				dispatch(saveSuccessBatchForm(data));
+			}, 5000);
+		};
+	}
+
+	function loadBatch() {
+		return {
+			type: LOAD_BATCH,
+			isFetching: true,
+			isFailed: false
+		};
+	}
+
+	function loadSuccess(batches) {
+		return {
+			type: LOAD_SUCCESS,
+			isFetching: false,
+			isFailed: false,
+			batches: batches
+		};
+	}
+
+	function loadFailed(message) {
+		return {
+			type: LOAD_FAILED,
+			isFetching: false,
+			isFailed: true,
+			message: message
+		};
+	}
+
+	function initBatch() {
+
+		var data = [{
+			"id": 0,
+			"batchname": "Rizal",
+			"startdate": "06/10/2016",
+			"enddate": "06/10/2016",
+			"yearfrom": "2016",
+			"yearto": "2017"
+		}, {
+			"id": 1,
+			"batchname": "Bonifacio",
+			"startdate": "06/10/2015",
+			"enddate": "06/10/2015",
+			"yearfrom": "2015",
+			"yearto": "2016"
+		}, {
+			"id": 3,
+			"batchname": "Mabini",
+			"startdate": "06/10/2015",
+			"enddate": "06/10/2015",
+			"yearfrom": "2015",
+			"yearto": "2016"
+		}, {
+			"id": 4,
+			"batchname": "Parasogot",
+			"startdate": "06/10/2015",
+			"enddate": "06/10/2015",
+			"yearfrom": "2015",
+			"yearto": "2016"
+		}];
+		return function (dispatch) {
+			dispatch(loadBatch());
+			return setTimeout(function () {
+				dispatch(loadSuccess(data));
+			}, 1000);
+		};
+	}
+
+	//https://www.youtube.com/watch?v=DVEsNYS1Cgo
+
+/***/ },
+/* 494 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _BatchForm = __webpack_require__(495);
+
+	var _BatchForm2 = _interopRequireDefault(_BatchForm);
+
+	var _reactRedux = __webpack_require__(254);
+
+	var _BatchActions = __webpack_require__(493);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			isSaving: state.batchForm.isFetching,
+			hasError: state.batchForm.hasError,
+			message: state.batchForm.message,
+			batch: state.batchForm.batch
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			saveForm: function saveForm(batch) {
+				dispatch(createBatch(batch));
+			}
+		};
+	};
+
+	var BatchContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_BatchForm2.default);
+
+	exports.default = BatchContainer;
+
+/***/ },
+/* 495 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BatchForm = function (_Component) {
+		_inherits(BatchForm, _Component);
+
+		function BatchForm() {
+			_classCallCheck(this, BatchForm);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(BatchForm).apply(this, arguments));
+		}
+
+		_createClass(BatchForm, [{
+			key: 'handleCancel',
+			value: function handleCancel(e) {
+				e.preventDefault();
+				this.context.router.push('/settings/batch');
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'panel panel-default' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'panel-heading' },
+						_react2.default.createElement(
+							'h3',
+							{ className: 'panel-title' },
+							'Create Batch'
+						),
+						_react2.default.createElement('div', { className: 'pull-right minusTop' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'panel-body' },
+						_react2.default.createElement(
+							'form',
+							null,
+							_react2.default.createElement(
+								'div',
+								{ className: 'row form-group' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-sm-8' },
+									_react2.default.createElement(
+										'label',
+										null,
+										'Batch Name'
+									),
+									_react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtName' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'row form-group' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-sm-8' },
+									_react2.default.createElement(
+										'label',
+										null,
+										'School Year'
+									),
+									_react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'txtName' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'row form-group' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-sm-3' },
+									_react2.default.createElement(
+										'button',
+										{ type: 'text', className: 'btn btn-success' },
+										_react2.default.createElement(
+											'strong',
+											null,
+											'Save Batch'
+										)
+									),
+									'  ',
+									_react2.default.createElement(
+										'button',
+										{ onClick: this.handleCancel.bind(this), type: 'text', className: 'btn btn-default' },
+										'Cancel'
+									)
+								),
+								_react2.default.createElement('div', { className: 'col-sm-3' })
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return BatchForm;
+	}(_react.Component);
+
+	BatchForm.contextTypes = {
+		router: _react2.default.PropTypes.object
+	};
+
+	exports.default = BatchForm;
+
+/***/ },
+/* 496 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -56216,7 +56575,7 @@
 	exports.default = StudClass;
 
 /***/ },
-/* 494 */
+/* 497 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -56244,7 +56603,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 495 */
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56298,6 +56657,109 @@
 	};
 
 	exports.default = loginreducer;
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _BatchActions = __webpack_require__(493);
+
+	var initialstate = {
+		isFetching: false,
+		isFailed: false,
+		message: '',
+		batches: {}
+	};
+
+	var batchreducer = function batchreducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate : arguments[0];
+		var action = arguments[1];
+
+		switch (action.type) {
+			case _BatchActions.LOAD_BATCH:
+				return Object.assign({}, state, {
+					isFetching: action.isFetching,
+					isFailed: action.isFailed
+				});
+
+			case _BatchActions.LOAD_SUCCESS:
+				return Object.assign({}, state, {
+					isFetching: action.isFetching,
+					isFailed: action.isFailed,
+					batches: action.batches
+				});
+			case _BatchActions.LOAD_FAILED:
+				return Object.assign({}, state, {
+					isFetching: action.isFetching,
+					isFailed: action.isFailed,
+					message: action.message
+				});
+			default:
+				return state;
+		}
+	};
+
+	exports.default = batchreducer;
+
+/***/ },
+/* 500 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _BatchActions = __webpack_require__(493);
+
+	var initialstate = {
+		isSaving: false,
+		hasError: false,
+		message: '',
+		batch: {}
+	};
+
+	var batchFormreducer = function batchFormreducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate : arguments[0];
+		var action = arguments[1];
+
+		switch (action.type) {
+			case _BatchActions.LOAD_BATCH_FORM:
+				return Object.assign({}, state, {
+					isSaving: action.isSaving
+				});
+
+			case _BatchActions.SAVE_BATCH_FORM:
+				return Object.assign({}, state, {
+					isSaving: action.isSaving,
+					hasError: action.hasError,
+					batch: action.batch
+				});
+			case _BatchActions.SAVE_FAILED_BATCH_FORM:
+				return Object.assign({}, state, {
+					isSaving: action.isSaving,
+					hasError: action.hasError,
+					message: action.message
+				});
+			case _BatchActions.SAVE_SUCCESS_BATCH_FORM:
+				return Object.assign({}, state, {
+					isSaving: action.isSaving,
+					hasError: action.hasError,
+					batch: action.batch
+				});
+			default:
+				return state;
+		}
+	};
+
+	exports.default = batchFormreducer;
 
 /***/ }
 /******/ ]);

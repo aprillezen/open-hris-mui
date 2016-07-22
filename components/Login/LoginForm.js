@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import _ from 'lodash'
-import LoginAlert from './LoginAlert'
+import LoginAlert from '../Alert'
 import LoginButton from './LoginButton'
 
 

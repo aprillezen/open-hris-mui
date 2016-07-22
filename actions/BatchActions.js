@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+
 export const LOAD_BATCH="LOAD_BATCH";
 export const LOAD_FAILED="LOAD_FAILED";
 export const LOAD_SUCCESS="LOAD_SUCCESS";
@@ -41,19 +43,28 @@ export function saveSuccessBatchForm(batch){
 }
 export function createBatch(batch){
 
-	let data =  {  "id": 0,
-				   "batchname": "Rizal",
-				   "startdate": "06/10/2016",
-				   "enddate": "06/10/2016",
-				   "yearfrom": "2016",
-				   "yearto": "2017"
-				 }
+	let config = {
+	    method: 'POST',
+	    headers: { 
+	    	 'Accept': 'application/json',
+        	 'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify({
+	    	id: batch.id,
+	    	batchname: batch.batchname,
+	    	yearfrom: batch.yearfrom,
+	    	yearto: batch.yearto
+	    })
+  	}	
+	
+	//console.log(batch)
 
 	return dispatch=>{
-		dispatch(saveBatchForm(data))
+		dispatch(saveBatchForm(batch))
 		return setTimeout(()=>{
-			dispatch(saveSuccessBatchForm(data))
-		}, 5000)
+			dispatch(saveSuccessBatchForm(batch))
+			dispatch(push('/settings/batch'))
+		}, 2000)
 	}
 }
 
@@ -123,8 +134,8 @@ export function initBatch(){
 	return dispatch=>{
 		dispatch(loadBatch())
 		return setTimeout(()=>{
-			dispatch(loadSuccess(data))
-		}, 2000)
+			dispatch(loadSuccess(data))			
+		}, 1000)
 	}
 }
 

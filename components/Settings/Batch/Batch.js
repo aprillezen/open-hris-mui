@@ -8,7 +8,7 @@ class Batch extends Component{
 
 	handleCreateBatch(e){
 		//alert("1")
-		this.context.router.push('/settings/createbatch')
+		this.context.router.push('/settings/batch/add')
 		//push('/settings/createbatch')
 	}
 

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-class LoginAlert extends React.Component{
+class Alert extends React.Component{
 	render(){
 		if (this.props.hasError){
 			return(
@@ -15,10 +15,10 @@ class LoginAlert extends React.Component{
 	}
 }
 
-LoginAlert.propTypes = {
+Alert.propTypes = {
 	message: PropTypes.string.isRequired,
 	hasError: React.PropTypes.bool.isRequired,	
 }
-LoginAlert.defaultProps = { hasError: false }
+Alert.defaultProps = { hasError: false }
 
-export default LoginAlert
+export default Alert

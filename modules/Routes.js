@@ -32,7 +32,7 @@ module.exports = (
       <Route path='/settings' component={Settings}>
           <IndexRoute component={BatchContainer}/>  
           <Route path='/settings/batch' component={BatchContainer} />
-          <Route path='/settings/createbatch' component={BatchFormContainer} />
+          <Route path='/settings/batch/:id' component={BatchFormContainer} />
           <Route path='/settings/classes' component={StudClass} />
       </Route>  	  		
   	</Route>
