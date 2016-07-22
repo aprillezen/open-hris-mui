@@ -4,8 +4,28 @@ import  Alert from '../../Alert'
 
 class BatchForm extends Component {
 
+	getItem(id){
+	   var ret
+	   this.props.batches.map(function(item){
+			if (id==item.id){	
+			   //console.log(item)			
+				 ret = item
+			}			
+		})
+
+	   return ret
+	}
+
 	componentDidMount(){
-		console.log(this.props.params.id)
+		
+		if (this.props.params.id!='add'){
+			var data = this.getItem(this.props.params.id)
+			this.refs.batchname.value = data.batchname
+			this.refs.yearfrom.value = data.yearfrom
+			this.refs.yearto.value = data.yearto
+			//console.log(data)
+		}
+	
 	}
 
 	handleSubmit(e){

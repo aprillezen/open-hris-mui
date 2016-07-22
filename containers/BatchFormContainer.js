@@ -1,7 +1,7 @@
 import Batch from '../components/Settings/Batch/BatchForm'
 import { connect } from 'react-redux'
 
-import { loadBatchForm, createBatch,saveFailedBatchForm } from '../actions/BatchActions'
+import { loadBatchForm, createBatch,saveFailedBatchForm, editBatchForm} from '../actions/BatchActions'
 
 
 const mapStateToProps=(state)=>{
@@ -9,7 +9,9 @@ const mapStateToProps=(state)=>{
 		isSaving : state.batchForm.isFetching,
 		hasError : state.batchForm.hasError,
 		message : state.batchForm.message,
-		batch : state.batchForm.batch
+		batch : state.batchForm.batch,
+		batches: state.batch.batches
+
 	}
 }
 
@@ -17,6 +19,9 @@ const mapDispatchToProps=(dispatch)=>{
 	return{
 		saveForm: (batch)=> {
 			dispatch(createBatch(batch))
+		},
+		editForm: (batch)=>{
+			dispatch(editBatchForm(batch))
 		},
 		failedSave: (message)=>{
 			dispatch(saveFailedBatchForm(message))

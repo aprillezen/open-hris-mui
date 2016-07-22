@@ -7,11 +7,21 @@ export const LOAD_BATCH_FORM="LOAD_BATCH_FORM";
 export const SAVE_BATCH_FORM="SAVE_BATCH_FORM";
 export const SAVE_FAILED_BATCH_FORM="SAVE_FAILED_BATCH_FORM";
 export const SAVE_SUCCESS_BATCH_FORM="SAVE_SUCCESS_BATCH_FORM";
+export const EDIT_BATCH="EDIT_BATCH";
 
 export function loadBatchForm(){
 	return{
 		type: LOAD_BATCH_FORM,
 		isSaving: false		
+	}
+}
+
+export function editBatchForm(batch){
+	return{
+		type: EDIT_BATCH,
+		isSaving: false,
+		hasError: false,
+		batch
 	}
 }
 

@@ -1,4 +1,4 @@
-import { LOAD_BATCH_FORM, SAVE_BATCH_FORM, SAVE_FAILED_BATCH_FORM,SAVE_SUCCESS_BATCH_FORM} from '../actions//BatchActions'
+import { LOAD_BATCH_FORM, SAVE_BATCH_FORM, SAVE_FAILED_BATCH_FORM,SAVE_SUCCESS_BATCH_FORM,EDIT_BATCH} from '../actions//BatchActions'
 
 const initialstate = {
 	isSaving: false,
@@ -12,6 +12,13 @@ const batchFormreducer = (state = initialstate , action)=>{
 		case LOAD_BATCH_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving				
+			})
+
+		case EDIT_BATCH:
+			return Object.assign({}, state,{
+				isSaving: action.isSaving,
+				hasError: action.hasError,
+				batch   : action.batch
 			})
 
 		case SAVE_BATCH_FORM:
