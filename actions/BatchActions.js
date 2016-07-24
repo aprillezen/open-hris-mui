@@ -1,27 +1,55 @@
 import { push } from 'react-router-redux'
+import fetch from 'isomorphic-fetch'
 
 export const LOAD_BATCH="LOAD_BATCH";
 export const LOAD_FAILED="LOAD_FAILED";
 export const LOAD_SUCCESS="LOAD_SUCCESS";
-export const LOAD_BATCH_FORM="LOAD_BATCH_FORM";
+
+export const ADD_BATCH_FORM="ADD_BATCH_FORM";
 export const SAVE_BATCH_FORM="SAVE_BATCH_FORM";
 export const SAVE_FAILED_BATCH_FORM="SAVE_FAILED_BATCH_FORM";
 export const SAVE_SUCCESS_BATCH_FORM="SAVE_SUCCESS_BATCH_FORM";
-export const EDIT_BATCH="EDIT_BATCH";
+export const EDIT_SUCCESS_LOAD_BATCH="EDIT_SUCCESS_LOAD_BATCH";
+export const EDIT_FAILED_LOAD_BATCH="EDIT_FAILED_LOAD_BATCH";
+export const FORM_VALUE_CHANGED="FORM_VALUE_CHANGED"
 
-export function loadBatchForm(){
+export function addBatchForm(batch){
 	return{
-		type: LOAD_BATCH_FORM,
-		isSaving: false		
+		type: ADD_BATCH_FORM,
+		isFetching: true,
+		isSaving: false,
+		hasError: false,
+		message: '',
+		batch
 	}
 }
 
-export function editBatchForm(batch){
+export function editSuccessLoadBatchForm(batch){
 	return{
-		type: EDIT_BATCH,
+		type: EDIT_SUCCESS_LOAD_BATCH,
 		isSaving: false,
+		isFetching: false,
 		hasError: false,
 		batch
+	}
+}
+
+export function valueChangeFormBatch(batch, field, value){
+	return{
+		type: FORM_VALUE_CHANGED,
+		batch,
+		field,
+		value
+	}
+}
+
+export function editFailedLoadBatchForm(message){
+	return{
+		type: EDIT_FAILED_LOAD_BATCH,
+		isSaving: false,
+		isFetching: false,
+		hasError: true,
+		message
 	}
 }
 
@@ -51,30 +79,99 @@ export function saveSuccessBatchForm(batch){
 		batch
 	}
 }
-export function createBatch(batch){
 
-	let config = {
+export function getBatch(id){
+
+	return dispatch=>{
+		//dispatch(loadBatchForm())
+		// setTimeout(()=>{
+		// 	//dispatch(saveSuccessBatchForm(batch))
+		// 	//dispatch(push('/settings/batch'))
+		// 	console.log('2')
+		// }, 2000)
+		
+		fetch('http://localhost:3000/batch/edit/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{
+		
+		 	if (parseInt(ret.status)==1){
+		 		//console.log('ye :' + ret.data.batchname)
+		 		//console.log(parseInt(data.status))
+				dispatch(editSuccessLoadBatchForm(ret.data))	
+		 	}else{
+		 		dispatch(editFailedLoadBatchForm(data.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(editFailedLoadBatchForm('Database error'))
+			console.log('request failed', error) 
+		})
+	}
+}
+
+export function saveBatch(mode, batch){
+
+	let config
+
+  	var url ="http://localhost:3000/batch/update/"
+  	if (mode=="add"){
+  		url ="http://localhost:3000/batch/add/"
+  		config = {
 	    method: 'POST',
 	    headers: { 
 	    	 'Accept': 'application/json',
         	 'Content-Type': 'application/json',
 	    },
 	    body: JSON.stringify({
-	    	id: batch.id,
 	    	batchname: batch.batchname,
 	    	yearfrom: batch.yearfrom,
 	    	yearto: batch.yearto
 	    })
   	}	
-	
-	//console.log(batch)
+  	}else{
+  		config = {
+	    method: 'POST',
+	    headers: { 
+	    	 'Accept': 'application/json',
+        	 'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify({
+	    	id : batch.id,
+	    	batchname: batch.batchname,
+	    	yearfrom: batch.yearfrom,
+	    	yearto: batch.yearto
+	    })
+  	}	
+  	}
+
+
+  	console.log(url)
 
 	return dispatch=>{
 		dispatch(saveBatchForm(batch))
-		return setTimeout(()=>{
-			dispatch(saveSuccessBatchForm(batch))
-			dispatch(push('/settings/batch'))
-		}, 2000)
+		// return setTimeout(()=>{
+		// 	dispatch(saveSuccessBatchForm(batch))
+		// 	dispatch(push('/settings/batch'))
+		// }, 2000)
+		fetch(url, config)
+		.then(response=>response.json()
+			.then(data=>({ data, response }))
+		 ).then(({ data, response })=>{
+		 	//console.log(data)
+		 	if (parseInt(data.status)==1){
+		 		//console.log(parseInt(data.message))
+				dispatch(push('/settings/batch'))
+		 	}else{
+		 		dispatch(saveFailedBatchForm(data.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(saveFailedBatchForm('Database error'))
+			console.log('request failed', error) 
+		})
 	}
 }
 
@@ -143,9 +240,26 @@ export function initBatch(){
 				]
 	return dispatch=>{
 		dispatch(loadBatch())
-		return setTimeout(()=>{
-			dispatch(loadSuccess(data))			
-		}, 1000)
+		// return setTimeout(()=>{
+		// 	dispatch(loadSuccess(data))			
+		// }, 1000)
+		fetch('http://localhost:3000/batch')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{
+		 	//console.log(data)
+		 	if (parseInt(ret.status)==1){
+		 		//console.log(parseInt(data.status))
+				dispatch(loadSuccess(ret.data))	
+		 	}else{
+		 		dispatch(loadFailed(data.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFailed('Database error'))
+			console.log('request failed', error) 
+		})
 	}
 }
 

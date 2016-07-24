@@ -52,31 +52,29 @@ export function gologin(username, password){
 	//console.log(config)
 	return dispatch=>{
 		dispatch(loginAttempt(username))	
-		return setTimeout(()=>{
-			dispatch(loginSuccess(username))
-			//console.log("siccess")
-			dispatch(push('/dashboard'))
+		// return setTimeout(()=>{
+		// 	dispatch(loginSuccess(username))
+		// 	//console.log("siccess")
+		// 	dispatch(push('/dashboard'))
 
-		}, 5000)
-
-
-			// fetch('http://localhost:3000/login', config)
-			// .then(response=>response.json()
-			// 	.then(data=>({ data, response }))
-			//  ).then(({ data, response })=>{
-			//  	//console.log(data)
-			//  	if (parseInt(data.status)==1){
-			//  		//console.log(parseInt(data.status))
-			// 		dispatch(push('/dashboard'))
-			//  	}else{
-			//  		dispatch(loginFailed(data.message))
-			//  	}
-			 	
-			//  })
-			// .catch(error => { 
-			// 	dispatch(loginFailed('Database error'))
-			// 	console.log('request failed', error) 
-			// })
+		// }, 5000)t
+		fetch('http://localhost:3000/login', config)
+		.then(response=>response.json()
+			.then(data=>({ data, response }))
+		 ).then(({ data, response })=>{
+		 	//console.log(data)
+		 	if (parseInt(data.status)==1){
+		 		//console.log(parseInt(data.status))
+				dispatch(push('/dashboard'))
+		 	}else{
+		 		dispatch(loginFailed(data.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(loginFailed('Database error'))
+			console.log('request failed', error) 
+		})
 		
 	}
 }
