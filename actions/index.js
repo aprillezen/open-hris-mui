@@ -58,7 +58,7 @@ export function gologin(username, password){
 		// 	dispatch(push('/dashboard'))
 
 		// }, 5000)t
-		fetch('http://localhost:3000/login', config)
+		fetch('http://52.77.70.200:3000/login', config)
 		.then(response=>response.json()
 			.then(data=>({ data, response }))
 		 ).then(({ data, response })=>{

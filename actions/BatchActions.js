@@ -88,9 +88,10 @@ export function getBatch(id){
 		// 	//dispatch(saveSuccessBatchForm(batch))
 		// 	//dispatch(push('/settings/batch'))
 		// 	console.log('2')
-		// }, 2000)
+		// }, 2000)http://52.77.70.200/
+
 		
-		fetch('http://localhost:3000/batch/edit/'+id)
+		fetch('http://52.77.70.200:3000/batch/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{
@@ -115,9 +116,9 @@ export function saveBatch(mode, batch){
 
 	let config
 
-  	var url ="http://localhost:3000/batch/update/"
+  	var url ="http://52.77.70.200:3000/batch/update/"
   	if (mode=="add"){
-  		url ="http://localhost:3000/batch/add/"
+  		url ="http://52.77.70.200:3000/batch/add/"
   		config = {
 	    method: 'POST',
 	    headers: { 
@@ -243,7 +244,7 @@ export function initBatch(){
 		// return setTimeout(()=>{
 		// 	dispatch(loadSuccess(data))			
 		// }, 1000)
-		fetch('http://localhost:3000/batch')
+		fetch('http://52.77.70.200:3000/batch')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{
