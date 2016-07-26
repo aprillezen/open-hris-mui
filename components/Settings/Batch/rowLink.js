@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import SkyLight from 'react-skylight'
-
+import Alert from '../../../components/Alert'
 class RowLink extends Component{
 
 	constructor(){
@@ -9,10 +9,12 @@ class RowLink extends Component{
 
 	handleDelete(e){
 		this.refs.simpleDialog.show()
+		this.props.initDelete()
 	}
 
 	handleDeleteOk(e){
-
+		//console.log(this.props)
+		this.props.deleteBatch(this.props.rowData.id)
 	}
 
 	handleCloseModal(e){
@@ -25,11 +27,17 @@ class RowLink extends Component{
 	}
 	render(){
 
-		 var myBigGreenDialog = {		      		    
+		 var deleteDialog = {		      		    
 		      width: '50%',
 		      height: '200px',
 		      marginTop: '-200px',
 		      marginLeft: '-20%',
+	    }
+
+	    const { isDeleting, hasError, message} = this.props
+	    var loading=<div></div>
+	    if (isDeleting){
+	    	loading=<div><i className="fa fa-spinner fa-spin fa-1x fa-fw"></i></div>
 	    }
 
 		return(<div>
@@ -49,11 +57,14 @@ class RowLink extends Component{
 						</tbody>
 					</table>		
 
-					<SkyLight dialogStyles={myBigGreenDialog} hideOnOverlayClicked ref="simpleDialog" title="">
+					<SkyLight dialogStyles={deleteDialog} hideOnOverlayClicked ref="simpleDialog" title="">
 					  <h3>Delete '{this.props.rowData.batchname}' </h3>			          
 			          <button className="btn btn-danger" onClick={this.handleDeleteOk.bind(this)}>Yes, continue delete</button>
 			          &nbsp;<button className="btn btn-default" onClick={this.handleCloseModal.bind(this)}>Cancel</button>
+			           {loading}
+			           <Alert hasError={hasError} message={message}/>
 			        </SkyLight>
+
 
 				</div>
 			)

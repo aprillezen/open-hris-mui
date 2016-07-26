@@ -5,6 +5,9 @@ import { cols, colmetadata, fakedata} from './colConfig'
 
 class Batch extends Component{
 
+	onRowClick(){
+		
+	}
 
 	handleCreateBatch(e){
 		//alert("1")
@@ -12,7 +15,7 @@ class Batch extends Component{
 		//push('/settings/createbatch')
 	}
 
-	componentDidMount(){
+	componentDidMount(){		
 		this.props.initialize()
 	}
 

@@ -12,6 +12,39 @@ export const SAVE_SUCCESS_BATCH_FORM="SAVE_SUCCESS_BATCH_FORM";
 export const EDIT_SUCCESS_LOAD_BATCH="EDIT_SUCCESS_LOAD_BATCH";
 export const EDIT_FAILED_LOAD_BATCH="EDIT_FAILED_LOAD_BATCH";
 export const FORM_VALUE_CHANGED="FORM_VALUE_CHANGED"
+export const INIT_DELETE_BATCH="INIT_DELETE_BATCH"
+export const DELETE_ATTEMPT_BATCH="DELETE_ATTEMPT_BATCH"
+export const DELETE_FAILED_BATCH="DELETE_FAILED_BATCH"
+
+
+export function initDeleteBatch(){
+	return{
+		type: INIT_DELETE_BATCH,
+		isDeleting: false,
+		hasError: false,
+		message:''
+		
+	}
+}
+export function deleteAttemptBatch(){
+	return{
+		type: DELETE_ATTEMPT_BATCH,
+		isDeleting: true,
+		hasError: false,
+		message:''
+		
+	}
+}
+
+export function deleteFailedBatch(message){
+	return{
+		type: DELETE_FAILED_BATCH,
+		isDeleting: false,
+		hasError: true,
+		message
+	}
+}
+
 
 export function addBatchForm(batch){
 	return{
@@ -80,6 +113,35 @@ export function saveSuccessBatchForm(batch){
 	}
 }
 
+export function deleteBatch(id){
+
+	return dispatch=>{
+		dispatch(deleteAttemptBatch())
+		// setTimeout(()=>{
+		// 	//dispatch(saveSuccessBatchForm(batch))
+		// 	//dispatch(push('/settings/batch'))
+		// 	dispatch(deleteFailedBatch('Delete failed'))
+		// }, 2000)
+		
+		fetch('http://52.77.70.200:3000/batch/delete/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{	
+		 	console.log(ret)	
+		 	if (parseInt(ret.status)==1){
+		 		dispatch(initBatch())	
+		 	}else{
+		 		dispatch(deleteFailedBatch(ret.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(deleteFailedBatch('Database error'))
+			console.log('request failed', error) 
+		})
+	}
+}
+
 export function getBatch(id){
 
 	return dispatch=>{
@@ -120,36 +182,32 @@ export function saveBatch(mode, batch){
   	if (mode=="add"){
   		url ="http://52.77.70.200:3000/batch/add/"
   		config = {
-	    method: 'POST',
-	    headers: { 
-	    	 'Accept': 'application/json',
-        	 'Content-Type': 'application/json',
-	    },
-	    body: JSON.stringify({
-	    	batchname: batch.batchname,
-	    	yearfrom: batch.yearfrom,
-	    	yearto: batch.yearto
-	    })
-  	}	
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify({
+		    	batchname: batch.batchname,
+		    	yearfrom: batch.yearfrom,
+		    	yearto: batch.yearto
+		    })
+  		}	
   	}else{
   		config = {
-	    method: 'POST',
-	    headers: { 
-	    	 'Accept': 'application/json',
-        	 'Content-Type': 'application/json',
-	    },
-	    body: JSON.stringify({
-	    	id : batch.id,
-	    	batchname: batch.batchname,
-	    	yearfrom: batch.yearfrom,
-	    	yearto: batch.yearto
-	    })
-  	}	
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify({
+		    	id : batch.id,
+		    	batchname: batch.batchname,
+		    	yearfrom: batch.yearfrom,
+		    	yearto: batch.yearto
+		    })
+  		}	
   	}
-
-
-  	console.log(url)
-
 	return dispatch=>{
 		dispatch(saveBatchForm(batch))
 		// return setTimeout(()=>{
