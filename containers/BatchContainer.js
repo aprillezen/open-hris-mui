@@ -1,7 +1,6 @@
 import Batch from '../components/Settings/Batch/Batch'
 import { connect } from 'react-redux'
-
-import { initBatch, loadSuccess} from '../actions/BatchActions'
+import { initBatch } from '../actions/SettingsActionsDispatch'
 
 
 const mapStateToProps=(state)=>{
@@ -9,7 +8,7 @@ const mapStateToProps=(state)=>{
 		isFetching : state.batch.isFetching,
 		isFailed : state.batch.isFailed,
 		message : state.batch.message,
-		batches : state.batch.batches
+		batches : state.batch.data
 
 	}
 }

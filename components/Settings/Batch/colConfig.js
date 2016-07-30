@@ -1,6 +1,7 @@
 import RowLink from './rowLink'
 import { connect } from 'react-redux'
-import {initDeleteBatch, deleteBatch}  from '../../../actions/BatchActions'
+import {deleteBatch}  from '../../../actions/SettingsActionsDispatch'
+import { loadDeleteDialog } from '../../../actions'
 
 const mapStateToProp=(state)=>{
 	return{
@@ -15,8 +16,8 @@ const mapDispatchToProps = (dispatch)=>{
 		deleteBatch: (id)=>{
 			dispatch(deleteBatch(id))
 		},
-		initDelete:()=>{
-			dispatch(initDeleteBatch())
+		loadDeleteDialog:()=>{
+			dispatch(loadDeleteDialog())
 		}
 	}
 }

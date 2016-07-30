@@ -24,7 +24,7 @@ class Batch extends Component{
 		const { isFetching, batches } = this.props
 		var data=<div></div>
 		if (isFetching){
-			data = <div><i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span className="sr-only">Loading...</span></div>
+			data = <div><i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span></div>
 		}else{
 			data=<div><Grid results={batches} tableClassName="griddle-table" showTableHeading={false} useGriddleStyles={false} columnMetadata={colmetadata} columns={cols}/></div>
 		}

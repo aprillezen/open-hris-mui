@@ -1,4 +1,4 @@
-import { gologin, loginFailed } from '../actions'
+import { gologin, loginFailed } from '../actions/loginActions'
 import LoginForm from '../components/Login/LoginForm'
 import { connect } from 'react-redux'
 

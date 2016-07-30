@@ -9,7 +9,7 @@ class RowLink extends Component{
 
 	handleDelete(e){
 		this.refs.simpleDialog.show()
-		this.props.initDelete()
+		this.props.loadDeleteDialog()
 	}
 
 	handleDeleteOk(e){
@@ -50,7 +50,7 @@ class RowLink extends Component{
 									<p className="text-muted">{this.props.rowData.yearfrom}-{this.props.rowData.yearto}</p>
 								</td>
 								<td className="griddle-row-table-td3">
-									<button type="button" className="btn btn-default btn-sm" onClick={this.handleClick.bind(this)} ><i className="fa fa-pencil"></i>&nbsp;Edit</button>
+									<button type="button" className="btn btn-default btn-sm" onClick={this.handleClick.bind(this)} ><i className="fa fa-pencil"></i>&nbsp;Edit</button>&nbsp;
 									<button type="button" className="btn btn-default btn-sm" onClick={this.handleDelete.bind(this)}><i className="fa fa-trash"></i>&nbsp;Delete</button>
 								</td>
 							</tr>

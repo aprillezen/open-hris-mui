@@ -1,81 +1,165 @@
-import { push } from 'react-router-redux'
-import fetch from 'isomorphic-fetch'
 
-export const LOGIN_ATTEMPT="LOGIN_ATTEMPT";
-export const LOGIN_SUCCESS="LOGIN_SUCCESS";
-export const LOGIN_FAILED="LOGIN_FAILED";
+export const LOGIN_ATTEMPT="LOGIN_ATTEMPT"
+export const LOGIN_SUCCESS="LOGIN_SUCCESS"
+export const LOGIN_FAILED="LOGIN_FAILED"
 
+export const LOAD_LIST="LOAD_LIST"
+export const LOAD_LIST_FAILED="LOAD_LIST_FAILED"
+export const LOAD_LIST_SUCCESS="LOAD_LIST_SUCCESS"
 
+export const LOAD_ADD_FORM="LOAD_ADD_FORM"
+export const SAVE_FORM="SAVE_FORM"
+export const SAVE_FAILED_FORM="SAVE_FAILED_FORM"
+export const SAVE_SUCCESS_FORM="SAVE_SUCCESS_FORM"
+export const LOAD_EDIT_FORM="LOAD_EDIT_FORM"
+export const LOAD_EDIT_SUCCESS_DATA="LOAD_EDIT_SUCCESS_DATA"
+export const LOAD_EDIT_FAILED_DATA="LOAD_EDIT_FAILED_DATA"
+export const FORM_VALUE_CHANGED="FORM_VALUE_CHANGED"
+export const LOAD_DELETE_DIALOG="LOAD_DELETE_DIALOG"
+export const DELETE_ATTEMPT="DELETE_ATTEMPT"
+export const DELETE_FAILED="DELETE_FAILED"
 
-export function loginAttempt(username){
+//************************************************
+//  Actions for page loads
+//************************************************
+export function loadList(){
 	return{
-		type: LOGIN_ATTEMPT,
+		type: LOAD_LIST,
 		isFetching: true,
-		isAuthenticated: false,
-		username
+		isFailed: false
 	}
 }
-export function loginSuccess(username){		
-	return{		
-		type: LOGIN_SUCCESS,
-		isFetching: false,
-		isAuthenticated: true,
-		username
-	}
 
-}	
-export function loginFailed(message){
-	return{		
-		type: LOGIN_FAILED,
+export function loadListSuccess(data){
+	return{
+		type: LOAD_LIST_SUCCESS,
+		isFetching:false,
+		isFailed: false,
+		data
+	}
+}
+
+export function loadListFailed(message){
+	return{
+		type: LOAD_LIST_FAILED,
 		isFetching: false,
-		isAuthenticated: false,	
+		isFailed: true,
+		message
+	}
+}
+
+//************************************************
+//  Actions for forms
+//************************************************
+
+export function loadAddForm(data, title){
+	return{
+		type: LOAD_ADD_FORM,
+		editMode: false,
+		title: title,
+		isFetching: false,
+		isSaving: false,
+		hasError: false,
+		message: '',
+		data
+	}
+}
+
+export function saveForm(data){
+	return{
+		type: SAVE_FORM,
+		isSaving: true,
+		hasError: false,
+		data
+	}
+}
+
+export function saveSuccessForm(data){
+	return{
+		type: SAVE_SUCCESS_FORM,
+		isSaving: false,
+		hasError: false,
+		data
+	}
+}
+
+export function saveFailedForm(message){
+	return{
+		type: SAVE_FAILED_FORM,
+		isSaving: false,
 		hasError: true,
-		message	
+		message
 	}
-}	
+}
+
+export function valueChangeForm(data, field, value){
+	return{
+		type: FORM_VALUE_CHANGED,
+		data,
+		field,
+		value
+	}
+}
+
+export function loadEditForm(title){
+	return{
+		type: LOAD_EDIT_FORM,
+		editMode: true,
+		title: title,
+		isFetching: true,
+		isSaving: false,
+		hasError: false,
+		message: '',
+	}
+}
+
+export function loadEditSuccessForm(data){
+	return{
+		type: LOAD_EDIT_SUCCESS_DATA,
+		isSaving: false,
+		isFetching: false,
+		hasError: false,
+		data
+	}
+}
+
+export function loadEditFailedForm(message){
+	return{
+		type: LOAD_EDIT_FAILED_DATA,
+		isSaving: false,
+		isFetching: false,
+		hasError: true,
+		message
+	}
+}
 
 
-export function gologin(username, password){
-
-	let config = {
-	    method: 'POST',
-	    headers: { 
-	    	 'Accept': 'application/json',
-        	 'Content-Type': 'application/json',
-	    },
-	    body: JSON.stringify({
-	    	username: username,
-	    	password: password,
-	    })
-  	}	
-
-	//console.log(config)
-	return dispatch=>{
-		dispatch(loginAttempt(username))	
-		// return setTimeout(()=>{
-		// 	dispatch(loginSuccess(username))
-		// 	//console.log("siccess")
-		// 	dispatch(push('/dashboard'))
-
-		// }, 5000)t
-		fetch('http://52.77.70.200:3000/login', config)
-		.then(response=>response.json()
-			.then(data=>({ data, response }))
-		 ).then(({ data, response })=>{
-		 	//console.log(data)
-		 	if (parseInt(data.status)==1){
-		 		//console.log(parseInt(data.status))
-				dispatch(push('/dashboard'))
-		 	}else{
-		 		dispatch(loginFailed(data.message))
-		 	}
-		 	
-		 })
-		.catch(error => { 
-			dispatch(loginFailed('Database error'))
-			console.log('request failed', error) 
-		})
+export function loadDeleteDialog(){
+	return{
+		type: LOAD_DELETE_DIALOG,
+		isDeleting: false,
+		hasError: false,
+		message:''
 		
+	}
+}
+
+export function deleteAttempt(){
+	return{
+		type: DELETE_ATTEMPT,
+		isDeleting: true,
+		hasError: false,
+		message:''
+		
+	}
+}
+
+export function deleteFailed(message){
+	return{
+		type: DELETE_FAILED,
+		isDeleting: false,
+		hasError: true,
+		message
 	}
 }
 

@@ -1,12 +1,13 @@
-import { ADD_BATCH_FORM, SAVE_BATCH_FORM, SAVE_FAILED_BATCH_FORM } from '../actions/BatchActions'
-import { SAVE_SUCCESS_BATCH_FORM, EDIT_SUCCESS_LOAD_BATCH, EDIT_FAILED_LOAD_BATCH, FORM_VALUE_CHANGED} from '../actions/BatchActions'
-import { DELETE_ATTEMPT_BATCH, DELETE_FAILED_BATCH,INIT_DELETE_BATCH} from '../actions/BatchActions'
+import { LOAD_ADD_FORM, SAVE_FORM, SAVE_FAILED_FORM, SAVE_SUCCESS_FORM } from '../actions'
+import { LOAD_EDIT_FORM, LOAD_EDIT_SUCCESS_DATA, LOAD_EDIT_FAILED_DATA, FORM_VALUE_CHANGED } from '../actions'
+import { LOAD_DELETE_DIALOG, DELETE_ATTEMPT,DELETE_FAILED} from '../actions'
 
 const initialstate = {
+	editMode: false,
 	isSaving: false,
 	hasError: false,
 	message: '',
-	batch: {
+	data: {
 		"id": '',
 		"batchname":'',
 		"yearfrom":'',
@@ -14,89 +15,101 @@ const initialstate = {
 	}
 }
 
-const fieldvalues=(batch, field, value)=>{
-	var newbatch = Object.assign({}, batch)
+const fieldvalues=(data, field, value)=>{
+	var newdata = Object.assign({}, data)
 	switch(field){
 		case "batchname":
-			newbatch.batchname = value
+			newdata.batchname = value
 			break
 		case "yearfrom":
-			newbatch.yearfrom = value
+			newdata.yearfrom = value
 			break
 		case "yearto":
-			newbatch.yearto = value
+			newdata.yearto = value
 		default:
 			break
 	}
-	//console.log(newbatch)
-	return newbatch
+	return newdata
 
 }
 
 const batchFormreducer = (state = initialstate , action)=>{
 	//console.log(state)
 	switch(action.type){
-		case ADD_BATCH_FORM:
+		case LOAD_ADD_FORM:
 			return Object.assign({}, state,{
+				editMode: action.editMode,
+				title : action.title,
 				isFetching: action.isFetching,
 				isSaving: action.isSaving,
 				hasError: action.hasError,
 				message: action.message,
-				batch: action.batch				
+				data: action.data				
 			})
-
-		case EDIT_SUCCESS_LOAD_BATCH:
+		case SAVE_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
-				isFetching: action.isFetching,
-				batch   : action.batch
+				data: action.data
 			})
-
-		case EDIT_SUCCESS_LOAD_BATCH:
-			return Object.assign({}, state,{
-				isSaving: action.isSaving,
-				hasError: action.hasError,
-				isFetching: action.isFetching,
-				batch   : action.batch
-			})
-
-		case FORM_VALUE_CHANGED:
-			return Object.assign({}, state,{
-				batch : fieldvalues(action.batch, action.field, action.value)
-			})
-
-		case SAVE_BATCH_FORM:
-			return Object.assign({}, state,{
-				isSaving: action.isSaving,
-				hasError: action.hasError,
-				batch: action.batch
-			})
-		case SAVE_FAILED_BATCH_FORM:
+		case SAVE_FAILED_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
 				message: action.message
 			})
-		case SAVE_SUCCESS_BATCH_FORM:
+		case SAVE_SUCCESS_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
-				batch: action.batch
+				data: action.data
 			})
-		case INIT_DELETE_BATCH:
+
+		case LOAD_EDIT_FORM:
+			return Object.assign({}, state,{
+				editMode: action.editMode,
+				title : action.title,
+				isFetching: action.isFetching,
+				isSaving: action.isSaving,
+				hasError: action.hasError,
+				message: action.message	
+			})
+
+		case LOAD_EDIT_SUCCESS_DATA:
+			return Object.assign({}, state,{
+				isSaving: action.isSaving,
+				hasError: action.hasError,
+				isFetching: action.isFetching,
+				data   : action.data
+			})
+
+		case LOAD_EDIT_FAILED_DATA:
+			return Object.assign({}, state,{
+				isSaving: action.isSaving,
+				hasError: action.hasError,
+				isFetching: action.isFetching,
+				data   : action.data
+			})
+
+		case FORM_VALUE_CHANGED:
+			return Object.assign({}, state,{
+				data : fieldvalues(action.data, action.field, action.value)
+			})
+
+		
+		case LOAD_DELETE_DIALOG:
 			return Object.assign({}, state,{
 				isDeleting: false,
 				hasError: false,
 				message: ''				
 			})
-		case DELETE_ATTEMPT_BATCH:
+		case DELETE_ATTEMPT:
 			return Object.assign({}, state,{
 				isDeleting: action.isDeleting,
 				hasError: action.hasError,
 				message: action.message				
 			})
-		case DELETE_FAILED_BATCH:
+		case DELETE_FAILED:
 			return Object.assign({}, state,{
 				isDeleting: action.isDeleting,
 				hasError: action.hasError,
