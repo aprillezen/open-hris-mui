@@ -7,12 +7,13 @@ import { Provider } from 'react-redux'
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import loginreducer from './login/reducer'
-
+import profilereducer from './settings/profile/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
 	login: loginreducer,
+	profile: profilereducer,
 	routing: routerReducer
 })
 

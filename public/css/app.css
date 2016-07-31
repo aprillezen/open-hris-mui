@@ -200,6 +200,9 @@ ul.nav-style > li.active-nav > a{
     margin-top: -26px;
 }
 
+.profile-photo{
+  height: 250px;
+}
 
 .ReactModal__Overlay {
   -webkit-perspective: 600;
