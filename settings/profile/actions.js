@@ -86,7 +86,7 @@ export function save(profile){
 
 	return dispatch=>{
 		dispatch(saveForm())
-		fetch('http://localhost:3000/profile/update', data)
+		fetch('http://52.77.70.200:8081/profile/update', data)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{
@@ -106,7 +106,7 @@ export function save(profile){
 export function load(){
 	return dispatch=>{
 		dispatch(loadForm())	
-		fetch('http://localhost:3000/profile')
+		fetch('http://52.77.70.200:8081/profile')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{
