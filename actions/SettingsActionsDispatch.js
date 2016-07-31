@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux'
 import fetch from 'isomorphic-fetch'
 import { saveForm, saveSuccessForm, saveFailedForm, loadList, loadListSuccess, loadListFailed, loadEditForm, loadEditSuccessForm, loadEditFailedForm,deleteAttempt, deleteFailed } from './index'
+import { loadFilter,loadFilterSuccess, loadFilterFailed, filterValueChanged } from './index'
 
 export function initBatch(){
 	return dispatch=>{
@@ -99,17 +100,10 @@ export function getBatch(id){
 	}
 }
 
-
 export function deleteBatch(id){
 
 	return dispatch=>{
 		dispatch(deleteAttempt())
-		// setTimeout(()=>{
-		// 	//dispatch(saveSuccessBatchForm(batch))
-		// 	//dispatch(push('/settings/batch'))
-		// 	dispatch(deleteFailedBatch('Delete failed'))
-		// }, 2000)
-		
 		fetch('http://52.77.70.200:8081/batch/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -125,4 +119,47 @@ export function deleteBatch(id){
 		})
 	}
 }
+
+export function filterClass(id){
+	// return dispatch=>{
+	// 	dispatch(loadList())
+	// 	fetch('http://52.77.70.200:8081/batch')
+	// 	.then(response=>response.json()
+	// 		.then(ret=>({ ret, response }))
+	// 	 ).then(({ ret, response })=>{
+	// 	 	if (parseInt(ret.status)==1){
+	// 			dispatch(loadListSuccess(ret.data))	
+	// 	 	}else{
+	// 	 		dispatch(loadListFailed(data.message))
+	// 	 	}
+		 	
+	// 	 })
+	// 	.catch(error => { 
+	// 		dispatch(loadListFailed('Database error'))			
+	// 	})
+	// }
+}
+
+export function getClassFilterList(){
+	return dispatch=>{
+		dispatch(loadFilter())
+		fetch('http://52.77.70.200:8081/batch/getlist')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{
+		 	if (parseInt(ret.status)==1){
+		 		//console.log(ret.data)
+				dispatch(loadFilterSuccess(ret.data))	
+		
+		 	}else{
+		 		dispatch(loadFilterFailed(data.message))
+		 	}
+		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFilterFailed('Database error'))			
+		})
+	}
+}
+
 

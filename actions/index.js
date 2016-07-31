@@ -7,6 +7,12 @@ export const LOAD_LIST="LOAD_LIST"
 export const LOAD_LIST_FAILED="LOAD_LIST_FAILED"
 export const LOAD_LIST_SUCCESS="LOAD_LIST_SUCCESS"
 
+export const LOAD_FILTER="LOAD_FILTER"
+export const LOAD_FILTER_FAILED="LOAD_FILTER_FAILED"
+export const LOAD_FILTER_SUCCESS="LOAD_FILTER_SUCCESS"
+export const FILTER_VALUE_CHANGED="FILTER_VALUE_CHANGED"
+
+
 export const LOAD_ADD_FORM="LOAD_ADD_FORM"
 export const SAVE_FORM="SAVE_FORM"
 export const SAVE_FAILED_FORM="SAVE_FAILED_FORM"
@@ -48,6 +54,37 @@ export function loadListFailed(message){
 	}
 }
 
+export function loadFilter(){
+	return{
+		type: LOAD_FILTER,
+		isFetching: true,
+		isFailed: false
+	}
+}
+
+export function loadFilterSuccess(data){
+	return{
+		type: LOAD_FILTER_SUCCESS,
+		isFetching:false,
+		isFailed: false,
+		data
+	}
+}
+
+export function loadFilterFailed(message){
+	return{
+		type: LOAD_FILTER_FAILED,
+		isFetching: false,
+		isFailed: true,
+		message
+	}
+}
+export function filterValueChanged(id){
+	return{
+		type: FILTER_VALUE_CHANGED,
+		id
+	}
+}
 //************************************************
 //  Actions for forms
 //************************************************

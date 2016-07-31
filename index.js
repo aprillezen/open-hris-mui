@@ -7,14 +7,14 @@ import { Provider } from 'react-redux'
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import loginreducer from './reducer/login'
-import batchreducer from './reducer/batchreducer'
+import mainReducer from './reducer/mainReducer'
 import batchFormreducer from './reducer/batchFormreducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
 	login: loginreducer,
-	batch: batchreducer,
+	batch: mainReducer,
 	batchForm: batchFormreducer,
 	routing: routerReducer
 })

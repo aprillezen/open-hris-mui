@@ -77,22 +77,20 @@ class BatchForm extends Component {
         if (isSaving || (editMode && isFetching)){
         	let caption="Loading..."
         	if (isSaving) caption="Saving..."
+
         	content = <div className="panel-body">
         				 <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;{caption}</span>
         			  </div>
         }
 
 		return(
-
 				<div className="panel panel-default">
 				  <div className="panel-heading">				  
 					   <h3 className="panel-title" ref="title">{title}</h3>
 						<div className="pull-right minusTop">
 						</div>
 				  </div>
-				 
 				 	{ content }
-
 				</div>
 			)
 	}
