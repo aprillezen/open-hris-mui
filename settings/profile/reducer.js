@@ -13,7 +13,15 @@ const initialstate = {
 			"companyname":'',
 			"address":'',
 			"contactno":'',
-			"emailadd":''
+			"emailadd":'',
+			"city":'',
+			"province":'',
+			"zip":'',
+			"tin":'',
+			"sssno":'',
+			"philhealthno":'',
+			"pagibigno":''
+
 	}
 }
 
@@ -55,6 +63,7 @@ const reducer = (state=initialstate, action) =>{
 				isFetching: action.isFetching,
 				isFailed: action.isFailed,
 				hasError: action.hasError,
+				saveSuccess: action.saveSuccess,
 				message: ''
 			})
 		case LOAD_SUCCESS_FORM:
@@ -63,6 +72,7 @@ const reducer = (state=initialstate, action) =>{
 				isFailed: action.isFailed,
 				hasError: action.hasError,
 				message: '',
+				saveSuccess: action.saveSuccess,
 				profile: checkProfile(action.profile)
 			})
 		case LOAD_FAILED_FORM:
@@ -70,6 +80,7 @@ const reducer = (state=initialstate, action) =>{
 				isFetching: action.isFetching,
 				isFailed: action.isFailed,
 				hasError: action.hasError,
+				saveSuccess: action.saveSuccess,
 				message: action.message
 			})
 		case SAVE_FORM:
@@ -77,6 +88,7 @@ const reducer = (state=initialstate, action) =>{
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
 				hasError: action.hasError,
+				saveSuccess: action.saveSuccess,
 				message: ''
 			})
 		case SAVE_SUCCESS_FORM:
@@ -84,6 +96,7 @@ const reducer = (state=initialstate, action) =>{
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
 				hasError: action.hasError,
+				saveSuccess: action.saveSuccess,
 				profile: action.profile
 			})
 		case SAVE_FAILED_FORM:
@@ -91,6 +104,7 @@ const reducer = (state=initialstate, action) =>{
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
 				hasError: action.hasError,
+				saveSuccess: action.saveSuccess,
 				message: action.message
 			})
 		case FORM_VALUE_CHANGED:

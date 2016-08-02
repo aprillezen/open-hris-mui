@@ -5,7 +5,8 @@ export function loadForm(){
 		type: LOAD_FORM,
 		isFetching: true,
 		isFailed: false,
-		hasError: false
+		hasError: false,
+		saveSuccess: false
 	}
 }
 
@@ -15,6 +16,7 @@ export function loadSucessForm(profile){
 		isFetching: false,
 		isFailed: false,
 		hasError: false,
+		saveSuccess: false,
 		profile
 	}
 }
@@ -25,6 +27,7 @@ export function loadFailedForm(message){
 		isFetching: false,
 		isFailed: true,
 		hasError: true,
+		saveSuccess: false,
 		message
 	}
 }
@@ -34,7 +37,8 @@ export function saveForm(){
 		type: SAVE_FORM,
 		isSaving: true,
 		isFailed: false,
-		hasError: false
+		hasError: false,
+		saveSuccess: false
 	}
 }
 
@@ -44,6 +48,7 @@ export function saveSuccessForm(profile){
 		isSaving: false,
 		isFailed: false,
 		hasError: false,
+		saveSuccess: true,
 		profile
 	}
 }
@@ -54,6 +59,7 @@ export function saveFailedForm(message){
 		isSaving: false,
 		isFailed: true,
 		hasError: true,
+		saveSuccess: false,
 		message
 	}
 }

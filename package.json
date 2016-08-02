@@ -1,7 +1,7 @@
 {
-  "name": "Academbox",
+  "name": "open-hris",
   "version": "1.0.0",
-  "description": "Academbox",
+  "description": "open-hris",
   "main": "index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",

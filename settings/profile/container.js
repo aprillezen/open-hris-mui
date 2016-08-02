@@ -9,7 +9,8 @@ const mapStateToProps=(state)=>{
 		message: state.profile.message,
 		hasError: state.profile.hasError,
 		profile: state.profile.profile,
-		isSaving: state.profile.isSaving
+		isSaving: state.profile.isSaving,
+		saveSuccess: state.profile.saveSuccess
 	}
 }
 
