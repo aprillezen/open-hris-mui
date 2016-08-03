@@ -8,13 +8,15 @@ import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-rou
 import thunkMiddleware from 'redux-thunk'
 import loginreducer from './login/reducer'
 import profilereducer from './settings/profile/reducer'
+import { departmentlistreducer } from './settings/orgunit/department/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
 	login: loginreducer,
 	profile: profilereducer,
-	routing: routerReducer
+	routing: routerReducer,
+	department: departmentlistreducer
 })
 
 const store = createStore(

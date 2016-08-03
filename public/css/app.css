@@ -244,3 +244,9 @@ ul.nav-style > li.active-nav > a{
   background-color: transparent;
 }
 
+
+.rowLinkBorder{
+  border-bottom:1px solid #ddd;
+  padding: 10px;
+  padding-left: 20px;
+}

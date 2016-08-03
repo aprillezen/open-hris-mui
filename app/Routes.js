@@ -10,6 +10,7 @@ import Employees from './Employees'
 import Settings from './Settings'
 import Profile from '../settings/profile/container'
 import Orgunit from '../settings/orgunit'
+import Department from '../settings/orgunit/department/container'
 
 module.exports = (
   <Route component={App} >	
@@ -20,7 +21,10 @@ module.exports = (
     	<Route path='/settings' component={Settings}>
     		<IndexRedirect to="/settings/profile" />	 	
     		<Route path='/settings/profile' component={Profile} />
-    		<Route path='/settings/unit' component={Orgunit} />
+    		<Route path='/settings/unit' component={Orgunit}>
+            <IndexRedirect to="/settings/unit/department" />    
+            <Route path='/settings/unit/department' component={Department} />
+        </Route>  
     	</Route>  	  			  		
   	</Route>
  	  <Route path='/login' component={Login} />

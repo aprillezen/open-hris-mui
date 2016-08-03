@@ -86,7 +86,15 @@ export function save(profile){
 		    	companyname: profile.companyname,
 		    	address: profile.address,
 		    	contactno: profile.contactno,
-		    	emailadd: profile.emailadd
+		    	emailadd: profile.emailadd,
+			    city: profile.city,
+				province: profile.province,
+				zip: profile.zip,
+				tin: profile.tin,
+				sssno: profile.sssno,
+				philhealthno: profile.philhealthno,
+				pagibigno: profile.pagibigno
+
 		    })
   		}	
 

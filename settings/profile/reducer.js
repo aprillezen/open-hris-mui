@@ -48,6 +48,27 @@ const fieldvalues=(data, field, value)=>{
 		case "emailadd":
 			newdata.emailadd = value
 			break
+		case "city":
+			newdata.city = value
+			break
+		case "province":
+			newdata.province = value
+			break
+		case "zip":
+			newdata.zip = value
+			break
+		case "tin":
+			newdata.tin = value
+			break
+		case "sssno":
+			newdata.sssno = value
+			break
+		case "philhealthno":
+			newdata.philhealthno = value
+			break
+		case "pagibigno":
+			newdata.pagibigno = value
+			break
 		default:
 			break
 	}

@@ -75,19 +75,19 @@ class index extends Component {
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>City</label>
-								    	<input ref="city" name="city" type="text" className="form-control"/>
+								    	<input ref="city" name="city" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.city}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>Province</label>
-								    	<input ref="province" name="province" type="text" className="form-control"/>
+								    	<input ref="province" name="province" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.province}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-3">
 								    	<label>Zip Code</label>
-								    	<input ref="zip" name="zip" type="text" className="form-control"/>
+								    	<input ref="zip" name="zip" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.zip}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
@@ -105,25 +105,25 @@ class index extends Component {
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>TIN</label>
-								    	<input ref="tin" name="tin" type="text" className="form-control"/>
+								    	<input ref="tin" name="tin" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.tin}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>SSS #</label>
-								    	<input ref="sssno" name="sssno" type="text" className="form-control"/>
+								    	<input ref="sssno" name="sssno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.sssno}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>PhilHealth #</label>
-								    	<input ref="philhealthno" name="philhealthno" type="text" className="form-control"/>
+								    	<input ref="philhealthno" name="philhealthno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.philhealthno}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-5">
 								    	<label>PagIbig #</label>
-								    	<input ref="pagibigno" name="pagibigno" type="text" className="form-control"/>
+								    	<input ref="pagibigno" name="pagibigno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.pagibigno}/>
 								    </div>						   
 								 </div>
 								 <div className="row form-group">							    
