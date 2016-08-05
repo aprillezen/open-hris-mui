@@ -2,7 +2,8 @@ import { load, saveFailedForm, save, valueChangeForm} from './actions'
 import Profile from './components/index'
 import { connect } from 'react-redux'
 
-const mapStateToProps=(state)=>{
+const mapStateToProps=(state)=>{	
+	console.log(state) 
 	return{
 		isFetching: state.profile.isFetching,
 		isFailed: state.profile.isFailed,

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Alert from '../../../shared/Alert'
-import SaveButton from './SaveButton'
+import SaveButton from   '../../../shared/SaveButton'
 import _ from 'lodash'
 import Notification from 'react-notification-system'
 
@@ -44,6 +44,7 @@ class index extends Component {
 			this.showNotif()
 		}
 	}
+	
 	componentDidMount(){
 		this.props.init()
 	}
@@ -128,7 +129,7 @@ class index extends Component {
 								 </div>
 								 <div className="row form-group">							    
 								    <div className="col-sm-3">
-								    	<SaveButton isSaving={isSaving} />
+								    	<SaveButton isSaving={isSaving} caption="Save Profile" />
 								    </div>
 								    <div className="col-sm-3">
 								    	

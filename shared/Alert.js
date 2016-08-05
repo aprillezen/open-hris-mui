@@ -16,7 +16,7 @@ class Alert extends React.Component{
 }
 
 Alert.propTypes = {
-	message: PropTypes.string.isRequired,
+	message: PropTypes.string,
 	hasError: React.PropTypes.bool.isRequired,	
 }
 Alert.defaultProps = { hasError: false }

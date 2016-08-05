@@ -250,3 +250,15 @@ ul.nav-style > li.active-nav > a{
   padding: 10px;
   padding-left: 20px;
 }
+
+.dialogTitle{
+  font-family: 'Open Sans Semi Bold';
+  font-size: 18px;  
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.smallForm{
+   padding-top:20px;
+   height: 160px;
+}
