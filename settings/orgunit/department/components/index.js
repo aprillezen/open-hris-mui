@@ -5,6 +5,7 @@ import { cols, colmetadata, fakedata} from './colConfig'
 import { SkyLightStateless } from 'react-skylight'
 import Alert from '../../../../shared/Alert'
 import SaveButton from   '../../../../shared/SaveButton'
+import Notification from 'react-notification-system'
 
 class index extends Component {
 
@@ -15,10 +16,21 @@ class index extends Component {
 			
 	handleSubmit(e){
 		e.preventDefault()
-		if (_.isEmpty(this.props.department.description)){
+		if (_.isEmpty(this.props.dataForm.description)){
 			this.props.failedSaved("Please enter description!")	
 			return
-		}		
+		}	
+		this.props.save(this.props.dataForm)
+
+	}
+
+	showNotif(){
+		this.refs.notify.addNotification({
+			message: 'New department successfully created.',
+			level: 'success',
+			position: 'tc',
+			autoDismiss: 3
+		})
 	}
 
 	handleCreate(e){
@@ -36,15 +48,13 @@ class index extends Component {
 
 	handleValueChanged(e){
 		this.props.valueChanged(e.target.value)
-	}
+	}	
 
-	componentWillReceiveProps(nextProps){
-		if (nextProps.isDialogOpen)	{
-			//console.log(this.refs)
+	componentWillReceiveProps(nextProps){		
+		if (nextProps.saveSuccess){
+			this.showNotif()
 		}
-
 	}
-	
 
 	render(){
 
@@ -57,10 +67,7 @@ class index extends Component {
 		      paddingRight: 30
 	    }
 
-		const { isFetching, isFetchFailed, message, data, hasError, dataForm, isDialogOpen, isSaving} = this.props 
-
-		console.log(dataForm.description)
-
+		const { isFetching, isFetchFailed, message, data, hasError, dataForm, isDialogOpen, isSaving, saveError} = this.props 
 		
 		let body= <div className="row">		 				
 						<div className="panel panel-default">
@@ -90,7 +97,7 @@ class index extends Component {
 							    	<label>Name</label>
 							    	<input ref="desc" name="desc" type="text" className="form-control" onChange={this.handleValueChanged.bind(this)} value={dataForm.description}/>
 							    </div>
-							   
+							    <Alert hasError={saveError} message={message}/>
 							 </div>	
 							 <div className="pull-right">
 								 <button className="btn btn-default" onClick={this.handleCloseModal.bind(this)}>Cancel</button>			          							 							 
@@ -98,6 +105,8 @@ class index extends Component {
 							 </div>
 				    	</form>			          			          
 			        </SkyLightStateless>	
+
+			        <Notification ref="notify"/>
 
 			  </div>
 			)

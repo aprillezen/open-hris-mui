@@ -1,31 +1,32 @@
-import { LOAD_LIST, LOAD_LIST_SUCCESS, LOAD_LIST_FAILED} from './actionTypes'
-import { LOAD_ADD_FORM, SAVE_FORM, SAVE_FAILED_FORM, SAVE_SUCCESS_FORM, CANCEL_FORM } from './actionTypes'
-import { LOAD_EDIT_FORM, LOAD_EDIT_SUCCESS_DATA, LOAD_EDIT_FAILED_DATA, FORM_VALUE_CHANGED } from './actionTypes'
+import { DEPT_LOAD_LIST, DEPT_LOAD_LIST_SUCCESS, DEPT_LOAD_LIST_FAILED} from './actionTypes'
+import { DEPT_LOAD_ADD_FORM, DEPT_SAVE_FORM, DEPT_SAVE_FAILED_FORM, DEPT_SAVE_SUCCESS_FORM, DEPT_CANCEL_FORM } from './actionTypes'
+import { DEPT_LOAD_EDIT_FORM, DEPT_LOAD_EDIT_SUCCESS_DATA, DEPT_LOAD_EDIT_FAILED_DATA, DEPT_FORM_VALUE_CHANGED } from './actionTypes'
 
 export function loadList(){	
 	return{
-		type: LOAD_LIST,
+		type: DEPT_LOAD_LIST,
 		isFetching: true,
 		isFetchFailed: false,		
 		message: '',
-		hasError: false
+		hasError: false,
+		saveSuccess: false
 	}
 }
 
 export function loadListSuccess(data){
 	return{
-		type: LOAD_LIST_SUCCESS,
+		type: DEPT_LOAD_LIST_SUCCESS,
 		isFetching:false,
 		isFetchFailed: false,	
 		message: '',
-		hasError: false,
+		hasError: false,		
 		data
 	}
 }
 
 export function loadListFailed(message){
 	return{
-		type: LOAD_LIST_FAILED,
+		type: DEPT_LOAD_LIST_FAILED,
 		isFetching: false,
 		isFetchFailed: true,
 		hasError: false,
@@ -76,32 +77,35 @@ export function fetchDepartment(){
 }
 
 
-export function loadAddForm(dataForm, title){	
+export function loadAddDeptForm(dataForm, title){	
 	return{
-		type: LOAD_ADD_FORM,
+		type: DEPT_LOAD_ADD_FORM,
 		isDialogOpen: true,
 		editMode: false,
 		title: title,		
 		isSaving: false,
-		hasError: false,		
+		hasError: false,	
+		saveError: false,	
+		saveSuccess: false,
 		dataForm
 	}
 }
 
-export function saveForm(){
+export function saveDeptForm(){
 	return{
-		type: SAVE_FORM,
+		type: DEPT_SAVE_FORM,
 		isSaving: true,
-		hasError: false		
+		saveError: false,
+		saveSuccess: false
 	}
 }
 
-export function saveDepartment(dataForm){
+export function saveDepartment(data){
 	
 	return dispatch=>{
-		dispatch(saveForm())
+		dispatch(saveDeptForm())
 		return setTimeout(()=>{
-			dispatch(saveSuccessForm())	
+			dispatch(saveSuccessDeptForm(data))	
 			//dispatch(loadListFailed(data.message))
 		}, 3000)
 		// fetch('http://52.77.70.200:8081/batch')
@@ -121,46 +125,56 @@ export function saveDepartment(dataForm){
 	}
 }
 
-export function saveSuccessForm(){
+export function saveSuccessDeptForm(data){
 	return{
-		type: SAVE_SUCCESS_FORM,
+		type: DEPT_SAVE_SUCCESS_FORM,
 		isDialogOpen: false,
 		isSaving: false,
 		hasError: false,
-		message:''
+		message:'',
+		saveError: false,
+		saveSuccess: true,
+		data
 	}
 }
 
 export function saveFailedForm(message){
 	return{
-		type: SAVE_FAILED_FORM,
+		type: DEPT_SAVE_FAILED_FORM,
 		isDialogOpen: true,
 		isSaving: false,
 		hasError: true,
+		saveError: true,
+		saveSuccess: false,
 		message
 	}
 }
 
 export function valueChangeForm(value){
 	return{
-		type: FORM_VALUE_CHANGED,	
+		type: DEPT_FORM_VALUE_CHANGED,	
 		hasError: false,	
 		message: '',
 		value
 	}
 }
 
-export function cancelForm(){
+export function cancelForm(data){
 	return{
-		type: CANCEL_FORM,
-		isDialogOpen: false		
+		type: DEPT_CANCEL_FORM,
+		isDialogOpen: false,
+		editMode: false,	
+		isSaving: false,
+		hasError: false,
+		dataForm: data,
+		saveError: false
 	}
 }
 
 
 export function loadEditForm(title){
 	return{
-		type: LOAD_EDIT_FORM,
+		type: DEPT_LOAD_EDIT_FORM,
 		isDialogOpen: true,
 		editMode: true,
 		title: title,
@@ -171,20 +185,20 @@ export function loadEditForm(title){
 	}
 }
 
-export function loadEditSuccessForm(dataForm){
+export function loadEditSuccessForm(){
 	return{
-		type: LOAD_EDIT_SUCCESS,
+		type: DEPT_SAVE_SUCCESS_FORM,
 		isDialogOpen: false,
 		isSaving: false,
 		isFetching: false,
 		hasError: false,
-		departdataFormment
+		saveError: false
 	}
 }
 
 export function loadEditFailedForm(message){
 	return{
-		type: LOAD_EDIT_FAILED_DATA,
+		type: DEPT_LOAD_EDIT_FAILED_DATA,
 		isDialogOpen: false,
 		isSaving: false,
 		isFetching: false,
