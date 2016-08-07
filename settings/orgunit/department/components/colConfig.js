@@ -1,18 +1,9 @@
 import RowLink from './RowLink'
-
-export const fakedata =  [
-				  {
-				    "id": 1,
-				    "description": "Information Technology"
-				  },
-				  {
-				    "id": 1,
-				    "description": "Accounting"
-				  }
-		]
 		
 export const cols = [ "id"]
-		
+
+// table [department] = id, description		
+
 export const colmetadata = [
 					{
 						"columnName": "id",

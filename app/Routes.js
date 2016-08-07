@@ -10,7 +10,7 @@ import Employees from './Employees'
 import Settings from './Settings'
 import Profile from '../settings/profile/container'
 import Orgunit from '../settings/orgunit'
-import Department from '../settings/orgunit/department/container'
+import {Dept_List_Container} from '../settings/orgunit/department/container'
 
 module.exports = (
   <Route component={App} >	
@@ -23,7 +23,7 @@ module.exports = (
     		<Route path='/settings/profile' component={Profile} />
     		<Route path='/settings/unit' component={Orgunit}>
             <IndexRedirect to="/settings/unit/department" />    
-            <Route path='/settings/unit/department' component={Department} />
+            <Route path='/settings/unit/department' component={Dept_List_Container} />
         </Route>  
     	</Route>  	  			  		
   	</Route>

@@ -1,4 +1,5 @@
 import index from './components/index'
+import dataForm from './components/dataForm'
 import { connect } from 'react-redux'
 import { fetchDepartment,loadAddDeptForm, cancelForm, valueChangeForm,saveFailedForm, saveDepartment} from './actions'
 
@@ -7,31 +8,27 @@ const mapStateToProps =(state)=>{
 		isFetching: state.department.isFetching,
 		isFetchFailed: state.department.isFetchFailed,
 		message: state.department.message,
-		data: state.department.data,
-		dataForm: state.department.dataForm,
-		isDialogOpen: state.department.isDialogOpen,
-		isSaving: state.department.isSaving,
+		data: state.department.data,	
 		hasError: state.department.hasError,
-		title: state.department.title,
-		saveError: state.department.saveError,
-		saveSuccess: state.department.saveSuccess
+		saveSuccess: state.department.saveSuccess,
+		deleteSuccess: state.department.deleteSuccess
 	}
 }
 
 const mapDispatchToProps=(dispatch)=>{
-	var data = {"id": '',	"description":''}	
+	var blankdata = {"id": 0,	"description":''}	
 	return{
 		fetch: ()=> {
 			dispatch(fetchDepartment())
 		},
 		add: ()=>{			
-			dispatch(loadAddDeptForm(data,'Create'))
+			dispatch(loadAddDeptForm(blankdata,'Create'))
 		},
 		cancel: ()=>{			
-			dispatch(cancelForm(data))
+			dispatch(cancelForm(blankdata))
 		},
-		save: (data)=>{			
-			dispatch(saveDepartment(data))
+		save: (data, editMode)=>{			
+			dispatch(saveDepartment(data,editMode))
 		},		
 		valueChanged: (value)=>{
 			dispatch(valueChangeForm(value))
@@ -42,7 +39,22 @@ const mapDispatchToProps=(dispatch)=>{
 	}
 }
 
-const container = connect(mapStateToProps, mapDispatchToProps)(index)
+export const Dept_List_Container = connect(mapStateToProps, mapDispatchToProps)(index)
 
-export default container
+
+const mapStateToPropsForm =(state)=>{		
+	return{						
+		data: state.department.dataForm,
+		isDialogOpen: state.department.isDialogOpen,
+		isSaving: state.department.isSaving,		
+		title: state.department.title,
+		saveError: state.department.saveError,		
+		message: state.department.message,
+		editMode: state.department.editMode
+	}
+}
+
+export const DataForm_Container = connect(mapStateToPropsForm, mapDispatchToProps)(dataForm)
+
+
 

@@ -262,3 +262,9 @@ ul.nav-style > li.active-nav > a{
    padding-top:20px;
    height: 160px;
 }
+
+.deleteDialog{
+   padding-top:20px;
+   height: 100px;
+}
+

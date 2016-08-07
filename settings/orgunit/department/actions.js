@@ -1,6 +1,7 @@
 import { DEPT_LOAD_LIST, DEPT_LOAD_LIST_SUCCESS, DEPT_LOAD_LIST_FAILED} from './actionTypes'
 import { DEPT_LOAD_ADD_FORM, DEPT_SAVE_FORM, DEPT_SAVE_FAILED_FORM, DEPT_SAVE_SUCCESS_FORM, DEPT_CANCEL_FORM } from './actionTypes'
-import { DEPT_LOAD_EDIT_FORM, DEPT_LOAD_EDIT_SUCCESS_DATA, DEPT_LOAD_EDIT_FAILED_DATA, DEPT_FORM_VALUE_CHANGED } from './actionTypes'
+import { DEPT_LOAD_EDIT_FORM, DEPT_SAVE_EDIT_SUCCESS_FORM, DEPT_FORM_VALUE_CHANGED } from './actionTypes'
+import { DEPT_LOAD_DELETE_DIALOG, DEPT_DELETE_ATTEMPT,DEPT_DELETE_FAILED, DEPT_CANCEL_DELETE, DEPT_DELETE_SUCCESS} from './actionTypes'
 
 export function loadList(){	
 	return{
@@ -69,6 +70,8 @@ export function loadAddDeptForm(dataForm, title){
 		hasError: false,	
 		saveError: false,	
 		saveSuccess: false,
+		message: '',
+		deleteSuccess: false,
 		dataForm
 	}
 }
@@ -82,8 +85,7 @@ export function saveDeptForm(){
 	}
 }
 
-export function saveDepartment(data){
-
+export function saveDepartment(data,editMode){
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -91,31 +93,34 @@ export function saveDepartment(data){
 	        	 'Content-Type': 'application/json',
 		    },
 		    body: JSON.stringify({
-		    	id : 0,
-		    	desc: data.description		   
+		    	id : data.id,
+		    	description: data.description	   
 		    })
   		}	
 
+  	let url = 'http://localhost:8081/department/add'
+  	if (editMode==true){
+  		url='http://localhost:8081/department/update'
+  	}
 	return dispatch=>{
-		dispatch(saveDeptForm())
-		// return setTimeout(()=>{
-		// 	dispatch(saveSuccessDeptForm(data))	
-		// 	//dispatch(loadListFailed(data.message))
-		// }, 3000)
-		fetch('http://localhost:8081/department/add', dataForm)
+		dispatch(saveDeptForm())		
+		fetch(url, dataForm)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{
-		 	if (parseInt(ret.status)==1){
-		 		console.log(ret.data)
-				dispatch(saveSuccessDeptForm(ret.data))	
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		if (editMode==true) {
+		 			dispatch(saveEditSuccessDeptForm(data))				 			
+		 		}else{		 			
+		 			dispatch(saveSuccessDeptForm(ret.data))		
+		 		}				
 		 	}else{
-		 		dispatch(saveFailedForm(data.message))
+		 		dispatch(saveFailedForm(ret.message))		 			 		
 		 	}
 		 	
 		 })
-		.catch(error => { 
-			dispatch(saveFailedForm('Database error'))			
+		.catch(error => { 					
+			dispatch(saveFailedForm(error))			
 		})
 	}
 }
@@ -129,6 +134,7 @@ export function saveSuccessDeptForm(data){
 		message:'',
 		saveError: false,
 		saveSuccess: true,
+		editMode: false,
 		data
 	}
 }
@@ -168,37 +174,109 @@ export function cancelForm(data){
 }
 
 
-export function loadEditForm(title){
+export function loadEditForm(dataForm, title){
 	return{
 		type: DEPT_LOAD_EDIT_FORM,
 		isDialogOpen: true,
 		editMode: true,
-		title: title,
-		isFetching: true,
+		title: title,		
 		isSaving: false,
-		hasError: false,
+		hasError: false,	
+		saveError: false,	
+		saveSuccess: false,
 		message: '',
+		dataForm
 	}
 }
 
-export function loadEditSuccessForm(){
+export function saveEditSuccessDeptForm(data){
 	return{
-		type: DEPT_SAVE_SUCCESS_FORM,
+		type: DEPT_SAVE_EDIT_SUCCESS_FORM,
 		isDialogOpen: false,
 		isSaving: false,
-		isFetching: false,
 		hasError: false,
-		saveError: false
+		message:'',
+		saveError: false,
+		saveSuccess: true,
+		editMode: false,
+		data
 	}
 }
 
-export function loadEditFailedForm(message){
+export function loadDeleteDialog(id, deletemsg){
 	return{
-		type: DEPT_LOAD_EDIT_FAILED_DATA,
-		isDialogOpen: false,
-		isSaving: false,
-		isFetching: false,
-		hasError: true,
+		type: DEPT_LOAD_DELETE_DIALOG,
+		isDeleteDialogOpen: true,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteErrorMsg:'',
+		deleteSuccess: false,
+		deleteId: id,
+		saveSuccess: false,
+		deletemsg
+	}
+}
+export function deleteAttempt(){
+	return{
+		type: DEPT_DELETE_ATTEMPT,
+		isDeleting: true,
+		deleteHasError: false,
+		deleteSuccess: false,
+		deleteErrorMsg:''
+		
+	}
+}
+export function deleteFailed(message){
+	return{
+		type: DEPT_DELETE_FAILED,
+		isDeleting: false,
+		deleteHasError: true,	
+		deleteSuccess: false,
 		message
 	}
 }
+
+export function cancelDelete(){
+	return{
+		type: DEPT_CANCEL_DELETE,
+		isDeleteDialogOpen: false,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteSuccess: false,
+		deleteErrorMsg:'',
+		deleteId: 0
+	}
+}
+
+export function deleteSuccess(id){
+	return{
+		type: DEPT_DELETE_SUCCESS,
+		isDeleteDialogOpen: false,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteSuccess: true,
+		deleteErrorMsg:'',
+		deleteId: id
+	}
+}
+
+export function deleteDepartment(id){
+	return dispatch=>{
+		dispatch(deleteAttempt())		
+		fetch('http://localhost:8081/department/delete/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(deleteSuccess(id))	
+		 	}else{
+		 		dispatch(deleteFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(deleteFailed('Database error'))			
+		})
+	}
+}
+
+
