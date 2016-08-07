@@ -35,44 +35,26 @@ export function loadListFailed(message){
 }
 
 
-export function fetchDepartment(){
-	let fakedata =  [
-				  {
-				    "id": 1,
-				    "description": "Information Technology"
-				  },
-				  {
-				    "id": 2,
-				    "description": "Accounting"
-				  },{
-				    "id": 3,
-				    "description": "Sales"
-				  },
-				  {
-				    "id": 4,
-				    "description": "Marketing"
-				  }
-		]
+export function fetchDepartment(){	
 	return dispatch=>{
 		dispatch(loadList())
-		return setTimeout(()=>{
-			dispatch(loadListSuccess(fakedata))	
-			//dispatch(loadListFailed("test error"))
-		}, 1000)
-		// fetch('http://52.77.70.200:8081/batch')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}
-		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadListSuccess(fakedata))	
+		// 	//dispatch(loadListFailed("test error"))
+		// }, 1000)
+		fetch('http://localhost:8081/department')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(loadListSuccess(ret.data))	
+		 	}else{
+		 		dispatch(loadListFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadListFailed('Database error'))			
+		})
 	}
 }
 
@@ -101,27 +83,40 @@ export function saveDeptForm(){
 }
 
 export function saveDepartment(data){
-	
+
+	let dataForm = {
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify({
+		    	id : 0,
+		    	desc: data.description		   
+		    })
+  		}	
+
 	return dispatch=>{
 		dispatch(saveDeptForm())
-		return setTimeout(()=>{
-			dispatch(saveSuccessDeptForm(data))	
-			//dispatch(loadListFailed(data.message))
-		}, 3000)
-		// fetch('http://52.77.70.200:8081/batch')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}
+		// return setTimeout(()=>{
+		// 	dispatch(saveSuccessDeptForm(data))	
+		// 	//dispatch(loadListFailed(data.message))
+		// }, 3000)
+		fetch('http://localhost:8081/department/add', dataForm)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{
+		 	if (parseInt(ret.status)==1){
+		 		console.log(ret.data)
+				dispatch(saveSuccessDeptForm(ret.data))	
+		 	}else{
+		 		dispatch(saveFailedForm(data.message))
+		 	}
 		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		 })
+		.catch(error => { 
+			dispatch(saveFailedForm('Database error'))			
+		})
 	}
 }
 
@@ -154,6 +149,7 @@ export function valueChangeForm(value){
 	return{
 		type: DEPT_FORM_VALUE_CHANGED,	
 		hasError: false,	
+		saveError: false,
 		message: '',
 		value
 	}

@@ -27,8 +27,7 @@ const mapDispatchToProps=(dispatch)=>{
 		add: ()=>{			
 			dispatch(loadAddDeptForm(data,'Create'))
 		},
-		cancel: ()=>{
-			data.id='9'
+		cancel: ()=>{			
 			dispatch(cancelForm(data))
 		},
 		save: (data)=>{			

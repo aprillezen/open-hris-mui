@@ -94,7 +94,8 @@ const departmentlistreducer = (state = initialstate, action)=>{
 		case DEPT_FORM_VALUE_CHANGED:
 			return Object.assign({}, state,{	
 				hasError: action.hasError,	
-				message: action.message,											
+				message: action.message,			
+				saveError: action.saveError,								
 				dataForm: fieldvalues(state.dataForm, action.value)
 			})
 		default:

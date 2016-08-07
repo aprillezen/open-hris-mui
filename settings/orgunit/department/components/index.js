@@ -67,8 +67,8 @@ class index extends Component {
 		      paddingRight: 30
 	    }
 
-		const { isFetching, isFetchFailed, message, data, hasError, dataForm, isDialogOpen, isSaving, saveError} = this.props 
-		
+		const { isFetching, isFetchFailed, message, data, hasError, dataForm, isDialogOpen, isSaving, saveError} = this.props 				
+
 		let body= <div className="row">		 				
 						<div className="panel panel-default">
 	  						<div className="panel-heading">&nbsp;<button className="btn btn-success" onClick={this.handleCreate.bind(this)}>Create</button></div>
