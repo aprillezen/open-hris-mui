@@ -11,7 +11,8 @@ const mapStateToProps =(state)=>{
 		data: state.department.data,	
 		hasError: state.department.hasError,
 		saveSuccess: state.department.saveSuccess,
-		deleteSuccess: state.department.deleteSuccess
+		deleteSuccess: state.department.deleteSuccess,
+		saveEditSuccess: state.department.saveEditSuccess
 	}
 }
 

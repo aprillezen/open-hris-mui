@@ -268,3 +268,11 @@ ul.nav-style > li.active-nav > a{
    height: 100px;
 }
 
+form h3 {
+  font-family: 'Open Sans Bold';
+  font-size: 22px;  
+  color: #0E4D69;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  margin-top: 0px;
+}

@@ -10,7 +10,20 @@ export function loadList(){
 		isFetchFailed: false,		
 		message: '',
 		hasError: false,
-		saveSuccess: false
+		saveSuccess: false,
+		isDialogOpen: false,
+		editMode: false,
+		isSaving: false,		
+		title: '',
+		saveError: false,	
+		saveEditSuccess: false,
+		isDeleteDialogOpen: false,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteErrorMsg:'',
+		deletemsg:'',
+		deleteSuccess: false,
+		deleteId:0
 	}
 }
 
@@ -43,7 +56,7 @@ export function fetchDepartment(){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://localhost:8081/department')
+		fetch('http://52.77.70.200:8081/department')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -72,6 +85,7 @@ export function loadAddDeptForm(dataForm, title){
 		saveSuccess: false,
 		message: '',
 		deleteSuccess: false,
+		saveEditSuccess: false,
 		dataForm
 	}
 }
@@ -98,9 +112,9 @@ export function saveDepartment(data,editMode){
 		    })
   		}	
 
-  	let url = 'http://localhost:8081/department/add'
+  	let url = 'http://52.77.70.200:8081/department/add'
   	if (editMode==true){
-  		url='http://localhost:8081/department/update'
+  		url='http://52.77.70.200:8081/department/update'
   	}
 	return dispatch=>{
 		dispatch(saveDeptForm())		
@@ -134,6 +148,7 @@ export function saveSuccessDeptForm(data){
 		message:'',
 		saveError: false,
 		saveSuccess: true,
+		saveEditSuccess: false,
 		editMode: false,
 		data
 	}
@@ -184,6 +199,8 @@ export function loadEditForm(dataForm, title){
 		hasError: false,	
 		saveError: false,	
 		saveSuccess: false,
+		saveEditSuccess: false,
+		deleteSuccess: false,
 		message: '',
 		dataForm
 	}
@@ -197,7 +214,9 @@ export function saveEditSuccessDeptForm(data){
 		hasError: false,
 		message:'',
 		saveError: false,
-		saveSuccess: true,
+		saveSuccess: false,
+		saveEditSuccess: true,
+		deleteSuccess: false,
 		editMode: false,
 		data
 	}
@@ -213,6 +232,7 @@ export function loadDeleteDialog(id, deletemsg){
 		deleteSuccess: false,
 		deleteId: id,
 		saveSuccess: false,
+		saveEditSuccess: false,
 		deletemsg
 	}
 }
@@ -256,6 +276,9 @@ export function deleteSuccess(id){
 		deleteHasError: false,
 		deleteSuccess: true,
 		deleteErrorMsg:'',
+		deleteSuccess: true,
+		saveEditSuccess: false,
+		saveSuccess: false,
 		deleteId: id
 	}
 }
@@ -263,7 +286,7 @@ export function deleteSuccess(id){
 export function deleteDepartment(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://localhost:8081/department/delete/'+id)
+		fetch('http://52.77.70.200:8081/department/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

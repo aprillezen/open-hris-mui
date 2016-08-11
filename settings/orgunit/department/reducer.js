@@ -17,6 +17,7 @@ const initialstate = {
 	title: '',
 	saveError: false,
 	saveSuccess: false,
+	saveEditSuccess: false,
 	isDeleteDialogOpen: false,
 	isDeleting: false,
 	deleteHasError: false,
@@ -34,7 +35,21 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				message: action.message,
-				saveSuccess: action.saveSuccess
+				saveSuccess: action.saveSuccess,
+				hasError: false,
+				isDialogOpen: false,
+				editMode: false,
+				isSaving: false,		
+				title: '',
+				saveError: false,	
+				saveEditSuccess: false,
+				isDeleteDialogOpen: false,
+				isDeleting: false,
+				deleteHasError: false,
+				deleteErrorMsg:'',
+				deletemsg:'',
+				deleteSuccess: false,
+				deleteId:0
 
 			})
 		case DEPT_LOAD_LIST_SUCCESS:
@@ -60,8 +75,10 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				hasError: action.hasError,		
 				dataForm: action.dataForm,
 				saveError: action.saveError,
+				saveSuccess: action.saveSuccess,
 				message: action.message,
-				saveSuccess: action.saveSuccess	
+				deleteSuccess: action.deleteSuccess,
+				saveEditSuccess: action.saveEditSuccess
 			})
 		case DEPT_SAVE_FORM:
 			return Object.assign({}, state,{												
@@ -85,7 +102,8 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				saveError: action.saveError,
 				dataForm: dataForm_initvalue,
 				saveSuccess: action.saveSuccess,
-				data: [ ...state.data, action.data]
+				data: [ ...state.data, action.data],		
+				saveEditSuccess: action.saveEditSuccess
 			})
 		case DEPT_CANCEL_FORM:
 			return Object.assign({}, state,{								
@@ -104,6 +122,8 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				hasError: action.hasError,	
 				saveError: action.saveError,	
 				saveSuccess: action.saveSuccess,
+				saveEditSuccess: action.saveEditSuccess,
+				deleteSuccess: action.deleteSuccess,
 				message: action.message,
 				dataForm: action.dataForm			
 			})		
@@ -121,7 +141,9 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				saveError: action.saveError,
 				dataForm: dataForm_initvalue,
 				saveSuccess: action.saveSuccess,
-				data: updateData(state.data, action.data)
+				data: updateData(state.data, action.data),
+				saveEditSuccess: action.saveEditSuccess,
+				deleteSuccess: action.deleteSuccess
 			})
 		case DEPT_LOAD_DELETE_DIALOG:			
 			return Object.assign({}, state,{								
@@ -131,7 +153,9 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				deleteErrorMsg: action.deleteErrorMsg,
 				deleteSuccess: action.deleteSuccess,
 				deletemsg: action.deletemsg,
-				deleteId: action.deleteId
+				deleteId: action.deleteId,
+				saveSuccess: action.saveSuccess,
+				saveEditSuccess: action.saveEditSuccess
 			})
 		case DEPT_DELETE_ATTEMPT:			
 			return Object.assign({}, state,{												
@@ -164,7 +188,10 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				deleteSuccess: action.deleteSuccess,
 				deleteErrorMsg: action.deleteErrorMsg,
 				deleteId: action.deleteId,
-				data: deleteData(state.data, action.deleteId)
+				saveSuccess: action.saveSuccess,
+				data: deleteData(state.data, action.deleteId),
+				saveSuccess: action.saveSuccess,
+				saveEditSuccess: action.saveEditSuccess,
 			})
 		default:
 			return state

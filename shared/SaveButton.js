@@ -9,13 +9,14 @@ class SaveButton extends React.Component{
 				</button>
 			)
 		}else{
-			return <button type="submit" className="btn btn-success"><strong>{this.props.caption}</strong></button>
+			return <button type="submit" className={this.props.sStyle}><strong>{this.props.caption}</strong></button>
 		}
 	}
 }
 SaveButton.propTypes = {
 	caption: React.PropTypes.string,
 	isSaving: React.PropTypes.bool.isRequired,	
+	sStyle: React.PropTypes.string
 }
-SaveButton.defaultProps = { isSaving: false }
+SaveButton.defaultProps = { isSaving: false, sStyle:'btn btn-success' }
 export default SaveButton

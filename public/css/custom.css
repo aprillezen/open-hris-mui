@@ -410,7 +410,20 @@ a.list-group-item {
     font-size:18px;
 }
 .panel-heading{
-	padding: 8px;
+	padding: 8px;	
+}
+
+.panel-heading h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 4px;
+    padding-left:10px;
+    font-family:'Open Sans Bold';
+    font-size:16px;    
+    color: #000;    
 }
 .panel-body{
 	padding: 2px;
@@ -428,6 +441,11 @@ label{
 .nav-tabs > li.active > a:focus{
 	font-family:'Open Sans Bold';
 }
+
+.form-group{
+	margin-bottom: 10px;
+}
+
 /*---------------
  GRIDDLE STYLES
 ---------------*/

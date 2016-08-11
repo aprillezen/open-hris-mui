@@ -28,11 +28,13 @@ class index extends Component {
 
 	componentWillReceiveProps(nextProps){		
 		if (nextProps.saveSuccess){
-			this.showNotif('New department successfully created')
+			this.showNotif('New department successfully created.')
+		}else if (nextProps.deleteSuccess){			
+			this.showNotif('Department successfully deleted.')
+		}else if (nextProps.saveEditSuccess){			
+			this.showNotif('Department successfully updated.')
 		}
-		if (nextProps.deleteSuccess){
-			this.showNotif('Department successfully deleted')
-		}
+		
 	}
 
 	render(){		

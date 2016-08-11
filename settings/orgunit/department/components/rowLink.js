@@ -28,7 +28,7 @@ class RowLink extends Component{
 		//console.log(this.props.deleteId)
 		this.props.dispatch(deleteDepartment(this.props.deleteId))
 	}
-
+	
 	render(){
 
 		var deleteDialog = {		      		    

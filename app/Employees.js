@@ -1,9 +1,15 @@
 import React,{Component} from 'react'
-import EmployeesContainer from '../employees/container'
 
 class Employees extends Component{
 	render(){
-		return(<EmployeesContainer/>)
+		return(
+			<div className="container">			
+				<div className="row">
+				  {this.props.children}	
+			   </div>
+			</div>
+			)
+
 	}
 }
 
