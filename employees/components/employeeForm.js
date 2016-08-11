@@ -25,37 +25,44 @@ class employeeForm extends Component{
 					</div>
 					<div className="panel-body">
 						<br/>
+
+						<div className="col-md-3">
+					    	
+					    	<div className="well profile-photo"></div>
+					    </div>
 						
-						<div className="col-md-8">
+						
+						<div className="col-md-6">
 							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-								 <h3>Personal Information</h3>								 
+								 <h3>Personal Information</h3>	
+								 <hr/>							 
 								 <div className="form-group">	
 								 	<label className="col-sm-3 control-label">Employee Id </label>						    
-								    <div className="col-sm-3">								    	
+								    <div className="col-sm-4">								    	
 								    	<input ref="employeeId" name="employeeId" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">		
 									<label className="col-sm-3 control-label">First Name</label>						    					    
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="firstname" name="firstname" type="text" className="form-control"/>
 								    </div>								  
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Last Name</label>							    								   
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="lastname" name="lastname" type="text" className="form-control"/>
 								    </div>								    
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Middle Name</label>							    								   
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="middlename" name="middlename" type="text" className="form-control"/>
 								    </div>
 								 </div>
 								  <div className="form-group">	
 								    <label className="col-sm-3 control-label">Birthdate</label>							    								   						    
-								    <div className="col-sm-3">								    	
+								    <div className="col-sm-5">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
@@ -93,58 +100,61 @@ class employeeForm extends Component{
 									    </div>									   
 									 </div>						   
 								 </div>
+								 <br/>
 								 <h3>Contact Information</h3>								 
 								 <div className="form-group">	
 								 	<label className="col-sm-3 control-label">Address</label>						    
-								    <div className="col-sm-6">								    	
-								    	<textarea style={textareaStyle} className="form-control" rows="3"></textarea>
+								    <div className="col-sm-7">								    	
+								    	<textarea style={textareaStyle} className="form-control" rows="2"></textarea>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">City</label>							    								   						    
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								<div className="form-group">	
 								    <label className="col-sm-3 control-label">Province</label>							    								   						    
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Zip</label>							    								   						    
-								    <div className="col-sm-2">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Home Phone</label>							    								   						    
-								    <div className="col-sm-3">								    	
+								    <div className="col-sm-5">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Mobile Phone</label>							    								   						    
-								    <div className="col-sm-3">								    	
+								    <div className="col-sm-5">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">Email</label>							    								   						    
-								    <div className="col-sm-4">								    	
+								    <div className="col-sm-6">								    	
 								    	<input ref="birthdate" name="birthdate" type="text" className="form-control"/>
 								    </div>								   
 								 </div>
 								  <div className="row form-group">							    
 								    <div className="col-sm-3">								    	
 								    </div>
-								    <div className="col-sm-4">								        
+								    <div className="col-sm-6">								        
 								    	<SaveButton isSaving={false} sStyle="btn btn-success btn-lg" caption="Save" />
 								    </div>
 								 </div>
 							</form>
 					    </div>
+
+					    <div className="col-md-2"></div>
 					</div>						 	
 				</div>	
 
