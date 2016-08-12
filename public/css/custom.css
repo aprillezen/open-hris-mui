@@ -428,6 +428,9 @@ a.list-group-item {
 .panel-body{
 	padding: 2px;
 }
+.panel-body hr{
+	margin-top: -10px;
+}
 
 label{
 	font-family:'Open Sans Bold';

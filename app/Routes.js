@@ -22,7 +22,7 @@ module.exports = (
     	<Route path='/employees' component={Employees}>
         <IndexRedirect to="/employees/list" />
         <Route path='/employees/list' component={EmployeesListContainer} />
-        <Route path='/employees/add' component={EmployeeFormContainer} />
+        <Route path='/employees/:id' component={EmployeeFormContainer} />
       </Route>
     	<Route path='/settings' component={Settings}>
     		<IndexRedirect to="/settings/profile" />	 	

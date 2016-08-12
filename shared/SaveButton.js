@@ -4,7 +4,7 @@ class SaveButton extends React.Component{
 	render(){
 		if (this.props.isSaving){
 			return(
-				<button type="submit" className="btn btn-success" disabled="disabled">
+				<button type="submit" className={this.props.sStyle} disabled="disabled">
 					<i className="fa fa-spinner fa-spin fa-1x fa-fw"></i> <strong>Saving...</strong>
 				</button>
 			)
