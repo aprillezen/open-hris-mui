@@ -2,7 +2,8 @@ import EmployeesIndex from './components/index'
 import EmployeeForm from './components/employeeForm'
 import { connect } from 'react-redux'
 import { load, loadEmployeeForm, valueChangeEmployeeForm, 
-		 civilStatus_ValueChanged,gender_ValueChanged, saveDB, saveFailedEmployeeForm} from './actions'
+		 civilStatus_ValueChanged,gender_ValueChanged,
+		 saveDB, saveFailedEmployeeForm, birthdate_ValueChanged} from './actions'
 
 const mapStateToProps = (state)=>{
 	return { 
@@ -64,7 +65,11 @@ const mapDispatchToPropsForm = (dispatch)=>{
 		},
 		saveFailed: (message)=>{
 			dispatch(saveFailedEmployeeForm(message))
+		},
+		birthChanged: (value)=>{			
+			dispatch(birthdate_ValueChanged(value))
 		}
+
 	}
 }
 

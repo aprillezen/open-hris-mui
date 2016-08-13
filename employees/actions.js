@@ -10,8 +10,10 @@ import { EMP_LOAD_FORM,
 		 EMP_SAVE_SUCCESS_FORM,
 		 EMP_FORM_CIVIL_CHANGED,
 		 EMP_FORM_GENDER_CHANGED,
+		 EMP_FORM_BIRTHDATE_CHANGED,
 		 EMP_FORM_VALUE_CHANGED} from './actionTypes'
 
+import moment from 'moment'
 
 export function loadEmployeeList(){
 	return{
@@ -41,39 +43,43 @@ export function load(){
      const fakedata =  [
 				  {
 				    "id": 0,
-				    "employeeid": "00001",
-				    "fullname": "Kaissieh Louella Abion"				    
+				    "employeeId": "00001",
+				    "fname": "Kaissieh Louella",
+				    "lname": "Abion"				    
 				  },
 				  {
 				     "id": 1,
-				     "employeeid": "00002",
-				     "fullname": "Aprille Abion"
+				     "employeeId": "00002",
+				     "fname": "Shiela",
+				     "lname": "Abion"	
 				  },
 				   {
 				     "id": 2,
-				     "employeeid": "00003",
-				     "fullname": "Shiela Abion"
+				     "employeeId": "00003",
+				     "fname": "Aprille",
+				     "lname": "Abion"	
 				  }
 		]
 	return dispatch=>{
 		dispatch(loadEmployeeList())
-		return setTimeout(()=>{
-			dispatch(loadSucessEmployeeList(fakedata))	
-			//dispatch(loadFailedEmployeeList("test error"))
-		}, 2000)
-		// fetch('http://52.77.70.200:8081/department')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadSucessEmployeeList(fakedata))	
+		// 	//dispatch(loadFailedEmployeeList("test error"))
+		// }, 2000)
+
+		fetch('http://localhost:8081/employee')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(loadSucessEmployeeList(ret.data))	
+		 	}else{
+		 		dispatch(loadFailedEmployeeList(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFailedEmployeeList('Database error'))			
+		})
 	}
 }
 
@@ -106,27 +112,50 @@ export function gender_ValueChanged(value){
 		value
 	}
 }
+export function birthdate_ValueChanged(value){	
+	return{
+		type: EMP_FORM_BIRTHDATE_CHANGED,		
+		value
+	}
+}
+export function saveDB(data, editMode){
 
-export function saveDB(){
+	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
+	let url = 'http://localhost:8081/employee/add'
+	let dataForm = {
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify(data)
+  		}	
+  	data.birthdate = moment(data.birthdate,'MM/DD/YYYY')
 	return dispatch=>{
 		dispatch(savingEmployeeForm())
-		return setTimeout(()=>{
-			dispatch(saveSuccessEmployeeForm())	
-			//dispatch(loadFailedEmployeeList("test error"))
-		}, 2000)
-		// fetch('http://52.77.70.200:8081/department')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{			
+		// 	dispatch(saveSuccessEmployeeForm(data))
+		// 	//dispatch(loadFailedEmployeeList("test error"))
+		// }, 2000)
+		fetch(url, dataForm)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		if (editMode==true) {
+		 			//dispatch(saveEditSuccessDeptForm(data))				 			
+		 		}else{		 		 			
+		 			dispatch(saveSuccessEmployeeForm(data))		
+		 		}				
+		 	}else{
+		 		dispatch(saveFailedEmployeeForm(ret.message))		 			 		
+		 	}
+		 	
+		 })
+		.catch(error => { 					
+			dispatch(saveFailedEmployeeForm(error))			
+		})
+		
 	}
 }
 
@@ -151,13 +180,14 @@ export function saveFailedEmployeeForm(message){
 	}
 }
 
-export function saveSuccessEmployeeForm(){
+export function saveSuccessEmployeeForm(data){
 	return{
 		type: EMP_SAVE_SUCCESS_FORM,
 		isSaving: false,		
 		hasError: false,
 		saveSuccess: true,
-		saveError: false		
+		saveError: false,
+		data	
 	}
 }
 

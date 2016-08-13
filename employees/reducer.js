@@ -10,9 +10,11 @@ import { EMP_LOAD_FORM,
 		 EMP_SAVE_SUCCESS_FORM,
 		 EMP_FORM_CIVIL_CHANGED,
 		 EMP_FORM_GENDER_CHANGED,
+		 EMP_FORM_BIRTHDATE_CHANGED,
 		 EMP_FORM_VALUE_CHANGED} from './actionTypes'
 
 import _ from 'lodash'
+import moment from 'moment'
 
 const initialState = {
 	isFetching: true,
@@ -59,7 +61,7 @@ const dataForm_initvalue = {
 								"fname":'',
 								"lname":'',
 								"mname":'',
-								"birthdate":'',
+								"birthdate": null,
 								"civilstat":"0",
 								"gender":'0',
 								"address":'',
@@ -141,6 +143,15 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				errorMessage: '',
 				dataForm : genderstatus(state.dataForm, action.value)
 			})
+		case EMP_FORM_BIRTHDATE_CHANGED:			
+			return Object.assign({}, state,{
+				isSaving: false,				
+				hasError: false,
+				saveSuccess: false,
+				saveError: false,
+				errorMessage: '',
+				dataForm : birthdatestatus(state.dataForm, action.value)
+			})
 		case EMP_SAVE_FORM:			
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,				
@@ -163,12 +174,19 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				hasError: action.hasError,
 				saveSuccess: action.saveSuccess,
 				saveError: action.saveError,
-				errorMessage: ''
+				errorMessage: '',
+				dataForm: action.data
 			})
 		default:
 			return state
 
 	}	
+}
+
+const birthdatestatus = (dataForm, value)=>{
+	return Object.assign({}, dataForm, {
+		birthdate: value
+	})
 }
 
 const genderstatus = (dataForm, value)=>{
@@ -192,11 +210,7 @@ const fieldvalues=(data, field, value)=>{
 		case "lname": newdata.lname = value
 			break
 		case "mname": newdata.mname = value
-			break
-		case "birthdate": newdata.birthdate = value
-			break		
-		case "gender": newdata.gender = value
-			break
+			break				
 		case "address": newdata.address = value
 			break
 		case "city": newdata.city = value

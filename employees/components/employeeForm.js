@@ -4,6 +4,8 @@ import { Link } from 'react-router'
 import SaveButton from   '../../shared/SaveButton'
 import Alert from '../../shared/Alert'
 import Notification from 'react-notification-system'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 class employeeForm extends Component{
 
@@ -27,11 +29,15 @@ class employeeForm extends Component{
 		this.props.genderChanged(e.target.value)
 	}
 
+	birthdateChanged(e){		
+		this.props.birthChanged(e)
+	}
+
 	handleSubmit(e){
 		const invalid_msg="Please enter required (*) fields."
 		e.preventDefault()
 		if (_.isEmpty(this.props.dataForm.employeeId) || _.isEmpty(this.props.dataForm.fname) || 
-			_.isEmpty(this.props.dataForm.lname) || _.isEmpty(this.props.dataForm.mname)){			
+			_.isEmpty(this.props.dataForm.lname) || _.isEmpty(this.props.dataForm.mname) || _.isEmpty(this.props.dataForm.birthdate)){			
 			this.props.saveFailed(invalid_msg)
 			ReactDOM.findDOMNode(this).scrollIntoView()
 			return
@@ -60,6 +66,7 @@ class employeeForm extends Component{
 		  width: '100%'
 		}
 		const { title, dataForm,hasError, errorMessage, isSaving} = this.props	
+
 		return(
 			<div>
 				<br/>
@@ -107,7 +114,8 @@ class employeeForm extends Component{
 								  <div className="form-group">	
 								    <label className="col-sm-3 control-label">Birthdate<sup className="required_asterisk">*</sup></label>							    								   						    
 								    <div className="col-sm-5">								    	
-								    	<input ref="birthdate" name="birthdate" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={dataForm.birthdate}/>
+								    	
+								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={dataForm.birthdate} onChange={this.birthdateChanged.bind(this)}/>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
@@ -150,7 +158,7 @@ class employeeForm extends Component{
 								 <div className="form-group">	
 								 	<label className="col-sm-3 control-label">Address</label>						    
 								    <div className="col-sm-7">								    	
-								    	<textarea ref="address" name="address" style={textareaStyle} className="form-control" rows="2" onChange={this.onValueChanged.bind(this)} defaultValue={dataForm.birthdate}></textarea>
+								    	<textarea ref="address" name="address" style={textareaStyle} className="form-control" rows="2" onChange={this.onValueChanged.bind(this)} defaultValue={dataForm.address}></textarea>
 								    </div>								   
 								 </div>
 								 <div className="form-group">	
@@ -210,3 +218,9 @@ class employeeForm extends Component{
 }
 
 export default employeeForm
+
+
+
+//<input ref="birthdate" name="birthdate" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={dataForm.birthdate}/>
+
+

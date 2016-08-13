@@ -56,7 +56,7 @@ export function fetchDepartment(){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://52.77.70.200:8081/department')
+		fetch('http://localhost:8081/department')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -112,9 +112,9 @@ export function saveDepartment(data,editMode){
 		    })
   		}	
 
-  	let url = 'http://52.77.70.200:8081/department/add'
+  	let url = 'http://localhost:8081/department/add'
   	if (editMode==true){
-  		url='http://52.77.70.200:8081/department/update'
+  		url='http://localhost:8081/department/update'
   	}
 	return dispatch=>{
 		dispatch(saveDeptForm())		
@@ -286,7 +286,7 @@ export function deleteSuccess(id){
 export function deleteDepartment(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://52.77.70.200:8081/department/delete/'+id)
+		fetch('http://localhost:8081/department/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
