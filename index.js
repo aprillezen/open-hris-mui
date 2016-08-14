@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk'
 import loginreducer from './login/reducer'
 import profilereducer from './settings/profile/reducer'
 import departmentlistreducer from './settings/orgunit/department/reducer'
-import { emp_list_reducer,emp_form_reducer } from './employees/reducer'
+import { emp_list_reducer,emp_form_reducer, emp_general_reducer } from './employees/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
 	department: departmentlistreducer,
 	employees: emp_list_reducer,
 	employeeForm: emp_form_reducer,
+	employeeGeneral: emp_general_reducer,
 	login: loginreducer,
 	profile: profilereducer,
 	routing: routerReducer

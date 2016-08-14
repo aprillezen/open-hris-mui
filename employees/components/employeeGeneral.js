@@ -1,63 +1,61 @@
 import React, {Component} from 'react'
+import General_PI from './general_pi_view'
+import General_CI from './general_ci_view'
+
+import Alert from '../../shared/Alert'
+import {EmployeeGeneralEditContainer} from '../container'
+import {EmployeeGeneralEditCIContainer} from '../container'
+
 
 class EmployeeGeneral extends Component{
 
+	constructor(props){
+		super(props)
+		this.props.load(props.params.id)
+	}
+
+	onEdit(e){
+		this.props.loadGeneralEdit()
+	}
+
+	onEditCI(e){
+		this.props.loadGeneralEditCI()
+	}
+
 	render(){
-		return(
-				<div className="col-md-12">
-					<form className="form-horizontal">
-						 <h3>Personal Information</h3>	
-						 <hr/>	
-				 		<div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Employee Id</label>					    
-						    <div className="col-sm-5">								    	
-						    	<label className="field_value">000003</label>
-						    </div>	
-						    <div className="col-sm-3">								    	
-						    	<button type="button" className="btn btn-default pull-right"><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
-						    </div>								   
-						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">First Name</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">Dondon</label>
-						    </div>								   
-						 </div>	
-						  <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Last Name</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">Abion</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Middle Name</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">Tuyay</label>
-						    </div>								   
-						 </div>		
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Birthdate</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">October 19, 1979</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Civil Status</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">Married</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Gender</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">Male</label>
-						    </div>								   
-						 </div>						 						
-					</form>
-			    </div>
+		const { data,isFetching, isFetchFailed, hasError, errorMessage, isGeneralEdit, isGeneralEditCI} = this.props
+
+		let body = <General_PI data={data} onEdit={this.onEdit.bind(this)} />
+		let content =  <General_CI data={data} onEdit={this.onEditCI.bind(this)}/>
+
+
+		if (isGeneralEdit){
+			body = <EmployeeGeneralEditContainer/>
+		}else{
+			if (isFetching){
+			body = <div>
+        			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
+        		   </div>
+			}
+
+			if (isFetchFailed){
+				body = <Alert hasError={isFetchFailed} message={errorMessage}/>
+			}
+		}
+		
+		if (isGeneralEditCI){
+			content = <EmployeeGeneralEditCIContainer/>
+		}
+
+		return(<div>
+				  {body}	
+				  <br/>	
+				  {content}
+				</div>
 			)
 	}
 }
 
 
 export default EmployeeGeneral
+

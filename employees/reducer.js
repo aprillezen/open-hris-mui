@@ -1,6 +1,4 @@
 import * as ACT from './actionTypes'
-
-
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -90,7 +88,6 @@ const checkData = (data)=>{
 	}
 	return data
 }
-
 export const emp_form_reducer = (state = employee_initialState, action)=>{	
 	switch(action.type){
 		case ACT.EMP_LOAD_FORM:
@@ -176,13 +173,11 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 
 	}	
 }
-
 const birthdatestatus = (dataForm, value)=>{
 	return Object.assign({}, dataForm, {
 		birthdate: value
 	})
 }
-
 const genderstatus = (dataForm, value)=>{
 	return Object.assign({}, dataForm, {
 		gender: value
@@ -193,7 +188,6 @@ const civilstatus = (dataForm, value)=>{
 		civilstat: value
 	})
 }
-
 const fieldvalues=(data, field, value)=>{
 	var newdata = Object.assign({}, data)
 	switch(field){
@@ -223,32 +217,109 @@ const fieldvalues=(data, field, value)=>{
 			break
 	}
 	return newdata
-
 }
+
 
 // ********************************************************************************
 // EMPLOYEE GENERAL
 // ********************************************************************************
-
-export const emp_general_reducer = (state = employee_initialState, action)=>{	
+const dataForm_general_initvalue = {
+								"id":0,
+								"employeeId":'',
+								"fname":'',
+								"lname":'',
+								"mname":'',
+								"birthdate": null,
+								"civilstat":"0",
+								"gender":'0',
+								"address":'',
+								"city":'',
+								"province":'',
+								"zipcode":'',
+								"homephone":'',
+								"mobilephone":'',
+								"emailadd":''						
+							}
+const emp_general_initialState = {
+								data: dataForm_general_initvalue,									
+								isFetching: false,
+								isFetchFailed: false,
+								hasError: false,
+								isGeneralEdit: false,
+								isGeneralEditCI:false,
+								errorMessage:'',
+								isSaving: false																	
+							 }
+export const emp_general_reducer = (state = emp_general_initialState, action)=>{	
 	switch(action.type){
-		case ACT.EMP_PROFILE_GENERAL_LOAD:
+		case ACT.EMP_PROFILE_GENERAL_LOAD_VIEW:
 			return Object.assign({}, state,{
-				editMode: action.editMode,
-				dataForm: checkData(action.data),	
-				title: action.title,
-				hasError: false,
-				errorMessage:'',														
-				isSaving: false,										
-				saveError: false,
-				saveSuccess: false,
-				saveEditSuccess: false,
-				isDeleting: false,
-				deleteHasError: false,
-				deleteErrorMsg:'',
-				deletemsg:'',
-				deleteSuccess: false
+				isFetching: action.isFetching,
+				isFetchFailed: false,
+				hasError:false,
+				isGeneralEdit: false,
+				isGeneralEditCI:false,
+				isSaving: false,
+				errorMessage:''
 			})	
+		case ACT.EMP_PROFILE_GENERAL_SUCCESS_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: false,
+				hasError:false,
+				isSaving: false,
+				errorMessage:'',
+				data: action.data
+			})	
+		case ACT.EMP_PROFILE_GENERAL_FAILED_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: false,
+				isSaving: false,
+				isFetchFailed: action.isFetchFailed,
+				hasError: action.hasError,
+				errorMessage: action.message
+			})	
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT:
+			return Object.assign({}, state,{
+				isGeneralEdit: action.isGeneralEdit				
+			})	
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL:
+			return Object.assign({}, state,{
+				isGeneralEdit: action.isGeneralEdit				
+			})	
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI:
+			return Object.assign({}, state,{
+				isGeneralEditCI: action.isGeneralEditCI				
+			})	
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL:
+			return Object.assign({}, state,{
+				isGeneralEditCI: action.isGeneralEditCI				
+			})	
+		case ACT.EMP_FORM_VALUE_CHANGED_GENERAL_EDIT:	
+		   console.log(state)		
+			return Object.assign({}, state,{						
+				hasError: false,			
+				errorMessage: '',
+				data : fieldvalues(state.data, action.field, action.value)
+			})
+		case ACT.EMP_FORM_CIVIL_CHANGED_GENERAL_EDIT:			
+			return Object.assign({}, state,{						
+				hasError: false,				
+				errorMessage: '',
+				data : civilstatus(state.data, action.value)
+			})
+		case ACT.EMP_FORM_GENDER_CHANGED_GENERAL_EDIT:			
+			return Object.assign({}, state,{						
+				hasError: false,				
+				errorMessage: '',
+				data : genderstatus(state.data, action.value)
+			})
+		case ACT.EMP_FORM_BIRTHDATE_CHANGED_GENERAL_EDIT:			
+			return Object.assign({}, state,{						
+				hasError: false,				
+				errorMessage: '',
+				data: birthdatestatus(state.data, action.value)
+			})
 		default:
 			return state
 

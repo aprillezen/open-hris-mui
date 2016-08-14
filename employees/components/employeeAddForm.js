@@ -55,6 +55,7 @@ class EmployeeAddForm extends Component{
 	componentWillReceiveProps(nextProps){
 		if (nextProps.saveSuccess){
 			this.showNotif("New employee sucessfully saved.")
+			this.context.router.push('/employees/profile/'+this.props.dataForm.id)
 		}
 	}
 
@@ -215,10 +216,9 @@ class EmployeeAddForm extends Component{
 	}
 }
 
+EmployeeAddForm.contextTypes = {
+	router : React.PropTypes.object
+}
+
 export default EmployeeAddForm
-
-
-
-//<input ref="birthdate" name="birthdate" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={dataForm.birthdate}/>
-
 

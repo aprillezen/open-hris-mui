@@ -1,6 +1,10 @@
 import * as ACT from './actionTypes'
 import moment from 'moment'
 
+
+// ********************************************************************************
+// EMPLOYEE LIST
+// ********************************************************************************
 export function loadEmployeeList(){
 	return{
 		type: ACT.EMP_LOAD_LIST,
@@ -69,6 +73,10 @@ export function load(){
 	}
 }
 
+
+// ********************************************************************************
+// EMPLOYEE ADD
+// ********************************************************************************
 export function loadEmployeeForm(editMode, title, data){	
 	return{
 		type: ACT.EMP_LOAD_FORM,
@@ -77,7 +85,6 @@ export function loadEmployeeForm(editMode, title, data){
 		data
 	}
 }
-
 export function valueChangeEmployeeForm(data, field, value){
 	return{
 		type: ACT.EMP_FORM_VALUE_CHANGED,
@@ -130,7 +137,8 @@ export function saveDB(data, editMode){
 		 	if (parseInt(ret.status)==1){			 		
 		 		if (editMode==true) {
 		 			//dispatch(saveEditSuccessDeptForm(data))				 			
-		 		}else{		 		 			
+		 		}else{		 
+		 			data.id = ret.data.id		 						
 		 			dispatch(saveSuccessEmployeeForm(data))		
 		 		}				
 		 	}else{
@@ -144,7 +152,6 @@ export function saveDB(data, editMode){
 		
 	}
 }
-
 export function savingEmployeeForm(){
 	return{
 		type: ACT.EMP_SAVE_FORM,
@@ -154,7 +161,6 @@ export function savingEmployeeForm(){
 		saveError: false
 	}
 }
-
 export function saveFailedEmployeeForm(message){
 	return{
 		type: ACT.EMP_SAVE_FAILED_FORM,
@@ -165,7 +171,6 @@ export function saveFailedEmployeeForm(message){
 		message
 	}
 }
-
 export function saveSuccessEmployeeForm(data){
 	return{
 		type: ACT.EMP_SAVE_SUCCESS_FORM,
@@ -176,4 +181,127 @@ export function saveSuccessEmployeeForm(data){
 		data	
 	}
 }
+
+// ********************************************************************************
+// EMPLOYEE GENERAL
+// ********************************************************************************
+export function loadEmployeeGeneralView(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_VIEW,
+		isFetching: true
+	}
+}
+export function loadSuccessEmployeeGeneralView(data){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_SUCCESS_LOAD_VIEW,
+		isFetching: false,
+		data
+	}
+}
+export function loadFailedEmployeeGeneralView(message){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_FAILED_LOAD_VIEW,
+		isFetching: false,
+		isFetchFailed: true,
+		hasError: true,
+		message
+	}
+}
+
+export function loadEmployeeGeneral(id){
+	let fakedata = {
+						"id":0,
+						"employeeId":'00006',
+						"fname":'Barbie',
+						"lname":'Almabis',
+						"mname":'Makoy',
+						"birthdate": '10/1/1979',
+						"civilstat":"2",
+						"gender":'1'								
+					 }
+	return dispatch=>{
+		dispatch(loadEmployeeGeneralView())
+		// return setTimeout(()=>{
+		// 	dispatch(loadSuccessEmployeeGeneralView(initial_data))	
+		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
+		// }, 1000)
+
+		fetch('http://localhost:8081/employee/edit/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+		 		var tmpdata = ret.data
+		 		tmpdata.birthdate = moment(tmpdata.birthdate)
+				dispatch(loadSuccessEmployeeGeneralView(tmpdata))	
+		 	}else{
+		 		dispatch(loadFailedEmployeeGeneralView(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFailedEmployeeGeneralView('Database error'))			
+		})
+	}
+}
+
+export function loadEmployeeGeneralEdit(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT,
+		isGeneralEdit: true
+	}
+}
+export function loadEmployeeGeneralEditCancel(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL,
+		isGeneralEdit: false
+	}
+}
+
+export function loadEmployeeGeneralEditCI(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI,
+		isGeneralEditCI: true
+	}
+}
+
+export function loadEmployeeGeneralEditCICancel(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL,
+		isGeneralEditCI: false
+	}
+}
+
+
+
+
+
+
+export function valueChangeEmployeeGeneralEdit(field, value){
+	return{
+		type: ACT.EMP_FORM_VALUE_CHANGED_GENERAL_EDIT,		
+		field,
+		value
+	}
+}
+export function civilStatus_ValueChangedGeneralEdit(value){
+	return{
+		type: ACT.EMP_FORM_CIVIL_CHANGED_GENERAL_EDIT,		
+		value
+	}
+}
+export function gender_ValueChangedGeneralEdit(value){
+	return{
+		type: ACT.EMP_FORM_GENDER_CHANGED_GENERAL_EDIT,		
+		value
+	}
+}
+export function birthdate_ValueChangedGeneralEdit(value){	
+	return{
+		type: ACT.EMP_FORM_BIRTHDATE_CHANGED_GENERAL_EDIT,		
+		value
+	}
+}
+
+
+
 

@@ -1,12 +1,21 @@
 import EmployeesIndex from './components/index'
 import EmployeeAddForm from './components/employeeAddForm'
 import EmployeeGeneral from './components/EmployeeGeneral'
+import EmployeeGeneralEdit_PI from './components/general_pi_form'
+import EmployeeGeneralEdit_CI from './components/general_ci_form'
 
 import { connect } from 'react-redux'
 import { load, loadEmployeeForm, valueChangeEmployeeForm, 
 		 civilStatus_ValueChanged,gender_ValueChanged,
-		 saveDB, saveFailedEmployeeForm, birthdate_ValueChanged} from './actions'
+		 saveDB, saveFailedEmployeeForm, birthdate_ValueChanged,
+		 loadEmployeeGeneral, loadEmployeeGeneralEdit, valueChangeEmployeeGeneralEdit, 
+		 civilStatus_ValueChangedGeneralEdit, gender_ValueChangedGeneralEdit,
+		 birthdate_ValueChangedGeneralEdit, loadEmployeeGeneralEditCancel,
+		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel} from './actions'
 
+// ********************************************************************************
+// EMPLOYEE LISTS
+// ********************************************************************************
 const mapStateToProps = (state)=>{
 	return { 
 		isFetching: state.employees.isFetching,
@@ -16,7 +25,6 @@ const mapStateToProps = (state)=>{
 		data: state.employees.data
 	}
 }
-
 const mapDispatchToProps = (dispatch)=>{
 	return{
 		fetch: ()=> {
@@ -24,10 +32,11 @@ const mapDispatchToProps = (dispatch)=>{
 		}		
 	}
 }
-
 export const EmployeesListContainer = connect(mapStateToProps, mapDispatchToProps)(EmployeesIndex)
 
-
+// ********************************************************************************
+// EMPLOYEE ADD
+// ********************************************************************************
 const mapStateToPropsForm = (state)=>{
 	return { 
 		editMode: state.employeeForm.editMode,
@@ -46,8 +55,6 @@ const mapStateToPropsForm = (state)=>{
 		deleteSuccess: state.employeeForm.deleteSuccess
 	}
 }
-
-
 const mapDispatchToPropsForm = (dispatch)=>{
 	return{
 		loadForm: (editmode, title, data)=> {
@@ -74,10 +81,95 @@ const mapDispatchToPropsForm = (dispatch)=>{
 
 	}
 }
-
 export const EmployeeAddFormContainer = connect(mapStateToPropsForm,mapDispatchToPropsForm)(EmployeeAddForm)
 
-export const EmployeeGeneralContainer = connect()(EmployeeGeneral)
+
+// ********************************************************************************
+// EMPLOYEE GENERAL
+// ********************************************************************************
+const mapStateToPropsGeneral = (state)=>{
+	return { 
+		isFetching: state.employeeGeneral.isFetching,
+		isFetchFailed: state.employeeGeneral.isFetchFailed,
+		hasError: state.employeeGeneral.hasError,
+		errorMessage: state.employeeGeneral.errorMessage,
+		data: state.employeeGeneral.data,
+		isGeneralEdit: state.employeeGeneral.isGeneralEdit,
+		isGeneralEditCI: state.employeeGeneral.isGeneralEditCI
+	}
+}
+const mapDispatchToPropsGeneral = (dispatch)=>{
+	return{
+		load: (id)=> {
+			dispatch(loadEmployeeGeneral(id))
+		},
+		loadGeneralEdit: ()=>{
+			dispatch(loadEmployeeGeneralEdit())
+		},
+		loadGeneralEditCI: ()=>{
+			dispatch(loadEmployeeGeneralEditCI())
+		}
+
+	}
+}
+export const EmployeeGeneralContainer = connect(mapStateToPropsGeneral,mapDispatchToPropsGeneral)(EmployeeGeneral)
+
+const mapStateToPropsGeneralEdit = (state)=>{
+	return { 
+		isGeneralEdit: state.employeeGeneral.isGeneralEdit,		
+		hasError: state.employeeGeneral.hasError,
+		errorMessage: state.employeeGeneral.errorMessage,
+		data: state.employeeGeneral.data,
+		isSaving: state.employeeGeneral.isSaving
+	}
+}
+const mapDispatchToPropsGeneralEdit= (dispatch)=>{
+	return{		
+		valueChanged: (field, value)=>{
+			dispatch(valueChangeEmployeeGeneralEdit(field,value))
+		},
+		civilChanged: (value)=>{
+			dispatch(civilStatus_ValueChangedGeneralEdit(value))
+		},
+		genderChanged: (value)=>{
+			dispatch(gender_ValueChangedGeneralEdit(value))
+		},		
+		birthChanged: (value)=>{			
+			dispatch(birthdate_ValueChangedGeneralEdit(value))
+		},
+		cancelEdit: ()=>{
+			dispatch(loadEmployeeGeneralEditCancel())
+		}
+
+	}
+}
+export const EmployeeGeneralEditContainer = connect(mapStateToPropsGeneralEdit,mapDispatchToPropsGeneralEdit)(EmployeeGeneralEdit_PI)
+
+
+const mapStateToPropsGeneralEdit_CI = (state)=>{
+	return { 
+		isGeneralEditCI: state.employeeGeneral.isGeneralEdit,		
+		hasError: state.employeeGeneral.hasError,
+		errorMessage: state.employeeGeneral.errorMessage,
+		data: state.employeeGeneral.data,
+		isSaving: state.employeeGeneral.isSaving
+	}
+}
+const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
+	return{		
+		valueChanged: (field, value)=>{
+			dispatch(valueChangeEmployeeGeneralEdit(field,value))
+		},
+		cancelEdit: ()=>{
+			dispatch(loadEmployeeGeneralEditCICancel())
+		}
+
+	}
+}
+export const EmployeeGeneralEditCIContainer = connect(mapStateToPropsGeneralEdit_CI,mapDispatchToPropsGeneralEdit_CI)(EmployeeGeneralEdit_CI)
+
+
+
 
 
 

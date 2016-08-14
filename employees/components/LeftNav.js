@@ -4,11 +4,7 @@ import ListNav from './ListNav'
 class LeftNav extends Component{
 
 	render(){
-
 		const { employeeId } = this.props
-
-		console.log(employeeId)
-
 		return(
 			 <div className="list-group">			      
 			      <ListNav to={"/employees/profile/"+employeeId+"/general"} className="list-group-item">General Information</ListNav>

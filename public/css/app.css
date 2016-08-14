@@ -269,7 +269,7 @@ ul.nav-style > li.active-nav > a{
    height: 100px;
 }
 
-form h3 {
+.form-horizontal h3 {
   font-family: 'Open Sans Bold';
   font-size: 22px;  
   color: #0E4D69;
@@ -279,7 +279,16 @@ form h3 {
 }
 
 .required_asterisk{
-   font-family: 'Open Sans Light';
+  font-family: 'Open Sans Light';
   font-size: 12px;  
   color: #ff0000;
 }
+
+.editForm{
+  margin-top: -25px;
+  background-color: #F5F5F5;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border: 1px solid #EBEDED;
+}
+
