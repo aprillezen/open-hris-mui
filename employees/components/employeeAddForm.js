@@ -7,14 +7,12 @@ import Notification from 'react-notification-system'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-class employeeForm extends Component{
+class EmployeeAddForm extends Component{
 
 
 	constructor(props){
 		super(props)
-		if (props.params.id=='add'){
-			props.loadForm(false,"Create new employee")			
-		}
+		props.loadForm(false,"Create new employee")	
 	}
 
 	onValueChanged(e){			
@@ -217,7 +215,7 @@ class employeeForm extends Component{
 	}
 }
 
-export default employeeForm
+export default EmployeeAddForm
 
 
 

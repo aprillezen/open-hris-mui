@@ -1,4 +1,4 @@
-import {LOAD_FORM,LOAD_SUCCESS_FORM,LOAD_FAILED_FORM,SAVE_FORM,SAVE_FAILED_FORM,SAVE_SUCCESS_FORM,FORM_VALUE_CHANGED} from './actionTypes'
+import * as ACT from './actionTypes'
 import _ from 'lodash'
 
 
@@ -79,7 +79,7 @@ const fieldvalues=(data, field, value)=>{
 const reducer = (state=initialstate, action) =>{
 	
 	switch(action.type){
-		case LOAD_FORM:
+		case ACT.LOAD_FORM:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFailed: action.isFailed,
@@ -87,7 +87,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				message: ''
 			})
-		case LOAD_SUCCESS_FORM:
+		case ACT.LOAD_SUCCESS_FORM:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFailed: action.isFailed,
@@ -96,7 +96,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				profile: checkProfile(action.profile)
 			})
-		case LOAD_FAILED_FORM:
+		case ACT.LOAD_FAILED_FORM:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFailed: action.isFailed,
@@ -104,7 +104,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				message: action.message
 			})
-		case SAVE_FORM:
+		case ACT.SAVE_FORM:
 			return Object.assign({}, state, {
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
@@ -112,7 +112,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				message: ''
 			})
-		case SAVE_SUCCESS_FORM:
+		case ACT.SAVE_SUCCESS_FORM:
 			return Object.assign({}, state, {
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
@@ -120,7 +120,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				profile: action.profile
 			})
-		case SAVE_FAILED_FORM:
+		case ACT.SAVE_FAILED_FORM:
 			return Object.assign({}, state, {
 				isSaving: action.isSaving,
 				isFailed: action.isFailed,
@@ -128,7 +128,7 @@ const reducer = (state=initialstate, action) =>{
 				saveSuccess: action.saveSuccess,
 				message: action.message
 			})
-		case FORM_VALUE_CHANGED:
+		case ACT.FORM_VALUE_CHANGED:
 			return Object.assign({}, state,{
 				profile : fieldvalues(action.data, action.field, action.value)
 		})

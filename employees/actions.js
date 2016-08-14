@@ -1,30 +1,16 @@
-import { EMP_LOAD_LIST, 
-		 EMP_LOAD_SUCCESS_LIST, 
-		 EMP_LOAD_FAILED_LIST} from './actionTypes'
-
-import { EMP_LOAD_FORM, 
-		 EMP_LOAD_SUCCESS_FORM, 
-		 EMP_LOAD_FAILED_FORM,
-		 EMP_SAVE_FORM,
-		 EMP_SAVE_FAILED_FORM,
-		 EMP_SAVE_SUCCESS_FORM,
-		 EMP_FORM_CIVIL_CHANGED,
-		 EMP_FORM_GENDER_CHANGED,
-		 EMP_FORM_BIRTHDATE_CHANGED,
-		 EMP_FORM_VALUE_CHANGED} from './actionTypes'
-
+import * as ACT from './actionTypes'
 import moment from 'moment'
 
 export function loadEmployeeList(){
 	return{
-		type: EMP_LOAD_LIST,
+		type: ACT.EMP_LOAD_LIST,
 		isFetching: true
 	}
 }
 
 export function loadSucessEmployeeList(data){
 	return{
-		type: EMP_LOAD_SUCCESS_LIST,
+		type: ACT.EMP_LOAD_SUCCESS_LIST,
 		isFetching: false,				
 		data
 	}
@@ -32,7 +18,7 @@ export function loadSucessEmployeeList(data){
 
 export function loadFailedEmployeeList(message){
 	return{
-		type: EMP_LOAD_FAILED_LIST,		
+		type: ACT.EMP_LOAD_FAILED_LIST,		
 		isFetchFailed: true,
 		hasError: true,		
 		message
@@ -85,7 +71,7 @@ export function load(){
 
 export function loadEmployeeForm(editMode, title, data){	
 	return{
-		type: EMP_LOAD_FORM,
+		type: ACT.EMP_LOAD_FORM,
 		editMode: editMode,		
 		title: title,
 		data
@@ -94,7 +80,7 @@ export function loadEmployeeForm(editMode, title, data){
 
 export function valueChangeEmployeeForm(data, field, value){
 	return{
-		type: EMP_FORM_VALUE_CHANGED,
+		type: ACT.EMP_FORM_VALUE_CHANGED,
 		data,
 		field,
 		value
@@ -102,19 +88,19 @@ export function valueChangeEmployeeForm(data, field, value){
 }
 export function civilStatus_ValueChanged(value){
 	return{
-		type: EMP_FORM_CIVIL_CHANGED,		
+		type: ACT.EMP_FORM_CIVIL_CHANGED,		
 		value
 	}
 }
 export function gender_ValueChanged(value){
 	return{
-		type: EMP_FORM_GENDER_CHANGED,		
+		type: ACT.EMP_FORM_GENDER_CHANGED,		
 		value
 	}
 }
 export function birthdate_ValueChanged(value){	
 	return{
-		type: EMP_FORM_BIRTHDATE_CHANGED,		
+		type: ACT.EMP_FORM_BIRTHDATE_CHANGED,		
 		value
 	}
 }
@@ -161,7 +147,7 @@ export function saveDB(data, editMode){
 
 export function savingEmployeeForm(){
 	return{
-		type: EMP_SAVE_FORM,
+		type: ACT.EMP_SAVE_FORM,
 		isSaving: true,		
 		hasError: false,
 		saveSuccess: false,
@@ -171,7 +157,7 @@ export function savingEmployeeForm(){
 
 export function saveFailedEmployeeForm(message){
 	return{
-		type: EMP_SAVE_FAILED_FORM,
+		type: ACT.EMP_SAVE_FAILED_FORM,
 		isSaving: false,		
 		hasError: true,				
 		saveSuccess: false,
@@ -182,7 +168,7 @@ export function saveFailedEmployeeForm(message){
 
 export function saveSuccessEmployeeForm(data){
 	return{
-		type: EMP_SAVE_SUCCESS_FORM,
+		type: ACT.EMP_SAVE_SUCCESS_FORM,
 		isSaving: false,		
 		hasError: false,
 		saveSuccess: true,

@@ -1,5 +1,7 @@
 import EmployeesIndex from './components/index'
-import EmployeeForm from './components/employeeForm'
+import EmployeeAddForm from './components/employeeAddForm'
+import EmployeeGeneral from './components/EmployeeGeneral'
+
 import { connect } from 'react-redux'
 import { load, loadEmployeeForm, valueChangeEmployeeForm, 
 		 civilStatus_ValueChanged,gender_ValueChanged,
@@ -73,5 +75,9 @@ const mapDispatchToPropsForm = (dispatch)=>{
 	}
 }
 
-export const EmployeeFormContainer = connect(mapStateToPropsForm,mapDispatchToPropsForm)(EmployeeForm)
+export const EmployeeAddFormContainer = connect(mapStateToPropsForm,mapDispatchToPropsForm)(EmployeeAddForm)
+
+export const EmployeeGeneralContainer = connect()(EmployeeGeneral)
+
+
 

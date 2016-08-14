@@ -1,8 +1,4 @@
-import { DEPT_LOAD_LIST, DEPT_LOAD_LIST_SUCCESS, DEPT_LOAD_LIST_FAILED} from './actionTypes'
-import { DEPT_LOAD_ADD_FORM, DEPT_SAVE_FORM, DEPT_SAVE_FAILED_FORM, DEPT_SAVE_SUCCESS_FORM, DEPT_CANCEL_FORM} from './actionTypes'
-import { DEPT_LOAD_EDIT_FORM, DEPT_SAVE_EDIT_SUCCESS_FORM, DEPT_FORM_VALUE_CHANGED } from './actionTypes'
-import { DEPT_LOAD_DELETE_DIALOG, DEPT_DELETE_ATTEMPT,DEPT_DELETE_FAILED, DEPT_CANCEL_DELETE, DEPT_DELETE_SUCCESS} from './actionTypes'
-
+import * as ACT from './actionTypes'
 
 const dataForm_initvalue = { "id": '', "description":''}
 const initialstate = {
@@ -30,7 +26,7 @@ const initialstate = {
 
 const departmentlistreducer = (state = initialstate, action)=>{			
 	switch(action.type){
-		case DEPT_LOAD_LIST:					
+		case ACT.DEPT_LOAD_LIST:					
 			return Object.assign({}, state,{								
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
@@ -52,21 +48,21 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				deleteId:0
 
 			})
-		case DEPT_LOAD_LIST_SUCCESS:
+		case ACT.DEPT_LOAD_LIST_SUCCESS:
 			return Object.assign({}, state,{								
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				message: action.message,
 				data: action.data
 			})
-		case DEPT_LOAD_LIST_FAILED:
+		case ACT.DEPT_LOAD_LIST_FAILED:
 			return Object.assign({}, state,{								
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				message: action.message,
 				hasError: action.hasError
 			})
-		case DEPT_LOAD_ADD_FORM:		
+		case ACT.DEPT_LOAD_ADD_FORM:		
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				editMode: action.editMode,
@@ -80,13 +76,13 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				deleteSuccess: action.deleteSuccess,
 				saveEditSuccess: action.saveEditSuccess
 			})
-		case DEPT_SAVE_FORM:
+		case ACT.DEPT_SAVE_FORM:
 			return Object.assign({}, state,{												
 				isSaving: action.isSaving,
 				saveError: action.saveError,
 				saveSuccess: action.saveSuccess
 			})
-		case DEPT_SAVE_FAILED_FORM:
+		case ACT.DEPT_SAVE_FAILED_FORM:
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				isSaving: action.isSaving,
@@ -95,7 +91,7 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				saveError: action.saveError,
 				saveSuccess: action.saveSuccess
 			})
-		case DEPT_SAVE_SUCCESS_FORM:			
+		case ACT.DEPT_SAVE_SUCCESS_FORM:			
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				isSaving: action.isSaving,								
@@ -105,7 +101,7 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				data: [ ...state.data, action.data],		
 				saveEditSuccess: action.saveEditSuccess
 			})
-		case DEPT_CANCEL_FORM:
+		case ACT.DEPT_CANCEL_FORM:
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				editMode: action.editMode,				
@@ -113,7 +109,7 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				hasError: action.hasError,		
 				dataForm: action.dataForm				
 			})
-		case DEPT_LOAD_EDIT_FORM:
+		case ACT.DEPT_LOAD_EDIT_FORM:
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				editMode: action.editMode,
@@ -127,14 +123,14 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				message: action.message,
 				dataForm: action.dataForm			
 			})		
-		case DEPT_FORM_VALUE_CHANGED:
+		case ACT.DEPT_FORM_VALUE_CHANGED:
 			return Object.assign({}, state,{	
 				hasError: action.hasError,	
 				message: action.message,			
 				saveError: action.saveError,								
 				dataForm: fieldvalues(state.dataForm, action.value)
 			})
-		case DEPT_SAVE_EDIT_SUCCESS_FORM:			
+		case ACT.DEPT_SAVE_EDIT_SUCCESS_FORM:			
 			return Object.assign({}, state,{								
 				isDialogOpen: action.isDialogOpen,
 				isSaving: action.isSaving,								
@@ -145,7 +141,7 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				saveEditSuccess: action.saveEditSuccess,
 				deleteSuccess: action.deleteSuccess
 			})
-		case DEPT_LOAD_DELETE_DIALOG:			
+		case ACT.DEPT_LOAD_DELETE_DIALOG:			
 			return Object.assign({}, state,{								
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
@@ -157,21 +153,21 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				saveSuccess: action.saveSuccess,
 				saveEditSuccess: action.saveEditSuccess
 			})
-		case DEPT_DELETE_ATTEMPT:			
+		case ACT.DEPT_DELETE_ATTEMPT:			
 			return Object.assign({}, state,{												
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
 				deleteSuccess: action.deleteSuccess,
 				deleteErrorMsg: action.deleteErrorMsg
 			})
-		case DEPT_DELETE_FAILED:			
+		case ACT.DEPT_DELETE_FAILED:			
 			return Object.assign({}, state,{												
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
 				deleteSuccess: action.deleteSuccess,
 				deleteErrorMsg: action.message
 			})		
-		case DEPT_CANCEL_DELETE:			
+		case ACT.DEPT_CANCEL_DELETE:			
 			return Object.assign({}, state,{	
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
@@ -180,7 +176,7 @@ const departmentlistreducer = (state = initialstate, action)=>{
 				deleteErrorMsg: action.deleteErrorMsg,
 				deleteId: action.deleteId
 			})
-		case DEPT_DELETE_SUCCESS:			
+		case ACT.DEPT_DELETE_SUCCESS:			
 			return Object.assign({}, state,{	
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,

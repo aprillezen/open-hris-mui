@@ -1,21 +1,12 @@
-import { EMP_LOAD_LIST, 
-		 EMP_LOAD_SUCCESS_LIST, 
-		 EMP_LOAD_FAILED_LIST} from './actionTypes'
+import * as ACT from './actionTypes'
 
-import { EMP_LOAD_FORM, 
-		 EMP_LOAD_SUCCESS_FORM, 
-		 EMP_LOAD_FAILED_FORM,
-		 EMP_SAVE_FORM,
-		 EMP_SAVE_FAILED_FORM,
-		 EMP_SAVE_SUCCESS_FORM,
-		 EMP_FORM_CIVIL_CHANGED,
-		 EMP_FORM_GENDER_CHANGED,
-		 EMP_FORM_BIRTHDATE_CHANGED,
-		 EMP_FORM_VALUE_CHANGED} from './actionTypes'
 
 import _ from 'lodash'
 import moment from 'moment'
 
+// ********************************************************************************
+// EMPLOYEE LISTS
+// ********************************************************************************
 const initialState = {
 	isFetching: true,
 	isFetchFailed: false,
@@ -26,14 +17,14 @@ const initialState = {
 
 export const emp_list_reducer = (state = initialState, action)=>{
 	switch(action.type){
-		case EMP_LOAD_LIST:
+		case ACT.EMP_LOAD_LIST:
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
 				isFetchFailed: false,
 				errorMessage: '',				
 				hasError: false
 			})
-		case EMP_LOAD_SUCCESS_LIST:
+		case ACT.EMP_LOAD_SUCCESS_LIST:
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
 				isFetchFailed: false,
@@ -42,7 +33,7 @@ export const emp_list_reducer = (state = initialState, action)=>{
 				data: action.data
 
 			})
-		case EMP_LOAD_FAILED_LIST:
+		case ACT.EMP_LOAD_FAILED_LIST:
 			return Object.assign({}, state,{
 				isFetching:false,
 				isFetchFailed: action.isFetchFailed,
@@ -55,6 +46,9 @@ export const emp_list_reducer = (state = initialState, action)=>{
 	}	
 }
 
+// ********************************************************************************
+// EMPLOYEE ADD
+// ********************************************************************************
 const dataForm_initvalue = {
 								"id":0,
 								"employeeId":'',
@@ -99,7 +93,7 @@ const checkData = (data)=>{
 
 export const emp_form_reducer = (state = employee_initialState, action)=>{	
 	switch(action.type){
-		case EMP_LOAD_FORM:
+		case ACT.EMP_LOAD_FORM:
 			return Object.assign({}, state,{
 				editMode: action.editMode,
 				dataForm: checkData(action.data),	
@@ -116,7 +110,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				deletemsg:'',
 				deleteSuccess: false
 			})	
-		case EMP_FORM_VALUE_CHANGED:			
+		case ACT.EMP_FORM_VALUE_CHANGED:			
 			return Object.assign({}, state,{
 				isSaving: false,				
 				hasError: false,
@@ -125,7 +119,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				errorMessage: '',
 				dataForm : fieldvalues(action.data, action.field, action.value)
 			})
-		case EMP_FORM_CIVIL_CHANGED:			
+		case ACT.EMP_FORM_CIVIL_CHANGED:			
 			return Object.assign({}, state,{
 				isSaving: false,				
 				hasError: false,
@@ -134,7 +128,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				errorMessage: '',
 				dataForm : civilstatus(state.dataForm, action.value)
 			})
-		case EMP_FORM_GENDER_CHANGED:			
+		case ACT.EMP_FORM_GENDER_CHANGED:			
 			return Object.assign({}, state,{
 				isSaving: false,				
 				hasError: false,
@@ -143,7 +137,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				errorMessage: '',
 				dataForm : genderstatus(state.dataForm, action.value)
 			})
-		case EMP_FORM_BIRTHDATE_CHANGED:			
+		case ACT.EMP_FORM_BIRTHDATE_CHANGED:			
 			return Object.assign({}, state,{
 				isSaving: false,				
 				hasError: false,
@@ -152,7 +146,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				errorMessage: '',
 				dataForm : birthdatestatus(state.dataForm, action.value)
 			})
-		case EMP_SAVE_FORM:			
+		case ACT.EMP_SAVE_FORM:			
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,				
 				hasError: action.hasError,
@@ -160,7 +154,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				saveError: action.saveError,
 				errorMessage: ''
 			})
-		case EMP_SAVE_FAILED_FORM:			
+		case ACT.EMP_SAVE_FAILED_FORM:			
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,				
 				hasError: action.hasError,
@@ -168,7 +162,7 @@ export const emp_form_reducer = (state = employee_initialState, action)=>{
 				saveError: action.saveError,
 				errorMessage: action.message
 			})
-		case EMP_SAVE_SUCCESS_FORM:			
+		case ACT.EMP_SAVE_SUCCESS_FORM:			
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,				
 				hasError: action.hasError,
@@ -230,4 +224,33 @@ const fieldvalues=(data, field, value)=>{
 	}
 	return newdata
 
+}
+
+// ********************************************************************************
+// EMPLOYEE GENERAL
+// ********************************************************************************
+
+export const emp_general_reducer = (state = employee_initialState, action)=>{	
+	switch(action.type){
+		case ACT.EMP_PROFILE_GENERAL_LOAD:
+			return Object.assign({}, state,{
+				editMode: action.editMode,
+				dataForm: checkData(action.data),	
+				title: action.title,
+				hasError: false,
+				errorMessage:'',														
+				isSaving: false,										
+				saveError: false,
+				saveSuccess: false,
+				saveEditSuccess: false,
+				isDeleting: false,
+				deleteHasError: false,
+				deleteErrorMsg:'',
+				deletemsg:'',
+				deleteSuccess: false
+			})	
+		default:
+			return state
+
+	}	
 }

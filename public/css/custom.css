@@ -1,3 +1,8 @@
+body{
+	font-size: 15px;
+	font-family: "Open Sans Regular";
+}
+
 .navbar-default{
 	background-color:transparent;
 }
@@ -81,7 +86,8 @@ p{
 	border: 1px solid #c9c9c9;
 	border-radius: 0px;
 	box-shadow:0px;
-	font-family:'Open Sans Regular';
+	font-family:'Open Sans Regular';	
+	font-size:15px;	
 }
 .form-control:focus{
 	border:2px solid #136dac;
@@ -373,8 +379,8 @@ span.ui-button-text{
 }
 
 .list-group-item{
-	font-family:'Open Sans Bold';
-    font-size:14px;
+	font-family:'Open Sans Regular';
+    font-size:15px;
 }
 a.list-group-item {
     color: #4078c0;
@@ -393,7 +399,8 @@ a.list-group-item {
     color: #4078c0;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-left: 3px solid #d26911
+    border-left: 3px solid #d26911;
+    font-family:'Open Sans Bold';    
 }
 
 .list-group-item.active:hover, .list-group-item.active:focus {
@@ -428,7 +435,7 @@ a.list-group-item {
 .panel-body{
 	padding: 2px;
 }
-.panel-body hr{
+hr{
 	margin-top: -10px;
 }
 
@@ -437,11 +444,11 @@ label{
 }
 
 .nav-tabs{
-	font-family:'Open Sans Regular';
+	font-family:'Open Sans Regular';	
 }
 .nav-tabs > li.active > a, 
 .nav-tabs > li.active > a:hover, 
-.nav-tabs > li.active > a:focus{
+.nav-tabs > li.active > a:focus{		
 	font-family:'Open Sans Bold';
 }
 
@@ -487,5 +494,21 @@ label{
 	text-align: right;
 }
 
+.control-label{
+	color: #7D7F80;
+	font-family:'Open Sans Semi Bold';
+	font-size:15px;	
+}
+
+.field_label {
+	color: #7D7F80;
+	font-family:'Open Sans Semi Bold';
+	font-size:15px;	
+}
+
+.field_value {
+	font-size:15px;	
+	margin-top: 7px;
+}
 
 

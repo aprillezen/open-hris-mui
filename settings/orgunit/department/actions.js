@@ -1,11 +1,8 @@
-import { DEPT_LOAD_LIST, DEPT_LOAD_LIST_SUCCESS, DEPT_LOAD_LIST_FAILED} from './actionTypes'
-import { DEPT_LOAD_ADD_FORM, DEPT_SAVE_FORM, DEPT_SAVE_FAILED_FORM, DEPT_SAVE_SUCCESS_FORM, DEPT_CANCEL_FORM } from './actionTypes'
-import { DEPT_LOAD_EDIT_FORM, DEPT_SAVE_EDIT_SUCCESS_FORM, DEPT_FORM_VALUE_CHANGED } from './actionTypes'
-import { DEPT_LOAD_DELETE_DIALOG, DEPT_DELETE_ATTEMPT,DEPT_DELETE_FAILED, DEPT_CANCEL_DELETE, DEPT_DELETE_SUCCESS} from './actionTypes'
+import * as ACT from './actionTypes'
 
 export function loadList(){	
 	return{
-		type: DEPT_LOAD_LIST,
+		type: ACT.DEPT_LOAD_LIST,
 		isFetching: true,
 		isFetchFailed: false,		
 		message: '',
@@ -29,7 +26,7 @@ export function loadList(){
 
 export function loadListSuccess(data){
 	return{
-		type: DEPT_LOAD_LIST_SUCCESS,
+		type: ACT.DEPT_LOAD_LIST_SUCCESS,
 		isFetching:false,
 		isFetchFailed: false,	
 		message: '',
@@ -40,7 +37,7 @@ export function loadListSuccess(data){
 
 export function loadListFailed(message){
 	return{
-		type: DEPT_LOAD_LIST_FAILED,
+		type: ACT.DEPT_LOAD_LIST_FAILED,
 		isFetching: false,
 		isFetchFailed: true,
 		hasError: false,
@@ -75,7 +72,7 @@ export function fetchDepartment(){
 
 export function loadAddDeptForm(dataForm, title){	
 	return{
-		type: DEPT_LOAD_ADD_FORM,
+		type: ACT.DEPT_LOAD_ADD_FORM,
 		isDialogOpen: true,
 		editMode: false,
 		title: title,		
@@ -92,7 +89,7 @@ export function loadAddDeptForm(dataForm, title){
 
 export function saveDeptForm(){
 	return{
-		type: DEPT_SAVE_FORM,
+		type: ACT.DEPT_SAVE_FORM,
 		isSaving: true,
 		saveError: false,
 		saveSuccess: false
@@ -141,7 +138,7 @@ export function saveDepartment(data,editMode){
 
 export function saveSuccessDeptForm(data){
 	return{
-		type: DEPT_SAVE_SUCCESS_FORM,
+		type: ACT.DEPT_SAVE_SUCCESS_FORM,
 		isDialogOpen: false,
 		isSaving: false,
 		hasError: false,
@@ -156,7 +153,7 @@ export function saveSuccessDeptForm(data){
 
 export function saveFailedForm(message){
 	return{
-		type: DEPT_SAVE_FAILED_FORM,
+		type: ACT.DEPT_SAVE_FAILED_FORM,
 		isDialogOpen: true,
 		isSaving: false,
 		hasError: true,
@@ -168,7 +165,7 @@ export function saveFailedForm(message){
 
 export function valueChangeForm(value){
 	return{
-		type: DEPT_FORM_VALUE_CHANGED,	
+		type: ACT.DEPT_FORM_VALUE_CHANGED,	
 		hasError: false,	
 		saveError: false,
 		message: '',
@@ -178,7 +175,7 @@ export function valueChangeForm(value){
 
 export function cancelForm(data){
 	return{
-		type: DEPT_CANCEL_FORM,
+		type: ACT.DEPT_CANCEL_FORM,
 		isDialogOpen: false,
 		editMode: false,	
 		isSaving: false,
@@ -191,7 +188,7 @@ export function cancelForm(data){
 
 export function loadEditForm(dataForm, title){
 	return{
-		type: DEPT_LOAD_EDIT_FORM,
+		type: ACT.DEPT_LOAD_EDIT_FORM,
 		isDialogOpen: true,
 		editMode: true,
 		title: title,		
@@ -208,7 +205,7 @@ export function loadEditForm(dataForm, title){
 
 export function saveEditSuccessDeptForm(data){
 	return{
-		type: DEPT_SAVE_EDIT_SUCCESS_FORM,
+		type: ACT.DEPT_SAVE_EDIT_SUCCESS_FORM,
 		isDialogOpen: false,
 		isSaving: false,
 		hasError: false,
@@ -224,7 +221,7 @@ export function saveEditSuccessDeptForm(data){
 
 export function loadDeleteDialog(id, deletemsg){
 	return{
-		type: DEPT_LOAD_DELETE_DIALOG,
+		type: ACT.DEPT_LOAD_DELETE_DIALOG,
 		isDeleteDialogOpen: true,
 		isDeleting: false,
 		deleteHasError: false,
@@ -238,7 +235,7 @@ export function loadDeleteDialog(id, deletemsg){
 }
 export function deleteAttempt(){
 	return{
-		type: DEPT_DELETE_ATTEMPT,
+		type: ACT.DEPT_DELETE_ATTEMPT,
 		isDeleting: true,
 		deleteHasError: false,
 		deleteSuccess: false,
@@ -248,7 +245,7 @@ export function deleteAttempt(){
 }
 export function deleteFailed(message){
 	return{
-		type: DEPT_DELETE_FAILED,
+		type: ACT.DEPT_DELETE_FAILED,
 		isDeleting: false,
 		deleteHasError: true,	
 		deleteSuccess: false,
@@ -258,7 +255,7 @@ export function deleteFailed(message){
 
 export function cancelDelete(){
 	return{
-		type: DEPT_CANCEL_DELETE,
+		type: ACT.DEPT_CANCEL_DELETE,
 		isDeleteDialogOpen: false,
 		isDeleting: false,
 		deleteHasError: false,
@@ -270,7 +267,7 @@ export function cancelDelete(){
 
 export function deleteSuccess(id){
 	return{
-		type: DEPT_DELETE_SUCCESS,
+		type: ACT.DEPT_DELETE_SUCCESS,
 		isDeleteDialogOpen: false,
 		isDeleting: false,
 		deleteHasError: false,

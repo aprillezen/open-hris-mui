@@ -1,8 +1,8 @@
-import {LOAD_FORM,LOAD_SUCCESS_FORM,LOAD_FAILED_FORM,SAVE_FORM,SAVE_FAILED_FORM,SAVE_SUCCESS_FORM,FORM_VALUE_CHANGED} from './actionTypes'
+import * as ACT from './actionTypes'
 
 export function loadForm(){
 	return{
-		type: LOAD_FORM,
+		type: ACT.LOAD_FORM,
 		isFetching: true,
 		isFailed: false,
 		hasError: false,
@@ -12,7 +12,7 @@ export function loadForm(){
 
 export function loadSucessForm(profile){
 	return{
-		type: LOAD_SUCCESS_FORM,
+		type: ACT.LOAD_SUCCESS_FORM,
 		isFetching: false,
 		isFailed: false,
 		hasError: false,
@@ -23,7 +23,7 @@ export function loadSucessForm(profile){
 
 export function loadFailedForm(message){
 	return{
-		type: LOAD_FAILED_FORM,
+		type: ACT.LOAD_FAILED_FORM,
 		isFetching: false,
 		isFailed: true,
 		hasError: true,
@@ -34,7 +34,7 @@ export function loadFailedForm(message){
 
 export function saveForm(){
 	return{
-		type: SAVE_FORM,
+		type: ACT.SAVE_FORM,
 		isSaving: true,
 		isFailed: false,
 		hasError: false,
@@ -44,7 +44,7 @@ export function saveForm(){
 
 export function saveSuccessForm(profile){
 	return{
-		type: SAVE_SUCCESS_FORM,
+		type: ACT.SAVE_SUCCESS_FORM,
 		isSaving: false,
 		isFailed: false,
 		hasError: false,
@@ -55,7 +55,7 @@ export function saveSuccessForm(profile){
 
 export function saveFailedForm(message){
 	return{
-		type: SAVE_FAILED_FORM,
+		type: ACT.SAVE_FAILED_FORM,
 		isSaving: false,
 		isFailed: true,
 		hasError: true,
@@ -66,7 +66,7 @@ export function saveFailedForm(message){
 
 export function valueChangeForm(data, field, value){
 	return{
-		type: FORM_VALUE_CHANGED,
+		type: ACT.FORM_VALUE_CHANGED,
 		data,
 		field,
 		value

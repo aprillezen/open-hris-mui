@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 class RowLink extends Component	{
 
 	handleClick(e){
+		//console.log(this.props.rowData.id)
+		this.context.router.push('/employees/profile/'+this.props.rowData.id)
 
 	}	
 
@@ -30,4 +32,9 @@ class RowLink extends Component	{
 			)
 	}
 }
+
+RowLink.contextTypes = {
+	router : React.PropTypes.object
+}
+
 export default RowLink
