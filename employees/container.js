@@ -11,7 +11,8 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 loadEmployeeGeneral, loadEmployeeGeneralEdit, valueChangeEmployeeGeneralEdit, 
 		 civilStatus_ValueChangedGeneralEdit, gender_ValueChangedGeneralEdit,
 		 birthdate_ValueChangedGeneralEdit, loadEmployeeGeneralEditCancel,
-		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel} from './actions'
+		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
+		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -95,7 +96,8 @@ const mapStateToPropsGeneral = (state)=>{
 		errorMessage: state.employeeGeneral.errorMessage,
 		data: state.employeeGeneral.data,
 		isGeneralEdit: state.employeeGeneral.isGeneralEdit,
-		isGeneralEditCI: state.employeeGeneral.isGeneralEditCI
+		isGeneralEditCI: state.employeeGeneral.isGeneralEditCI,
+		updateSuccess: state.employeeGeneral.updateSuccess
 	}
 }
 const mapDispatchToPropsGeneral = (dispatch)=>{
@@ -120,7 +122,9 @@ const mapStateToPropsGeneralEdit = (state)=>{
 		hasError: state.employeeGeneral.hasError,
 		errorMessage: state.employeeGeneral.errorMessage,
 		data: state.employeeGeneral.data,
-		isSaving: state.employeeGeneral.isSaving
+		isSaving: state.employeeGeneral.isSaving,
+		updateSuccess: state.employeeGeneral.updateSuccess,
+		updateError: state.employeeGeneral.updateError
 	}
 }
 const mapDispatchToPropsGeneralEdit= (dispatch)=>{
@@ -137,8 +141,15 @@ const mapDispatchToPropsGeneralEdit= (dispatch)=>{
 		birthChanged: (value)=>{			
 			dispatch(birthdate_ValueChangedGeneralEdit(value))
 		},
-		cancelEdit: ()=>{
+		cancelEdit: (id)=>{
 			dispatch(loadEmployeeGeneralEditCancel())
+			dispatch(loadEmployeeGeneral(id))
+		},
+		update: (data)=>{
+			dispatch(updateEmployeeGeneral_PI(data))
+		},
+		saveFailed: (message)=>{
+			dispatch(saveFailedEmployeeGeneral_PI(message))
 		}
 
 	}
@@ -160,8 +171,9 @@ const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
 		valueChanged: (field, value)=>{
 			dispatch(valueChangeEmployeeGeneralEdit(field,value))
 		},
-		cancelEdit: ()=>{
+		cancelEdit: (id)=>{
 			dispatch(loadEmployeeGeneralEditCICancel())
+			dispatch(loadEmployeeGeneral(id))
 		}
 
 	}

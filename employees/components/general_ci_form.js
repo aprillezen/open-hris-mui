@@ -11,7 +11,7 @@ class General_CI_FORM extends Component{
 	}
 
 	cancel(e){
-		this.props.cancelEdit()
+		this.props.cancelEdit(this.props.data.id)
 	}
 
 	handleSubmit(e){

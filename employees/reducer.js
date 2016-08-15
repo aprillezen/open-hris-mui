@@ -88,7 +88,7 @@ const checkData = (data)=>{
 	}
 	return data
 }
-export const emp_form_reducer = (state = employee_initialState, action)=>{	
+export const emp_add_form_reducer = (state = employee_initialState, action)=>{	
 	switch(action.type){
 		case ACT.EMP_LOAD_FORM:
 			return Object.assign({}, state,{
@@ -248,7 +248,10 @@ const emp_general_initialState = {
 								isGeneralEdit: false,
 								isGeneralEditCI:false,
 								errorMessage:'',
-								isSaving: false																	
+								isSaving: false,
+								updateSuccess: false,
+								updateError: false
+
 							 }
 export const emp_general_reducer = (state = emp_general_initialState, action)=>{	
 	switch(action.type){
@@ -260,7 +263,9 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				isGeneralEdit: false,
 				isGeneralEditCI:false,
 				isSaving: false,
-				errorMessage:''
+				errorMessage:'',
+				updateSuccess: false,
+				updateError: false
 			})	
 		case ACT.EMP_PROFILE_GENERAL_SUCCESS_LOAD_VIEW:
 			return Object.assign({}, state,{
@@ -279,46 +284,86 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				hasError: action.hasError,
 				errorMessage: action.message
 			})	
-		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT:
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_PI:
 			return Object.assign({}, state,{
-				isGeneralEdit: action.isGeneralEdit				
+				isGeneralEdit: action.isGeneralEdit,
+				isGeneralEditCI: action.isGeneralEditCI,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false
 			})	
-		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL:
+		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI:
 			return Object.assign({}, state,{
-				isGeneralEdit: action.isGeneralEdit				
+				isGeneralEdit: action.isGeneralEdit,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false			
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI:
 			return Object.assign({}, state,{
-				isGeneralEditCI: action.isGeneralEditCI				
+				isGeneralEditCI: action.isGeneralEditCI,
+				isGeneralEdit: action.isGeneralEdit		
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL:
 			return Object.assign({}, state,{
 				isGeneralEditCI: action.isGeneralEditCI				
 			})	
-		case ACT.EMP_FORM_VALUE_CHANGED_GENERAL_EDIT:	
-		   console.log(state)		
+		case ACT.EMP_PROFILE_GENERAL_VALUE_CHANGED:			 	
 			return Object.assign({}, state,{						
 				hasError: false,			
-				errorMessage: '',
+				errorMessage: '',				
+				updateSuccess: false,
+				updateError: false,
 				data : fieldvalues(state.data, action.field, action.value)
 			})
-		case ACT.EMP_FORM_CIVIL_CHANGED_GENERAL_EDIT:			
+		case ACT.EMP_PROFILE_GENERAL_CIVIL_CHANGED:			
 			return Object.assign({}, state,{						
 				hasError: false,				
 				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
 				data : civilstatus(state.data, action.value)
 			})
-		case ACT.EMP_FORM_GENDER_CHANGED_GENERAL_EDIT:			
+		case ACT.EMP_PROFILE_GENERAL_GENDER_CHANGED:			
 			return Object.assign({}, state,{						
 				hasError: false,				
 				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
 				data : genderstatus(state.data, action.value)
 			})
-		case ACT.EMP_FORM_BIRTHDATE_CHANGED_GENERAL_EDIT:			
+		case ACT.EMP_PROFILE_GENERAL_BIRTHDATE_CHANGED:			
 			return Object.assign({}, state,{						
 				hasError: false,				
 				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
 				data: birthdatestatus(state.data, action.value)
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_PI:			
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.errorMessage,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_PI:					
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.errorMessage,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError,
+				isGeneralEdit: false,
+				data: action.data
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_PI:			
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.message,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError
 			})
 		default:
 			return state

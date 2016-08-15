@@ -57,7 +57,7 @@ export function load(){
 		// 	//dispatch(loadFailedEmployeeList("test error"))
 		// }, 2000)
 
-		fetch('http://localhost:8081/employee')
+		fetch('http://52.77.70.200:8081/employee')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -114,7 +114,7 @@ export function birthdate_ValueChanged(value){
 export function saveDB(data, editMode){
 
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://localhost:8081/employee/add'
+	let url = 'http://52.77.70.200:8081/employee/add'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -135,12 +135,8 @@ export function saveDB(data, editMode){
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
 		 	if (parseInt(ret.status)==1){			 		
-		 		if (editMode==true) {
-		 			//dispatch(saveEditSuccessDeptForm(data))				 			
-		 		}else{		 
-		 			data.id = ret.data.id		 						
-		 			dispatch(saveSuccessEmployeeForm(data))		
-		 		}				
+		 		data.id = ret.data.id		 						
+		 		dispatch(saveSuccessEmployeeForm(data))				
 		 	}else{
 		 		dispatch(saveFailedEmployeeForm(ret.message))		 			 		
 		 	}
@@ -181,7 +177,6 @@ export function saveSuccessEmployeeForm(data){
 		data	
 	}
 }
-
 // ********************************************************************************
 // EMPLOYEE GENERAL
 // ********************************************************************************
@@ -207,7 +202,6 @@ export function loadFailedEmployeeGeneralView(message){
 		message
 	}
 }
-
 export function loadEmployeeGeneral(id){
 	let fakedata = {
 						"id":0,
@@ -226,7 +220,7 @@ export function loadEmployeeGeneral(id){
 		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
 		// }, 1000)
 
-		fetch('http://localhost:8081/employee/edit/'+id)
+		fetch('http://52.77.70.200:8081/employee/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -243,65 +237,118 @@ export function loadEmployeeGeneral(id){
 		})
 	}
 }
-
 export function loadEmployeeGeneralEdit(){
 	return{
-		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT,
-		isGeneralEdit: true
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_PI,
+		isGeneralEdit: true,
+		isGeneralEditCI: false
 	}
 }
 export function loadEmployeeGeneralEditCancel(){
 	return{
-		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL,
+		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI,
 		isGeneralEdit: false
 	}
 }
-
 export function loadEmployeeGeneralEditCI(){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI,
-		isGeneralEditCI: true
+		isGeneralEditCI: true,
+		isGeneralEdit: false
 	}
 }
-
 export function loadEmployeeGeneralEditCICancel(){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL,
 		isGeneralEditCI: false
 	}
 }
-
-
-
-
-
-
 export function valueChangeEmployeeGeneralEdit(field, value){
 	return{
-		type: ACT.EMP_FORM_VALUE_CHANGED_GENERAL_EDIT,		
+		type: ACT.EMP_PROFILE_GENERAL_VALUE_CHANGED,		
 		field,
 		value
 	}
 }
 export function civilStatus_ValueChangedGeneralEdit(value){
 	return{
-		type: ACT.EMP_FORM_CIVIL_CHANGED_GENERAL_EDIT,		
+		type: ACT.EMP_PROFILE_GENERAL_CIVIL_CHANGED,		
 		value
 	}
 }
 export function gender_ValueChangedGeneralEdit(value){
 	return{
-		type: ACT.EMP_FORM_GENDER_CHANGED_GENERAL_EDIT,		
+		type: ACT.EMP_PROFILE_GENERAL_GENDER_CHANGED,		
 		value
 	}
 }
 export function birthdate_ValueChangedGeneralEdit(value){	
 	return{
-		type: ACT.EMP_FORM_BIRTHDATE_CHANGED_GENERAL_EDIT,		
+		type: ACT.EMP_PROFILE_GENERAL_BIRTHDATE_CHANGED,		
 		value
 	}
 }
-
+export function savingEmployeeGeneral_PI(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_PI,
+		isSaving: true,		
+		errorMessage: '',
+		updateSuccess: false,
+		updateError: false
+	}
+}
+export function saveSuccessEmployeeGeneral_PI(data){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_PI,
+		isSaving: false,		
+		errorMessage: '',
+		updateSuccess: true,
+		updateError: false,
+		data
+	}
+}
+export function saveFailedEmployeeGeneral_PI(message){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_PI,
+		isSaving: false,				
+		updateSuccess: false,
+		updateError: true,
+		message
+	}
+}
+export function updateEmployeeGeneral_PI(data){	
+	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
+	let url = 'http://52.77.70.200:8081/employee/update'
+	let dataForm = {
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify(data)
+  		}	  	
+   	data.birthdate = moment(data.birthdate,'YYYY/MM/DD')     	
+	return dispatch=>{
+		dispatch(savingEmployeeGeneral_PI())
+		// return setTimeout(()=>{			
+		// 	dispatch(saveSuccessEmployeeGeneral_PI(data))
+		// 	//dispatch(saveFailedEmployeeGeneral_PI("test error"))
+		// }, 2000)
+		fetch(url, dataForm)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		dispatch(saveSuccessEmployeeGeneral_PI(data))	 				 				
+		 	}else{
+		 		dispatch(saveFailedEmployeeGeneral_PI(ret.message))		 			 		
+		 	}		 	
+		 })
+		.catch(error => { 					
+			dispatch(saveFailedEmployeeGeneral_PI(error))			
+		})		
+	}
+}
 
 
 

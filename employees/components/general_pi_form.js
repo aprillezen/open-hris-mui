@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import ReactDOM from 'react-dom'
+import Alert from '../../shared/Alert'
 import SaveButton from   '../../shared/SaveButton'
 
 class General_PI extends Component{
 
 	onValueChanged(e){			
-		this.props.valueChanged(this.props.dataForm, e.target.name, e.target.value)		
+		this.props.valueChanged(e.target.name, e.target.value)		
 	}
 
 	civilValueChanged(e){
@@ -23,28 +24,28 @@ class General_PI extends Component{
 	}
 
 	cancel(e){
-		this.props.cancelEdit()
+		this.props.cancelEdit(this.props.data.id)
 	}
 
 	handleSubmit(e){
 		const invalid_msg="Please enter required (*) fields."
 		e.preventDefault()
-		if (_.isEmpty(this.props.dataForm.employeeId) || _.isEmpty(this.props.dataForm.fname) || 
-			_.isEmpty(this.props.dataForm.lname) || _.isEmpty(this.props.dataForm.mname) || _.isEmpty(this.props.dataForm.birthdate)){			
+		if (_.isEmpty(this.props.data.employeeId) || _.isEmpty(this.props.data.fname) || 
+			_.isEmpty(this.props.data.lname) || _.isEmpty(this.props.data.mname) || _.isEmpty(this.props.data.birthdate)){			
 			this.props.saveFailed(invalid_msg)
 			ReactDOM.findDOMNode(this).scrollIntoView()
 			return
-		}
-		//this.props.save(this.props.dataForm, this.props.editMode)
+		}		
+		this.props.update(this.props.data)
 	}
-
 
 	render(){
 
-		const { data, isSaving, isGeneralEdit} = this.props
+		const { data, isSaving, isGeneralEdit, updateSuccess, updateError, errorMessage} = this.props
 
 		return(
 				<div className="col-md-12">
+					<Alert hasError={updateError} message={errorMessage}/>
 					<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
 						 <h3>Personal Information</h3>	
 						 <hr/>		
