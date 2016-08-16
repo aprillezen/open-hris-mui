@@ -291,7 +291,9 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,
-				updateError: false
+				updateError: false,
+				saveSuccess: false,
+				saveError: true
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI:
 			return Object.assign({}, state,{
@@ -304,7 +306,13 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI:
 			return Object.assign({}, state,{
 				isGeneralEditCI: action.isGeneralEditCI,
-				isGeneralEdit: action.isGeneralEdit		
+				isGeneralEdit: action.isGeneralEdit,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
+				saveSuccess: false,
+				saveError: true
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL:
 			return Object.assign({}, state,{
@@ -359,6 +367,29 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				data: action.data
 			})
 		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_PI:			
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.message,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_CI:			
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.errorMessage,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_CI:					
+			return Object.assign({}, state,{						
+				isSaving: action.isSaving,		
+				errorMessage: action.errorMessage,
+				updateSuccess: action.updateSuccess,
+				updateError: action.updateError,
+				isGeneralEditCI: false,
+				data: action.data
+			})
+		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_CI:			
 			return Object.assign({}, state,{						
 				isSaving: action.isSaving,		
 				errorMessage: action.message,

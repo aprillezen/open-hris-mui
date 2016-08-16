@@ -12,7 +12,8 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 civilStatus_ValueChangedGeneralEdit, gender_ValueChangedGeneralEdit,
 		 birthdate_ValueChangedGeneralEdit, loadEmployeeGeneralEditCancel,
 		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
-		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI} from './actions'
+		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,
+		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -163,7 +164,9 @@ const mapStateToPropsGeneralEdit_CI = (state)=>{
 		hasError: state.employeeGeneral.hasError,
 		errorMessage: state.employeeGeneral.errorMessage,
 		data: state.employeeGeneral.data,
-		isSaving: state.employeeGeneral.isSaving
+		isSaving: state.employeeGeneral.isSaving,
+		updateSuccess: state.employeeGeneral.updateSuccess,
+		updateError: state.employeeGeneral.updateError
 	}
 }
 const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
@@ -174,6 +177,12 @@ const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
 		cancelEdit: (id)=>{
 			dispatch(loadEmployeeGeneralEditCICancel())
 			dispatch(loadEmployeeGeneral(id))
+		},
+		update: (data)=>{
+			dispatch(updateEmployeeGeneral_CI(data))
+		},
+		saveFailed: (message)=>{
+			dispatch(saveFailedEmployeeGeneral_CI(message))
 		}
 
 	}

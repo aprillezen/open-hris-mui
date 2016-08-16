@@ -65,6 +65,9 @@ class EmployeeGeneral extends Component{
 				  <br/>	
 				  {content}
 				  <Notification ref="notify"/>
+				  <br/>
+				  <br/>
+				  <br/>
 				</div>
 			)
 	}

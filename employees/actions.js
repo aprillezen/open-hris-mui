@@ -349,6 +349,67 @@ export function updateEmployeeGeneral_PI(data){
 		})		
 	}
 }
+export function savingEmployeeGeneral_CI(){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_CI,
+		isSaving: true,		
+		errorMessage: '',
+		updateSuccess: false,
+		updateError: false
+	}
+}
+export function saveSuccessEmployeeGeneral_CI(data){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_CI,
+		isSaving: false,		
+		errorMessage: '',
+		updateSuccess: true,
+		updateError: false,
+		data
+	}
+}
+export function saveFailedEmployeeGeneral_CI(message){
+	return{
+		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_CI,
+		isSaving: false,				
+		updateSuccess: false,
+		updateError: true,
+		message
+	}
+}
+export function updateEmployeeGeneral_CI(data){	
+	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
+	let url = 'http://52.77.70.200:8081/employee/update'
+	let dataForm = {
+		    method: 'POST',
+		    headers: { 
+		    	 'Accept': 'application/json',
+	        	 'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify(data)
+  		}	  	
+   	data.birthdate = moment(data.birthdate,'YYYY/MM/DD')     	
+	return dispatch=>{
+		dispatch(savingEmployeeGeneral_CI())
+		// return setTimeout(()=>{			
+		// 	dispatch(saveSuccessEmployeeGeneral_CI(data))
+		// 	//dispatch(saveFailedEmployeeGeneral_CI("test error"))
+		// }, 2000)
+		fetch(url, dataForm)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		dispatch(saveSuccessEmployeeGeneral_CI(data))	 				 				
+		 	}else{
+		 		dispatch(saveFailedEmployeeGeneral_CI(ret.message))		 			 		
+		 	}		 	
+		 })
+		.catch(error => { 					
+			dispatch(saveFailedEmployeeGeneral_CI(error))			
+		})		
+	}
+}
 
 
 

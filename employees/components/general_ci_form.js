@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import ReactDOM from 'react-dom'
+import Alert from '../../shared/Alert'
 import SaveButton from   '../../shared/SaveButton'
 
 class General_CI_FORM extends Component{
 
 	onValueChanged(e){			
-		this.props.valueChanged(this.props.dataForm, e.target.name, e.target.value)		
+		this.props.valueChanged(e.target.name, e.target.value)		
 	}
 
 	cancel(e){
@@ -15,8 +16,8 @@ class General_CI_FORM extends Component{
 	}
 
 	handleSubmit(e){
-		
-		//this.props.save(this.props.dataForm, this.props.editMode)
+		e.preventDefault()
+		this.props.update(this.props.data)
 	}
 
 
@@ -26,10 +27,11 @@ class General_CI_FORM extends Component{
 		  width: '100%'
 		}
 
-		const { data, isSaving } = this.props
+		const { data, isSaving, isGeneralEdit, updateSuccess, updateError, errorMessage} = this.props
 
 		return(
 				<div className="col-md-12">
+					<Alert hasError={updateError} message={errorMessage}/>
 					<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
 						 <h3>Contact Information</h3>	
 						 <hr/>		
