@@ -293,7 +293,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				updateSuccess: false,
 				updateError: false,
 				saveSuccess: false,
-				saveError: true
+				saveError: false
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI:
 			return Object.assign({}, state,{
@@ -312,7 +312,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				updateSuccess: false,
 				updateError: false,
 				saveSuccess: false,
-				saveError: true
+				saveError: false
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL:
 			return Object.assign({}, state,{
@@ -396,6 +396,96 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				updateSuccess: action.updateSuccess,
 				updateError: action.updateError
 			})
+		default:
+			return state
+
+	}	
+}
+
+
+// ********************************************************************************
+// EMPLOYEE EMPLOYMENT
+// ********************************************************************************
+const dataForm_employment_initvalue = {
+								"id":0,
+								"startdate": null,
+								"jobTitle":'',
+								"joblevel":"0",								
+								"category":'0',
+								"schedule":'0',
+								"empstatus":"0",
+								"separationdate":'-',
+								"paymentmode":'0',
+								"branch":'',
+								"department":'',
+								"group":'',
+								"sssno":'',
+								"philhealthno":'',
+								"pagibigno":'',
+								"tin":'',
+								"taxstatus":''				
+							}
+const emp_employment_initialState = {
+								data: dataForm_employment_initvalue,									
+								isFetching: false,
+								isFetchFailed: false,
+								hasError: false,
+								errorMessage:'',
+								isSaving: false,
+								isLoadEdit: false,
+								updateSuccess: false,
+								updateError: false
+
+							 }
+export const emp_employment_reducer = (state = emp_employment_initialState, action)=>{	
+	switch(action.type){
+		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: false,
+				hasError:false,				
+				isSaving: false,
+				errorMessage:'',
+				updateSuccess: false,
+				updateError: false
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: false,
+				hasError:false,
+				isSaving: false,
+				errorMessage:'',
+				data: action.data
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_FAILED_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: false,
+				isSaving: false,
+				isFetchFailed: action.isFetchFailed,
+				hasError: action.hasError,
+				errorMessage: action.message
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT:
+			return Object.assign({}, state,{
+				isLoadEdit: action.isLoadEdit,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
+				saveSuccess: false,
+				saveError: false
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL:
+			return Object.assign({}, state,{
+				isLoadEdit: action.isLoadEdit,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
+				saveSuccess: false,
+				saveError: false
+			})			
 		default:
 			return state
 

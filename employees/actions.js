@@ -410,6 +410,84 @@ export function updateEmployeeGeneral_CI(data){
 		})		
 	}
 }
+export function loadEmployeeEmploymentView(){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_VIEW,
+		isFetching: true
+	}
+}
+export function loadSuccessEmployeeEmploymentView(data){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_LOAD_VIEW,
+		isFetching: false,
+		data
+	}
+}
+export function loadFailedEmployeeEmploymentView(message){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_FAILED_LOAD_VIEW,
+		isFetching: false,
+		isFetchFailed: true,
+		hasError: true,
+		message
+	}
+}
 
+export function loadEmployeeEmployment(id){
+	let fakedata = {
+					"id":0,
+					"startdate": null,
+					"jobTitle":'Janitor',
+					"joblevel":"Rank and File",								
+					"category":'Monthly',
+					"schedule":'Semi-Monthly',
+					"empstatus":"Regular",
+					"separationdate": null,
+					"paymentmode":'Cash',
+					"branch":'Head Office',
+					"department":'Finance',
+					"group":'Team A',
+					"sssno":'562-0983-12888',
+					"philhealthno":'987-0938-0292',
+					"pagibigno":'10-0293-2',
+					"tin":'19-02928',
+					"taxstatus":'Single'									
+				   }
+	return dispatch=>{
+		dispatch(loadEmployeeEmploymentView())
+		return setTimeout(()=>{
+			dispatch(loadSuccessEmployeeEmploymentView(fakedata))	
+			//dispatch(loadFailedEmployeeGeneralView("test error"))
+		}, 1000)
 
+		// fetch('http://52.77.70.200:8081/employee/edit/'+id)
+		// .then(response=>response.json()
+		// 	.then(ret=>({ ret, response }))
+		//  ).then(({ ret, response })=>{		 	
+		//  	if (parseInt(ret.status)==1){
+		//  		var tmpdata = ret.data
+		//  		tmpdata.birthdate = moment(tmpdata.birthdate)
+		// 		dispatch(loadSuccessEmployeeGeneralView(tmpdata))	
+		//  	}else{
+		//  		dispatch(loadFailedEmployeeGeneralView(data.message))
+		//  	}		 	
+		//  })
+		// .catch(error => { 
+		// 	dispatch(loadFailedEmployeeGeneralView('Database error'))			
+		// })
+	}
+}
 
+export function loadEmployeeEmploymentEdit(){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT,
+		isLoadEdit: true
+	}
+}
+
+export function loadEmployeeEmploymentEditCancel(){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL,
+		isLoadEdit: false
+	}
+}

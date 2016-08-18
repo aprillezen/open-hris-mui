@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ListNav from './ListNav'
+import ListNav from '../../shared/ListNav'
 
 class LeftNav extends Component{
 

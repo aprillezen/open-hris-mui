@@ -4,6 +4,10 @@ import EmployeeGeneral from './components/EmployeeGeneral'
 import EmployeeGeneralEdit_PI from './components/general_pi_form'
 import EmployeeGeneralEdit_CI from './components/general_ci_form'
 
+import EmployeeEmployment from './components/EmployeeEmployment'
+import EmployeeEmployment_Form from './components/employment_form'
+
+
 import { connect } from 'react-redux'
 import { load, loadEmployeeForm, valueChangeEmployeeForm, 
 		 civilStatus_ValueChanged,gender_ValueChanged,
@@ -13,7 +17,8 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 birthdate_ValueChangedGeneralEdit, loadEmployeeGeneralEditCancel,
 		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
 		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,
-		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI} from './actions'
+		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI,
+		 loadEmployeeEmployment, loadEmployeeEmploymentEdit,loadEmployeeEmploymentEditCancel} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -190,7 +195,59 @@ const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
 export const EmployeeGeneralEditCIContainer = connect(mapStateToPropsGeneralEdit_CI,mapDispatchToPropsGeneralEdit_CI)(EmployeeGeneralEdit_CI)
 
 
+const mapStateToPropsEmployment = (state)=>{
+	return { 
+				data: state.employeeEmployment.data,									
+				isFetching: state.employeeEmployment.isFetching,
+				isFetchFailed: state.employeeEmployment.isFetchFailed,
+				hasError: state.employeeEmployment.hasError,
+				errorMessage: state.employeeEmployment.errorMessage,
+				isSaving: state.employeeEmployment.isSaving,
+				updateSuccess: state.employeeEmployment.updateSuccess,
+				updateError: state.employeeEmployment.updateError,
+				isLoadEdit: state.employeeEmployment.isLoadEdit
+			}
+}
+const mapDispatchToPropsEmployment= (dispatch)=>{
+	return{		
+		load: (id)=> {
+			dispatch(loadEmployeeEmployment(id))
+		},
+		edit: ()=>{
+			dispatch(loadEmployeeEmploymentEdit())
+		}
+	}
+}
+export const EmployeeEmploymentContainer = connect(mapStateToPropsEmployment,mapDispatchToPropsEmployment)(EmployeeEmployment)
 
+const mapStateToPropsEmploymentForm = (state)=>{
+	return { 
+				data: state.employeeEmployment.data,									
+				errorMessage: state.employeeEmployment.errorMessage,
+				isSaving: state.employeeEmployment.isSaving,
+				updateSuccess: state.employeeEmployment.updateSuccess,
+				updateError: state.employeeEmployment.updateError				
+			}
+}
+const mapDispatchToPropsEmploymentForm= (dispatch)=>{
+	return{		
+		valueChanged: (field, value)=>{
+			
+		},
+		cancelEdit: (id)=>{
+			dispatch(loadEmployeeEmploymentEditCancel())
+			dispatch(loadEmployeeEmployment(id))
+		},
+		update: (data)=>{
+			
+		},
+		saveFailed: (message)=>{
+			
+		}
+	}
+}
+
+export const EmployeeEmploymentFormContainer = connect(mapStateToPropsEmploymentForm,mapDispatchToPropsEmploymentForm)(EmployeeEmployment_Form)
 
 
 
