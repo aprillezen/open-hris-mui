@@ -60,12 +60,24 @@ class index extends Component {
 		let body = <div>						
 						<div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
-							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
+							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>							
+					    		<div className="form-group">	
+								 	<label className="col-sm-3 control-label">Company Logo</label>	
+								 	<div className="col-sm-3">		
+								    	<div className="well profile-photo"></div>
+								    </div>						    								    
+								 </div>
 								 <div className="form-group">	
 								 	<label className="col-sm-3 control-label">Company Name<sup className="required_asterisk">*</sup> </label>						    
 								    <div className="col-sm-5">								    	
 								    	<input ref="companyname" name="companyname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.companyname}/>
 								    </div>
+								 </div>
+								 <div className="form-group">	
+								 	<label className="col-sm-3 control-label">Email Address</label>						    
+								    <div className="col-sm-5">								    	
+								    	<input ref="emailadd" name="emailadd" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.emailadd}/>
+								    </div>						   
 								 </div>
 								 <div className="form-group">
 								 	<label className="col-sm-3 control-label">Address<sup className="required_asterisk">*</sup> </label>						    							    
@@ -87,43 +99,37 @@ class index extends Component {
 								 </div>
 								 <div className="form-group">		
 								 	<label className="col-sm-3 control-label">Zip Code</label>						    
-								    <div className="col-sm-3">								    	
+								    <div className="col-sm-2">								    	
 								    	<input ref="zip" name="zip" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.zip}/>
 								    </div>						   
 								 </div>
 								 <div className="form-group">	
 								 	<label className="col-sm-3 control-label">Contact Number</label>							    
-								    <div className="col-sm-5">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="contactno" name="contactno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.contactno}/>
 								    </div>						   
-								 </div>
-								 <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Email Address</label>						    
-								    <div className="col-sm-5">								    	
-								    	<input ref="emailadd" name="emailadd" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.emailadd}/>
-								    </div>						   
-								 </div>
+								 </div>								 
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">T.I.N.</label>							    
-								    <div className="col-sm-5">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="tin" name="tin" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.tin}/>
 								    </div>						   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">S.S.S. Number</label>							    								 						    
-								    <div className="col-sm-5">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="sssno" name="sssno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.sssno}/>
 								    </div>						   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">PhilHealth Number</label>							    
-								    <div className="col-sm-5">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="philhealthno" name="philhealthno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.philhealthno}/>
 								    </div>						   
 								 </div>
 								 <div className="form-group">	
 								    <label className="col-sm-3 control-label">PagIbig Number</label>							    						    
-								    <div className="col-sm-5">								    	
+								    <div className="col-sm-3">								    	
 								    	<input ref="pagibigno" name="pagibigno" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={profile.pagibigno}/>
 								    </div>						   
 								 </div>
