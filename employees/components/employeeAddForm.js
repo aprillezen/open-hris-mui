@@ -72,7 +72,7 @@ class EmployeeAddForm extends Component{
 				<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title pull-left">{title}</h3>
-						<Link  to="/employees/list" className="btn btn-default pull-right">Back</Link>
+						<Link  to="/employees/list" className="btn btn-default pull-right">Cancel</Link>
 				        <div className="clearfix"></div>
 					</div>
 					<div className="panel-body">

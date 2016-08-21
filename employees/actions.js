@@ -57,7 +57,7 @@ export function load(){
 		// 	//dispatch(loadFailedEmployeeList("test error"))
 		// }, 2000)
 
-		fetch('http://52.77.70.200:8081/employee')
+		fetch('http://localhost:8081/employee')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -114,7 +114,7 @@ export function birthdate_ValueChanged(value){
 export function saveDB(data, editMode){
 
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/add'
+	let url = 'http://localhost:8081/employee/add'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -220,7 +220,7 @@ export function loadEmployeeGeneral(id){
 		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
 		// }, 1000)
 
-		fetch('http://52.77.70.200:8081/employee/edit/'+id)
+		fetch('http://localhost:8081/employee/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -318,7 +318,7 @@ export function saveFailedEmployeeGeneral_PI(message){
 }
 export function updateEmployeeGeneral_PI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/update'
+	let url = 'http://localhost:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -379,7 +379,7 @@ export function saveFailedEmployeeGeneral_CI(message){
 }
 export function updateEmployeeGeneral_CI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/update'
+	let url = 'http://localhost:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
