@@ -23,12 +23,12 @@ class List extends Component{
 	}
 
 	handleCreate(e){
-		this.context.router.push('/settings/unit/branch/add')
+		this.context.router.push('/settings/company/jobtitle/add')
 	}
 
 	componentWillReceiveProps(nextProps){		
 		if (nextProps.deleteSuccess){
-			this.showNotif('Branch successfully deleted.')		
+			this.showNotif('Job Title successfully deleted.')		
 		}
 		
 	}

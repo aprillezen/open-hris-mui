@@ -23,9 +23,9 @@ const deleteData=(data, id)=>{
 }
 
 
-export const departmentReducer = (state= initialstate, action)=>{
+export const jobTitleReducer = (state= initialstate, action)=>{
 	switch(action.type){
-		case ACT.DEPT_LOAD_LIST:
+		case ACT.JOB_LOAD_LIST:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
@@ -39,7 +39,7 @@ export const departmentReducer = (state= initialstate, action)=>{
 				deleteId:0,
 				deleteSuccess: false
 			})
-		case ACT.DEPT_LOAD_LIST_SUCCESS:
+		case ACT.JOB_LOAD_LIST_SUCCESS:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
@@ -47,14 +47,14 @@ export const departmentReducer = (state= initialstate, action)=>{
 				message: action.message,
 				data: action.data
 			})
-		case ACT.DEPT_LOAD_LIST_FAILED:
+		case ACT.JOB_LOAD_LIST_FAILED:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				hasError: action.hasError,
 				message: action.message
 			})
-		case ACT.DEPT_LOAD_DELETE_DIALOG:
+		case ACT.JOB_LOAD_DELETE_DIALOG:
 			return Object.assign({}, state,{
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
@@ -64,7 +64,7 @@ export const departmentReducer = (state= initialstate, action)=>{
 				deleteId: action.id,
 				deletemsg: action.msg
 			})
-		case ACT.DEPT_CANCEL_DELETE:
+		case ACT.JOB_CANCEL_DELETE:
 			return Object.assign({}, state,{
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
@@ -73,21 +73,21 @@ export const departmentReducer = (state= initialstate, action)=>{
 				deleteSuccess: false,
 				deleteId: action.deleteId
 			})
-		case ACT.DEPT_DELETE_ATTEMPT:
+		case ACT.JOB_DELETE_ATTEMPT:
 			return Object.assign({}, state,{
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
 				deleteSuccess: action.deleteSuccess,
 				deleteErrorMsg: action.deleteErrorMsg			
 			})
-		case ACT.DEPT_DELETE_FAILED:
+		case ACT.JOB_DELETE_FAILED:
 			return Object.assign({}, state,{				
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
 				deleteSuccess: action.deleteSuccess,
 				deleteErrorMsg: action.message			
 			})
-		case ACT.DEPT_DELETE_SUCCESS:
+		case ACT.JOB_DELETE_SUCCESS:
 			return Object.assign({}, state,{				
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
@@ -106,7 +106,7 @@ export const departmentReducer = (state= initialstate, action)=>{
 	}
 }
 
-const dataForm_initvalue = { "id": '', "description":'', "head": ''}
+const dataForm_initvalue = { "id": '', "title":'', "jobdesc": '',"duties": ''}
 
 const form_initialstate = {
 	editMode: false,
@@ -115,7 +115,6 @@ const form_initialstate = {
 	isSaving: false,
 	hasError: false,
 	message: '',
-	employees: [],
 	saveAddSuccess: false,
 	updateSuccess: false,
 	data: dataForm_initvalue
@@ -123,19 +122,24 @@ const form_initialstate = {
 
 const fieldvalues=(data, field, value)=>{
 	var newdata = Object.assign({}, data)
-	newdata.description = value
+	switch(field){
+		case "title": newdata.title = value
+			break
+		case "jobdesc": newdata.jobdesc = value
+			break
+		case "duties": newdata.duties = value
+			break	
+		default:
+			break
+	}
 	return newdata
 
 }
-const headchange=(data, value)=>{
-	var newdata = Object.assign({}, data)
-	newdata.head = value
-	return newdata
-}
 
-export const deptFormReducer = (state = form_initialstate, action)=>{
+
+export const jobFormReducer = (state = form_initialstate, action)=>{
 	switch(action.type){
-		case ACT.DEPT_LOAD_ADD_FORM:
+		case ACT.JOB_LOAD_ADD_FORM:
 			return Object.assign({}, state, {
 				editMode: action.editMode,
 				title: action.title,
@@ -144,51 +148,47 @@ export const deptFormReducer = (state = form_initialstate, action)=>{
 				hasError: action.hasError,
 				message: action.message,				
 				saveAddSuccess: action.saveAddSuccess,
-				updateSuccess: false
+				updateSuccess: false,
+				data: action.data
 			})
-		case ACT.DEPT_LOAD_FORM_SUCCESS:
+		case ACT.JOB_LOAD_FORM_SUCCESS:
 			return Object.assign({}, state, {		
 				isFetching: action.isFetching,
-				data: action.data,
-				employees: action.employees
+				data: action.data				
 			})
-		case ACT.DEPT_LOAD_FORM_FAILED:
+		case ACT.JOB_LOAD_FORM_FAILED:
 			return Object.assign({}, state, {		
 				isFetching: action.isFetching,
 				hasError: action.hasError,
 				message: action.message
 			})
-		case ACT.DEPT_FORM_VALUE_CHANGED:
+		case ACT.JOB_FORM_VALUE_CHANGED:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
 				message: action.message,
 				data : fieldvalues(action.data, action.field, action.value)
-			})
-		case ACT.DEPT_FORM_HEAD_VALUE_CHANGED:
-			return Object.assign({}, state,{
-				data: headchange(state.data, action.id)
-			})
-		case ACT.DEPT_SAVE_FORM:
+			})	
+		case ACT.JOB_SAVE_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,				
 				saveAddSuccess: action.saveAddSuccess
 			})
-		case ACT.DEPT_SAVE_FAILED_FORM:
+		case ACT.JOB_SAVE_FAILED_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
 				message: action.message				
 			})
-		case ACT.DEPT_SAVE_SUCCESS_FORM:
+		case ACT.JOB_SAVE_SUCCESS_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,
 				data: action.data,
 				saveAddSuccess: action.saveAddSuccess
 			})
-		case ACT.DEPT_LOAD_EDIT_FORM:
+		case ACT.JOB_LOAD_EDIT_FORM:
 			return Object.assign({}, state, {
 				editMode: action.editMode,
 				title: action.title,
@@ -199,7 +199,7 @@ export const deptFormReducer = (state = form_initialstate, action)=>{
 				updateSuccess: action.updateSuccess,
 				saveAddSuccess: false
 			})
-		case ACT.DEPT_UPDATE_SUCCESS_FORM:
+		case ACT.JOB_UPDATE_SUCCESS_FORM:
 			return Object.assign({}, state,{
 				isSaving: action.isSaving,
 				hasError: action.hasError,

@@ -1,61 +1,81 @@
-import index from './components/index'
-import dataForm from './components/dataForm'
 import { connect } from 'react-redux'
-import { fetchDepartment,loadAddDeptForm, cancelForm, valueChangeForm,saveFailedForm, saveDepartment} from './actions'
+import { fetchDepartment,loaddAdd,valueChangeForm,saveFailedForm,
+		 headvalueChangeForm, saveDepartment,loadEdit,
+		 loadDeleteDialog, cancelDelete} from './actions'
+import List from './components/list'
+import DeptForm from './components/deptForm'
 
-const mapStateToProps =(state)=>{		
-	return{		
+const mapStateToProps = (state)=>{
+	
+	return{
 		isFetching: state.department.isFetching,
-		isFetchFailed: state.department.isFetchFailed,
-		message: state.department.message,
-		data: state.department.data,	
+		isFetchFailed: state.department.isFetching,
 		hasError: state.department.hasError,
-		saveSuccess: state.department.saveSuccess,
-		deleteSuccess: state.department.deleteSuccess,
-		saveEditSuccess: state.department.saveEditSuccess
+		message: state.department.message,
+		data: state.department.data,
+		deleteSuccess: state.department.deleteSuccess
 	}
 }
 
-const mapDispatchToProps=(dispatch)=>{
-	var blankdata = {"id": 0,	"description":''}	
-	return{
-		fetch: ()=> {
+const mapDispatchToProps= (dispatch)=>{
+	return {
+		fetch: ()=>{
 			dispatch(fetchDepartment())
-		},
-		add: ()=>{			
-			dispatch(loadAddDeptForm(blankdata,'Create'))
-		},
-		cancel: ()=>{			
-			dispatch(cancelForm(blankdata))
-		},
-		save: (data, editMode)=>{			
-			dispatch(saveDepartment(data,editMode))
-		},		
-		valueChanged: (value)=>{
-			dispatch(valueChangeForm(value))
-		},
-		failedSaved: (message)=>{
-			dispatch(saveFailedForm(message))
 		}
 	}
+
 }
 
-export const Dept_List_Container = connect(mapStateToProps, mapDispatchToProps)(index)
 
+export const Dept_List_Container = connect(mapStateToProps, mapDispatchToProps)(List)
 
-const mapStateToPropsForm =(state)=>{		
-	return{						
-		data: state.department.dataForm,
-		isDialogOpen: state.department.isDialogOpen,
-		isSaving: state.department.isSaving,		
-		title: state.department.title,
-		saveError: state.department.saveError,		
-		message: state.department.message,
-		editMode: state.department.editMode
+const mapStateToPropsForm=(state)=>{
+	return{
+		editMode : state.departmentForm.editMode,
+		isFetching : state.departmentForm.isFetching,	
+		isSaving : state.departmentForm.isSaving,
+		hasError : state.departmentForm.hasError,
+		message : state.departmentForm.message,
+		data : state.departmentForm.data,		
+		title: state.departmentForm.title,
+		employees: state.departmentForm.employees,
+		saveAddSuccess: state.departmentForm.saveAddSuccess,
+		updateSuccess: state.departmentForm.updateSuccess
 	}
 }
 
-export const DataForm_Container = connect(mapStateToPropsForm, mapDispatchToProps)(dataForm)
+const mapDispatchToPropsForm = (dispatch)=>{
+	const blankdata = { 
+						"id": 0, 
+						"description":'', 						
+						"head": ''
+					   }
+	return {
+		add: ()=>{
+			dispatch(loaddAdd(blankdata, "Create new department"))
+		},
+		save: (data,editMode)=>{
+			dispatch(saveDepartment(data, editMode))
+		},
+		valueChanged: (data, field, value)=>{
+			dispatch(valueChangeForm(data, field, value))
+		},
+		saveFailed: (message)=>{
+			dispatch(saveFailedForm(message))
+		},
+	 	headChange: (val)=>{
+	 		dispatch(headvalueChangeForm(val))
+	 	},
+	 	edit: (id)=>{
+	 		dispatch(loadEdit(id,"Edit department"))
+	 	}
+	}
+
+}
+
+export const Dept_Form_Container = connect(mapStateToPropsForm, mapDispatchToPropsForm)(DeptForm)
+
+
 
 
 

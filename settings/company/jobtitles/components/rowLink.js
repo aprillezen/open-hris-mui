@@ -6,11 +6,11 @@ import { loadDeleteDialog, cancelDelete, deleteDept} from '../actions'
 class RowLink extends Component{
 
 	handleClick(e){		
-		this.context.router.push('/settings/unit/department/'+this.props.rowData.id)
+		this.context.router.push('/settings/company/jobtitle/'+this.props.rowData.id)
 	}
 
 	handleDelete(e){
-		this.props.dispatch(loadDeleteDialog(this.props.rowData.id, this.props.rowData.description))
+		this.props.dispatch(loadDeleteDialog(this.props.rowData.id, this.props.rowData.title))
 	}
 
 	closeClickDelete(e){
@@ -48,7 +48,7 @@ class RowLink extends Component{
 			 		 <table className="griddle-row-table">
 						<tbody>
 							<tr>
-								<td className="griddle-row-table-td2"><h4>{this.props.rowData.description} </h4></td>								
+								<td className="griddle-row-table-td2"><h4>{this.props.rowData.title} </h4></td>								
 								<td className="griddle-row-table-td3">
 									<button type="button" className="btn btn-default btn-sm" onClick={this.handleClick.bind(this)} ><i className="fa fa-pencil"></i></button>&nbsp;
 									<button type="button" className="btn btn-default btn-sm" onClick={this.handleDelete.bind(this)}><i className="fa fa-trash"></i></button>				
@@ -82,12 +82,12 @@ RowLink.contextTypes = {
 
 const mapStateToProps =(state)=>{		
 	return{		
-		isDeleteDialogOpen: state.department.isDeleteDialogOpen,
-		isDeleting: state.department.isDeleting,
-		deleteErrorMsg: state.department.deleteErrorMsg,
-		deleteHasError: state.department.hasError,
-		deletemsg: state.department.deletemsg,
-		deleteId: state.department.deleteId
+		isDeleteDialogOpen: state.jobtitle.isDeleteDialogOpen,
+		isDeleting: state.jobtitle.isDeleting,
+		deleteErrorMsg: state.jobtitle.deleteErrorMsg,
+		deleteHasError: state.jobtitle.hasError,
+		deletemsg: state.jobtitle.deletemsg,
+		deleteId: state.jobtitle.deleteId
 	}
 }
 

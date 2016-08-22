@@ -19,7 +19,13 @@ import CompanySetup from '../settings/company/setup'
 import Profile from '../settings/company/profile/container'
 import Settings from './settings'
 import Orgunit from '../settings/orgunit'
-import {Dept_List_Container} from '../settings/orgunit/department/container'
+
+import JobContainer from '../settings/company/jobtitles/components'
+import {Job_List_Container, Job_Form_Container} from '../settings/company/jobtitles/container'
+
+import DeptContainer from '../settings/orgunit/department/components'
+import {Dept_List_Container, Dept_Form_Container} from '../settings/orgunit/department/container'
+
 import BranchContainer from '../settings/orgunit/branches/components'
 import {Branch_List_Container, Branch_Form_Container} from '../settings/orgunit/branches/container'
 
@@ -48,6 +54,12 @@ module.exports = (
                     <IndexRedirect to="/settings/company/profile" />               
                     <Route path='/settings/company/profile' component={Profile}/>
                     <Route path='/settings/company/setup' component={CompanySetup}/>
+                    <Route path='/settings/company/jobtitle' component={JobContainer}>
+                        <IndexRedirect to='/settings/company/jobtitle/list'/>   
+                        <Route path='/settings/company/jobtitle/list' component={Job_List_Container}/>
+                        <Route path='/settings/company/jobtitle/:id' component={Job_Form_Container}/>
+                    </Route> 
+
                 </Route>
                 <Route path='/settings/unit' component={Orgunit}>
                     <IndexRedirect to="/settings/unit/branch" />    
@@ -55,9 +67,12 @@ module.exports = (
                         <IndexRedirect to='/settings/unit/branch/list'/>   
                         <Route path='/settings/unit/branch/list' component={Branch_List_Container}/>
                         <Route path='/settings/unit/branch/:id' component={Branch_Form_Container}/>
-                    </Route>
-                    <Route path='/settings/unit/branch/:id' component={Branch_Form_Container}/>
-                     <Route path='/settings/unit/department' component={Dept_List_Container} />
+                    </Route> 
+                    <Route path='/settings/unit/department' component={DeptContainer}>
+                        <IndexRedirect to='/settings/unit/department/list'/>   
+                        <Route path='/settings/unit/department/list' component={Dept_List_Container}/>
+                        <Route path='/settings/unit/department/:id' component={Dept_Form_Container}/>
+                    </Route> 
                 </Route>  
             </Route>  	  			  		
         </Route>

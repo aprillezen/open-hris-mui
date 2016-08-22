@@ -65,9 +65,16 @@ class BatchForm extends Component{
 
 	componentWillReceiveProps(nextProps){		
 		if (nextProps.saveAddSuccess){
-			this.showNotif('New branch successfully created.')		
+			this.showNotif('New branch successfully created.')	
+			setTimeout(()=>{
+				this.context.router.push('/settings/unit/branch/list')
+			},2000)
+			
 		}else if (nextProps.updateSuccess){
 			this.showNotif('Branch successfully modified.')	
+			setTimeout(()=>{
+				this.context.router.push('/settings/unit/branch/list')
+			},2000)
 		}
 		
 	}
