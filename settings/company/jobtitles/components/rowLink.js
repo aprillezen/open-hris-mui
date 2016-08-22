@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { SkyLightStateless } from 'react-skylight'
-import { loadDeleteDialog, cancelDelete, deleteDept} from '../actions'
+import { loadDeleteDialog, cancelDelete, deleteJob} from '../actions'
 
 class RowLink extends Component{
 
@@ -22,7 +22,7 @@ class RowLink extends Component{
 	}
 
 	deleteNow(e){		
-		this.props.dispatch(deleteDept(this.props.deleteId))
+		this.props.dispatch(deleteJob(this.props.deleteId))
 	}
 	
 	render(){
