@@ -29,6 +29,13 @@ class JobForm extends Component{
 		})
 	}
 
+	componentDidMount(){
+		if (this.props.params.id=='add'){											
+			this.refs.jobdesc.value=''
+			this.refs.duties.value=''
+		}
+		this.refs.title.focus()
+	}
 
 	handleSubmit(e){
 		e.preventDefault()
@@ -56,13 +63,13 @@ class JobForm extends Component{
 			this.showNotif('New Job Title successfully created.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/company/jobtitle/list')
-			},2000)
+			},1000)
 			
 		}else if (nextProps.updateSuccess){
 			this.showNotif('Job Title successfully modified.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/company/jobtitle/list')
-			},2000)
+			},1000)
 		}
 		
 	}

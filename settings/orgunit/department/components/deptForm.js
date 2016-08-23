@@ -58,13 +58,13 @@ class DeptForm extends Component{
 			this.showNotif('New Department successfully created.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/unit/department/list')
-			},2000)
+			},1000)
 			
 		}else if (nextProps.updateSuccess){
 			this.showNotif('Department successfully modified.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/unit/department/list')
-			},2000)
+			},1000)
 		}
 		
 	}

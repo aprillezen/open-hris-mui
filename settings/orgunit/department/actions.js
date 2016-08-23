@@ -41,7 +41,7 @@ export function fetchDepartment(){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://52.77.70.200:8081/department')
+		fetch('http://localhost:8081/department')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -99,7 +99,7 @@ export function loaddAdd(data, title){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://52.77.70.200:8081/employee/list')
+		fetch('http://localhost:8081/employee/list')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -139,7 +139,7 @@ export function loadEditForm(title){
 export function loadEdit(id,title){
 	return dispatch=>{
 		dispatch(loadEditForm(title))		
-		fetch('http://52.77.70.200:8081/department/edit/'+id)
+		fetch('http://localhost:8081/department/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -225,9 +225,9 @@ export function saveDepartment(data, editMode){
 		    	head: selectedHead
 		    })
   		}	
-  	let url = 'http://52.77.70.200:8081/department/add'
+  	let url = 'http://localhost:8081/department/add'
   	if (editMode==true){
-  		url='http://52.77.70.200:8081/department/update'
+  		url='http://localhost:8081/department/update'
   	}
 	return dispatch=>{
 		dispatch(saveForm())		
@@ -316,7 +316,7 @@ export function deleteSuccess(id){
 export function deleteDept(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://52.77.70.200:8081/department/delete/'+id)
+		fetch('http://localhost:8081/department/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

@@ -41,7 +41,7 @@ export function fetchBranches(){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://52.77.70.200:8081/branches')
+		fetch('http://localhost:8081/branches')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -99,7 +99,7 @@ export function loaddAdd(data, title){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://52.77.70.200:8081/employee/list')
+		fetch('http://localhost:8081/employee/list')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -139,7 +139,7 @@ export function loadEditForm(title){
 export function loadEdit(id,title){
 	return dispatch=>{
 		dispatch(loadEditForm(title))		
-		fetch('http://52.77.70.200:8081/branches/edit/'+id)
+		fetch('http://localhost:8081/branches/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -230,9 +230,9 @@ export function saveBranch(data, editMode){
 		    	head: selectedHead
 		    })
   		}	
-  	let url = 'http://52.77.70.200:8081/branches/add'
+  	let url = 'http://localhost:8081/branches/add'
   	if (editMode==true){
-  		url='http://52.77.70.200:8081/branches/update'
+  		url='http://localhost:8081/branches/update'
   	}
 	return dispatch=>{
 		dispatch(saveForm())		
@@ -321,7 +321,7 @@ export function deleteSuccess(id){
 export function deleteBranch(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://52.77.70.200:8081/branches/delete/'+id)
+		fetch('http://localhost:8081/branches/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

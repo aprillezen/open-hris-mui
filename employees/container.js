@@ -122,6 +122,9 @@ const mapDispatchToPropsGeneral = (dispatch)=>{
 }
 export const EmployeeGeneralContainer = connect(mapStateToPropsGeneral,mapDispatchToPropsGeneral)(EmployeeGeneral)
 
+// ********************************************************************************
+// EMPLOYEE GENERAL EDIT
+// ********************************************************************************
 const mapStateToPropsGeneralEdit = (state)=>{
 	return { 
 		isGeneralEdit: state.employeeGeneral.isGeneralEdit,		
@@ -162,7 +165,9 @@ const mapDispatchToPropsGeneralEdit= (dispatch)=>{
 }
 export const EmployeeGeneralEditContainer = connect(mapStateToPropsGeneralEdit,mapDispatchToPropsGeneralEdit)(EmployeeGeneralEdit_PI)
 
-
+// ********************************************************************************
+// EMPLOYEE GENERAL CONTACT
+// ********************************************************************************
 const mapStateToPropsGeneralEdit_CI = (state)=>{
 	return { 
 		isGeneralEditCI: state.employeeGeneral.isGeneralEdit,		
@@ -195,6 +200,9 @@ const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
 export const EmployeeGeneralEditCIContainer = connect(mapStateToPropsGeneralEdit_CI,mapDispatchToPropsGeneralEdit_CI)(EmployeeGeneralEdit_CI)
 
 
+// ********************************************************************************
+// EMPLOYEE EMPLOYMENT VIEW
+// ********************************************************************************
 const mapStateToPropsEmployment = (state)=>{
 	return { 
 				data: state.employeeEmployment.data,									
@@ -220,6 +228,9 @@ const mapDispatchToPropsEmployment= (dispatch)=>{
 }
 export const EmployeeEmploymentContainer = connect(mapStateToPropsEmployment,mapDispatchToPropsEmployment)(EmployeeEmployment)
 
+// ********************************************************************************
+// EMPLOYEE EMPLOYMENT FORM (EDIT)
+// ********************************************************************************
 const mapStateToPropsEmploymentForm = (state)=>{
 	return { 
 				data: state.employeeEmployment.data,									

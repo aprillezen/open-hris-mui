@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import moment from 'moment'
+import {JOB_LEVELS,EMPLOYEE_CATEGORY,PAY_SCHEDULE,PAY_MODE,EMPLOYMENT_STATUS} from '../../shared/Const'
 
 class Employment_View extends Component{
 
@@ -15,7 +16,7 @@ class Employment_View extends Component{
 						 <div className="form-group">	
 						 	<label className="col-sm-3 control-label field_label">Start of Employment</label>					    
 						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.startdate}</label>
+						    	<label className="field_value">{moment(data.startdate).format('MM/DD/YYYY')}</label>
 						    </div>
 						    <div className="col-sm-3">								    	
 						    	<button type="button" className="btn btn-default pull-right" onClick={this.props.onEdit}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
@@ -24,31 +25,31 @@ class Employment_View extends Component{
 						 <div className="form-group">
 						 	<label className="col-sm-3 control-label field_label">Job Title</label>					    
 						    <div className="col-sm-5">								    	
-						    	<label className="field_value">{data.jobTitle}</label>
+						    	<label className="field_value">{data.jobtitle}</label>
 						    </div>								 									  
 						 </div>	
 						 <div className="form-group">
 						 	<label className="col-sm-3 control-label field_label">Job Level</label>					    
 						    <div className="col-sm-5">								    	
-						    	<label className="field_value">{data.joblevel}</label>
+						    	<label className="field_value">{JOB_LEVELS[data.joblevel]}</label>
 						    </div>								 									  
 						 </div>	
 						  <div className="form-group">	
 						 	<label className="col-sm-3 control-label field_label">Employee Category</label>					    
 						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.category}</label>
+						    	<label className="field_value">{EMPLOYEE_CATEGORY[data.category]}</label>
 						    </div>								   
 						 </div>	
 						 <div className="form-group">	
 						 	<label className="col-sm-3 control-label field_label">Payroll Schedule</label>					    
 						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.schedule}</label>
+						    	<label className="field_value">{PAY_SCHEDULE[data.schedule]}</label>
 						    </div>								   
 						 </div>		
 						  <div className="form-group">	
 						 	<label className="col-sm-3 control-label field_label">Employment Status</label>					    
 						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.empstatus}</label>
+						    	<label className="field_value">{EMPLOYMENT_STATUS[data.empstatus]}</label>
 						    </div>								   
 						 </div>		
 						<div className="form-group">	
@@ -60,7 +61,7 @@ class Employment_View extends Component{
 						 <div className="form-group">	
 						 	<label className="col-sm-3 control-label field_label">Mode of Payment</label>					    
 						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.paymentmode}</label>
+						    	<label className="field_value">{PAY_MODE[data.paymentmode]}</label>
 						    </div>								   
 						 </div>	
 						 <div className="form-group">	

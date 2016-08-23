@@ -253,6 +253,7 @@ const emp_general_initialState = {
 								updateError: false
 
 							 }
+
 export const emp_general_reducer = (state = emp_general_initialState, action)=>{	
 	switch(action.type){
 		case ACT.EMP_PROFILE_GENERAL_LOAD_VIEW:
@@ -409,12 +410,12 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 const dataForm_employment_initvalue = {
 								"id":0,
 								"startdate": null,
-								"jobTitle":'',
-								"joblevel":"0",								
+								"jobtitle": '',
+								"joblevel": 0,								
 								"category":'0',
 								"schedule":'0',
 								"empstatus":"0",
-								"separationdate":'-',
+								"separationdate": null,
 								"paymentmode":'0',
 								"branch":'',
 								"department":'',

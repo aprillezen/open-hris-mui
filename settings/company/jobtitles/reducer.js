@@ -149,7 +149,7 @@ export const jobFormReducer = (state = form_initialstate, action)=>{
 				message: action.message,				
 				saveAddSuccess: action.saveAddSuccess,
 				updateSuccess: false,
-				data: action.data
+				data: action.data				
 			})
 		case ACT.JOB_LOAD_FORM_SUCCESS:
 			return Object.assign({}, state, {		
