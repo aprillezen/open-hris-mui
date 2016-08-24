@@ -57,7 +57,7 @@ export function load(){
 		// 	//dispatch(loadFailedEmployeeList("test error"))
 		// }, 2000)
 
-		fetch('http://localhost:8081/employee')
+		fetch('http://52.77.70.200:8081/employee')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -114,7 +114,7 @@ export function birthdate_ValueChanged(value){
 export function saveDB(data, editMode){
 
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://localhost:8081/employee/add'
+	let url = 'http://52.77.70.200:8081/employee/add'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -203,16 +203,16 @@ export function loadFailedEmployeeGeneralView(message){
 	}
 }
 export function loadEmployeeGeneral(id){
-	let fakedata = {
-						"id":0,
-						"employeeId":'00006',
-						"fname":'Barbie',
-						"lname":'Almabis',
-						"mname":'Makoy',
-						"birthdate": '10/1/1979',
-						"civilstat":"2",
-						"gender":'1'								
-					 }
+	// let fakedata = {
+	// 					"id":0,
+	// 					"employeeId":'00006',
+	// 					"fname":'Barbie',
+	// 					"lname":'Almabis',
+	// 					"mname":'Makoy',
+	// 					"birthdate": '10/1/1979',
+	// 					"civilstat":"2",
+	// 					"gender":'1'								
+	// 				 }
 	return dispatch=>{
 		dispatch(loadEmployeeGeneralView())
 		// return setTimeout(()=>{
@@ -220,7 +220,7 @@ export function loadEmployeeGeneral(id){
 		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
 		// }, 1000)
 
-		fetch('http://localhost:8081/employee/edit/'+id)
+		fetch('http://52.77.70.200:8081/employee/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -318,7 +318,7 @@ export function saveFailedEmployeeGeneral_PI(message){
 }
 export function updateEmployeeGeneral_PI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://localhost:8081/employee/update'
+	let url = 'http://52.77.70.200:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -379,7 +379,7 @@ export function saveFailedEmployeeGeneral_CI(message){
 }
 export function updateEmployeeGeneral_CI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://localhost:8081/employee/update'
+	let url = 'http://52.77.70.200:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -439,52 +439,110 @@ export function loadFailedEmployeeEmploymentView(message){
 }
 
 export function loadEmployeeEmployment(id){
-	// let fakedata = {
-	// 				"id":0,
-	// 				"startdate": null,
-	// 				"jobTitle":'Janitor',
-	// 				"joblevel":"Rank and File",								
-	// 				"category":'Monthly',
-	// 				"schedule":'Semi-Monthly',
-	// 				"empstatus":"Regular",
-	// 				"separationdate": null,
-	// 				"paymentmode":'Cash',
-	// 				"branch":'Head Office',
-	// 				"department":'Finance',
-	// 				"group":'Team A',
-	// 				"sssno":'562-0983-12888',
-	// 				"philhealthno":'987-0938-0292',
-	// 				"pagibigno":'10-0293-2',
-	// 				"tin":'19-02928',
-	// 				"taxstatus":'Single'									
-	// 			   }
+	let fakedata = {
+					"id":0,
+					"startdate": '2006-10-09',
+					"jobTitle":'Janitor',
+					"joblevel": 1,								
+					"category":'0',
+					"schedule":'0',
+					"empstatus":"0",
+					"separationdate": null,
+					"paymentmode":1,
+					"branch":'Head Office',
+					"department":'Finance',
+					"group":'Team A',
+					"sssno":'562-0983-12888',
+					"philhealthno":'987-0938-0292',
+					"pagibigno":'10-0293-2',
+					"tin":'19-02928',
+					"taxstatus":'Single'									
+				   }
 	return dispatch=>{
 		dispatch(loadEmployeeEmploymentView())
-		// return setTimeout(()=>{
-		// 	dispatch(loadSuccessEmployeeEmploymentView(fakedata))	
-		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
-		// }, 1000)
+		return setTimeout(()=>{
+			dispatch(loadSuccessEmployeeEmploymentView(fakedata))	
+			//dispatch(loadFailedEmployeeGeneralView("test error"))
+		}, 1000)
 
-		fetch('http://localhost:8081/employee/employment/'+id)
-		.then(response=>response.json()
-			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{		 	
-		 	if (parseInt(ret.status)==1){		 		
-				dispatch(loadSuccessEmployeeEmploymentView(ret.data))	
-		 	}else{
-		 		dispatch(loadFailedEmployeeEmploymentView(ret.message))
-		 	}		 	
-		 })
-		.catch(error => { 
-			dispatch(loadFailedEmployeeEmploymentView('Database error'))			
-		})
+		// fetch('http://52.77.70.200:8081/employee/employment/'+id)
+		// .then(response=>response.json()
+		// 	.then(ret=>({ ret, response }))
+		//  ).then(({ ret, response })=>{		 	
+		//  	if (parseInt(ret.status)==1){		 		
+		// 		dispatch(loadSuccessEmployeeEmploymentView(ret.data))	
+		//  	}else{
+		//  		dispatch(loadFailedEmployeeEmploymentView(ret.message))
+		//  	}		 	
+		//  })
+		// .catch(error => { 
+		// 	dispatch(loadFailedEmployeeEmploymentView('Database error'))			
+		// })
 	}
 }
+
+export function loadEmploymentForm(id){
+	let fakedata = {
+					"id": id,
+					"startdate": null,
+					"jobtitle":'',
+					"joblevel": 0,								
+					"category": 0,
+					"schedule": 0,
+					"empstatus": 0,
+					"separationdate": null,
+					"paymentmode":1,
+					"branch":'',
+					"department":'',
+					"group":'',
+					"sssno":'',
+					"philhealthno":'',
+					"pagibigno":'',
+					"tin":'',
+					"taxstatus":''
+				   }
+	return dispatch=>{
+		dispatch(loadEmployeeEmploymentEdit())
+		return setTimeout(()=>{
+			let data = {
+				"dataForm": fakedata,
+				"jobTitles": [],
+				"branches": [],
+				"department": [],
+				"groups": [],
+				"taxtable": []
+			}
+			dispatch(loadEmployeeEmploymentEditSuccess(data))	
+			//dispatch(loadFailedEmployeeGeneralView("test error"))
+		}, 1000)		
+	}
+}
+
 
 export function loadEmployeeEmploymentEdit(){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT,
+		isFetching: true,
 		isLoadEdit: true
+	}
+}
+
+
+export function loadEmployeeEmploymentEditSuccess(data){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_SUCCESS,
+		isFetching: false,
+		data
+	}
+}
+
+export function loadEmployeeEmploymentEditFailed(message){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_FAILED,
+		isFetching: false,
+		isFetchFailed: true,
+		hasError: true,
+		message
 	}
 }
 

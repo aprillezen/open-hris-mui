@@ -18,7 +18,7 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
 		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,
 		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI,
-		 loadEmployeeEmployment, loadEmployeeEmploymentEdit,loadEmployeeEmploymentEditCancel} from './actions'
+		 loadEmployeeEmployment, loadEmploymentForm,loadEmployeeEmploymentEditCancel} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -222,7 +222,7 @@ const mapDispatchToPropsEmployment= (dispatch)=>{
 			dispatch(loadEmployeeEmployment(id))
 		},
 		edit: ()=>{
-			dispatch(loadEmployeeEmploymentEdit())
+			dispatch(loadEmploymentForm())
 		}
 	}
 }
@@ -237,7 +237,12 @@ const mapStateToPropsEmploymentForm = (state)=>{
 				errorMessage: state.employeeEmployment.errorMessage,
 				isSaving: state.employeeEmployment.isSaving,
 				updateSuccess: state.employeeEmployment.updateSuccess,
-				updateError: state.employeeEmployment.updateError				
+				updateError: state.employeeEmployment.updateError,
+				jobtitles: state.employeeEmployment.jobtitles,
+				branches: state.employeeEmployment.branches,
+				department: state.employeeEmployment.department,
+				groups: state.employeeEmployment.groups,
+				taxtable: state.employeeEmployment.taxtable
 			}
 }
 const mapDispatchToPropsEmploymentForm= (dispatch)=>{

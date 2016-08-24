@@ -41,7 +41,7 @@ export function fetchJobTitles(){
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://localhost:8081/jobtitle')
+		fetch('http://52.77.70.200:8081/jobtitle')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -111,7 +111,7 @@ export function loadEditForm(title){
 export function loadEdit(id,title){
 	return dispatch=>{
 		dispatch(loadEditForm(title))		
-		fetch('http://localhost:8081/jobtitle/edit/'+id)
+		fetch('http://52.77.70.200:8081/jobtitle/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -194,9 +194,9 @@ export function saveJob(data, editMode){
 		    	duties: data.duties
 		    })
   		}	
-  	let url = 'http://localhost:8081/jobtitle/add'
+  	let url = 'http://52.77.70.200:8081/jobtitle/add'
   	if (editMode==true){
-  		url='http://localhost:8081/jobtitle/update'
+  		url='http://52.77.70.200:8081/jobtitle/update'
   	}
 	return dispatch=>{
 		dispatch(saveForm())		
@@ -285,7 +285,7 @@ export function deleteSuccess(id){
 export function deleteJob(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://localhost:8081/jobtitle/delete/'+id)
+		fetch('http://52.77.70.200:8081/jobtitle/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

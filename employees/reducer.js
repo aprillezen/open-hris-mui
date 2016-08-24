@@ -412,11 +412,11 @@ const dataForm_employment_initvalue = {
 								"startdate": null,
 								"jobtitle": '',
 								"joblevel": 0,								
-								"category":'0',
-								"schedule":'0',
-								"empstatus":"0",
+								"category":0,
+								"schedule":0,
+								"empstatus":0,
 								"separationdate": null,
-								"paymentmode":'0',
+								"paymentmode":0,
 								"branch":'',
 								"department":'',
 								"group":'',
@@ -435,8 +435,12 @@ const emp_employment_initialState = {
 								isSaving: false,
 								isLoadEdit: false,
 								updateSuccess: false,
-								updateError: false
-
+								updateError: false,
+								jobtitles: [],
+								branches: [],
+								department: [],
+								groups: [],
+								taxtable: []
 							 }
 export const emp_employment_reducer = (state = emp_employment_initialState, action)=>{	
 	switch(action.type){
@@ -469,19 +473,53 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT:
 			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: false,
 				isLoadEdit: action.isLoadEdit,
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,
 				updateError: false,
 				saveSuccess: false,
-				saveError: false
+				saveError: false,
+				hasError: false
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_SUCCESS:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: false,
+				isLoadEdit: true,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
+				saveSuccess: false,
+				saveError: false,
+				data: action.data.dataForm,
+				jobtitles: action.data.jobtitles,
+				branches: action.data.branches,
+				department: action.data.department,
+				groups: action.data.groups,
+				taxtable: action.data.taxtable
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_FAILED:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				isFetchFailed: action.isFetchFailed,
+				isLoadEdit: action.isLoadEdit,
+				isSaving: false,		
+				errorMessage: '',
+				updateSuccess: false,
+				updateError: false,
+				saveSuccess: false,
+				saveError: false,
+				hasError: action.hasError
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL:
 			return Object.assign({}, state,{
 				isLoadEdit: action.isLoadEdit,
 				isSaving: false,		
-				errorMessage: '',
+				errorMessage: action.errorMessage,
 				updateSuccess: false,
 				updateError: false,
 				saveSuccess: false,
