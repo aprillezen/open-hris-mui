@@ -4,11 +4,16 @@ import App from './App'
 import Nav from './Appnav'
 import Login from './Login'
 import Dashboard from './Dashboard'
+import Leave from './Leave'
+import LeaveSetup from '../leave/setup'
+import LeaveOption from '../leave/setup/options/container'
+import LeaveTypeContainer from '../leave/setup/lt/components'
+import {Lt_List_Container,Lt_Form_Container} from '../leave/setup/lt/container'
+
 import Employees from './Employees'
 import {EmployeesListContainer,EmployeeAddFormContainer } from '../employees/container'
 import EmployeeProfile from '../employees/components/EmployeeProfile'
 import { EmployeeGeneralContainer, EmployeeEmploymentContainer } from '../employees/container'
-
 import EmployeeBC from '../employees/components/employeeBC'
 import EmployeeTA from '../employees/components/employeeTA'
 import EmployeeLoan from '../employees/components/employeeLoan'
@@ -74,7 +79,19 @@ module.exports = (
                         <Route path='/settings/unit/department/:id' component={Dept_Form_Container}/>
                     </Route> 
                 </Route>  
-            </Route>  	  			  		
+            </Route>  
+            <Route path='/leave' component={Leave}>
+                <IndexRedirect to="/leave/setup" />
+                <Route path='/leave/setup' component={LeaveSetup}>
+                    <IndexRedirect to="/leave/setup/options" />  
+                    <Route path='/leave/setup/options' component={LeaveOption}/>
+                    <Route path='/leave/setup/lt' component={LeaveTypeContainer}>
+                        <IndexRedirect to='/leave/setup/lt/list'/>   
+                        <Route path='/leave/setup/lt/list' component={Lt_List_Container}/>
+                        <Route path='/leave/setup/lt/:id' component={Lt_Form_Container}/>
+                    </Route>                    
+                </Route>                  
+            </Route>	  			  		
         </Route>
         <Route path='/login' component={Login} />
     </Route>  

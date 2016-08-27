@@ -6,9 +6,9 @@ class NavTab extends Component{
 	render(){
 		return(
 				<ul className="nav nav-tabs">
-				  <TabLink to="/settings/company">Company</TabLink>
-				  <TabLink to="/settings/unit">Organizational Unit</TabLink> 
-				  <TabLink to="/settings/security">Security</TabLink> 
+				  <TabLink to="/leave/setup">&nbsp;&nbsp;&nbsp;Setup&nbsp;&nbsp;&nbsp;</TabLink>
+				  <TabLink to="/leave/entitlement">Entitlement</TabLink> 
+				  <TabLink to="/leave/card">Leave Card</TabLink> 
 				</ul>
 			)
 	}

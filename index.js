@@ -13,9 +13,13 @@ import {departmentReducer, deptFormReducer} from './settings/orgunit/department/
 import {branchReducer, branchFormReducer } from './settings/orgunit/branches/reducer'
 import { emp_list_reducer,emp_add_form_reducer, emp_general_reducer,emp_employment_reducer } from './employees/reducer'
 
+import {leavetypeReducer,leavetypeFormReducer} from './leave/setup/lt/reducer'
+
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
+	leavetype: leavetypeReducer,
+	leavetypeForm: leavetypeFormReducer,
 	jobtitle: jobTitleReducer,
 	jobtitleForm: jobFormReducer,
 	department: departmentReducer,
