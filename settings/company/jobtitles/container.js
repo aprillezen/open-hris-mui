@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchJobTitles,loadAddForm,valueChangeForm,saveFailedForm,
-		 headvalueChangeForm, saveJob,loadEdit,
+		 saveJob,loadEdit,
 		 loadDeleteDialog, cancelDelete} from './actions'
 import List from './components/list'
 import JobForm from './components/jobForm'

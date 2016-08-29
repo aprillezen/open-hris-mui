@@ -23,12 +23,12 @@ export default React.createClass({
 					        <li><NavLink to="/employees">Employees</NavLink></li>	
 					        <li><NavLink to="/leave">Leave</NavLink></li>					        
 					        <li><NavLink to="/ta">Time and Attendance</NavLink></li>					        
-					        <li><NavLink to="/ta">Payroll</NavLink></li>					        
+					        <li><NavLink to="/py">Payroll</NavLink></li>					        
 					      </ul>				     
 					      <ul className="nav navbar-nav nav-style navbar-right">
 					        <li><NavLink to="/settings">Settings</NavLink></li>
 					        <li className="dropdown">
-					          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+					          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
 					          <ul className="dropdown-menu">
 					            <li><a href="#">Action</a></li>
 					            <li><a href="#">Another action</a></li>

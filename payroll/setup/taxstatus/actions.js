@@ -5,7 +5,7 @@ import * as ACT from './actionTypes'
 // ********************************************************************************
 export function loadList(){	
 	return{
-		type: ACT.BRANCH_LOAD_LIST,
+		type: ACT.TAXSTATUS_LOAD_LIST,
 		isFetching: true,
 		isFetchFailed: false,		
 		message: '',
@@ -15,7 +15,7 @@ export function loadList(){
 
 export function loadListSuccess(data){
 	return{
-		type: ACT.BRANCH_LOAD_LIST_SUCCESS,
+		type: ACT.TAXSTATUS_LOAD_LIST_SUCCESS,
 		isFetching:false,
 		isFetchFailed: false,	
 		message: '',
@@ -26,7 +26,7 @@ export function loadListSuccess(data){
 
 export function loadListFailed(message){
 	return{
-		type: ACT.BRANCH_LOAD_LIST_FAILED,
+		type: ACT.TAXSTATUS_LOAD_LIST_FAILED,
 		isFetching: false,
 		isFetchFailed: true,
 		hasError: false,
@@ -34,14 +34,14 @@ export function loadListFailed(message){
 	}
 }
 
-export function fetchBranches(){	
+export function fetchTaxStatus(){	
 	return dispatch=>{
 		dispatch(loadList())
 		// return setTimeout(()=>{
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://localhost:8081/branches')
+		fetch('http://localhost:8081/taxstatus')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -61,71 +61,43 @@ export function fetchBranches(){
 // ********************************************************************************
 //  FORM
 // ********************************************************************************
-export function loadAddForm(title){
+export function loadAddForm(data, title){
 	return{
-		type: ACT.BRANCH_LOAD_ADD_FORM,
+		type: ACT.TAXSTATUS_LOAD_ADD_FORM,
 		editMode: false,
 		title: title,
-		isFetching: true,
+		isFetching: false,
 		isSaving: false,
 		hasError: false,
 		message: '',
 		saveAddSuccess: false,
+		data
 	}
 }
 
-export function loadFormSuccess(data, employees){
+export function loadFormSuccess(data){
 	return{
-		type: ACT.BRANCH_LOAD_FORM_SUCCESS,	
+		type: ACT.TAXSTATUS_LOAD_FORM_SUCCESS,	
 		isFetching: false,
-		data,
-		employees
+		data
 	}
 }
 
 export function loadFormFailed(message){
 	return{
-		type: ACT.BRANCH_LOAD_FORM_FAILED,	
+		type: ACT.TAXSTATUS_LOAD_FORM_FAILED,	
 		isFetching: false,
 		hasError: true,
 		message
 	}
 }
 
-export function loaddAdd(data, title){
-	return dispatch=>{
-		dispatch(loadAddForm(title))
-		// return setTimeout(()=>{
-		// 	dispatch(loadListSuccess(fakedata))	
-		// 	//dispatch(loadListFailed("test error"))
-		// }, 1000)
-		fetch('http://localhost:8081/employee/list')
-		.then(response=>response.json()
-			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{			 	 	
-		 	if (parseInt(ret.status)==1){
-		 		//console.log(ret.data)
-				dispatch(loadFormSuccess(data, ret.data))	
-		 	}else{
-		 		dispatch(loadFormFailed(ret.message))
-		 	}		 	
-		 })
-		.catch(error => { 
-			dispatch(loadFormFailed('Database error'))			
-		})
-	}
-}
 
-export function headvalueChangeForm(id){
-	return{
-		type: ACT.BRANCH_FORM_HEAD_VALUE_CHANGED,
-		id
-	}
-}
+
 
 export function loadEditForm(title){
 	return{
-		type: ACT.BRANCH_LOAD_EDIT_FORM,
+		type: ACT.TAXSTATUS_LOAD_EDIT_FORM,
 		editMode: true,
 		title: title,
 		isFetching: true,
@@ -139,7 +111,7 @@ export function loadEditForm(title){
 export function loadEdit(id,title){
 	return dispatch=>{
 		dispatch(loadEditForm(title))		
-		fetch('http://localhost:8081/branches/edit/'+id)
+		fetch('http://localhost:8081/taxstatus/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
@@ -157,7 +129,7 @@ export function loadEdit(id,title){
 
 export function saveForm(){
 	return{
-		type: ACT.BRANCH_SAVE_FORM,
+		type: ACT.TAXSTATUS_SAVE_FORM,
 		isSaving: true,
 		hasError: false,
 		saveAddSuccess: false
@@ -166,7 +138,7 @@ export function saveForm(){
 
 export function saveSuccessForm(data){
 	return{
-		type: ACT.BRANCH_SAVE_SUCCESS_FORM,
+		type: ACT.TAXSTATUS_SAVE_SUCCESS_FORM,
 		isSaving: false,
 		hasError: false,
 		saveAddSuccess: true,
@@ -177,7 +149,7 @@ export function saveSuccessForm(data){
 
 export function updateSuccessForm(data){
 	return{
-		type: ACT.BRANCH_UPDATE_SUCCESS_FORM,
+		type: ACT.TAXSTATUS_UPDATE_SUCCESS_FORM,
 		isSaving: false,
 		hasError: false,
 		saveAddSuccess: false,
@@ -188,7 +160,7 @@ export function updateSuccessForm(data){
 
 export function saveFailedForm(message){
 	return{
-		type: ACT.BRANCH_SAVE_FAILED_FORM,
+		type: ACT.TAXSTATUS_SAVE_FAILED_FORM,
 		isSaving: false,
 		hasError: true,		
 		message
@@ -197,7 +169,7 @@ export function saveFailedForm(message){
 
 export function valueChangeForm(data, field, value){
 	return{
-		type: ACT.BRANCH_FORM_VALUE_CHANGED,
+		type: ACT.TAXSTATUS_FORM_VALUE_CHANGED,
 		isSaving: false,
 		hasError: false,
 		message: '',
@@ -207,12 +179,8 @@ export function valueChangeForm(data, field, value){
 	}
 }
 
-export function saveBranch(data, editMode){
-
-	let selectedHead = 0
-	if (!_.isEmpty(data.head)){
-		selectedHead = data.head.value
-	}
+export function saveTaxStatus(data, editMode){
+	
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -221,18 +189,13 @@ export function saveBranch(data, editMode){
 		    },
 		    body: JSON.stringify({
 		    	id : data.id,
-		    	branchname: data.branchname,
-		    	address: data.address,
-		    	city: data.city,
-		    	province: data.province,
-		    	zipcode: data.zipcode,
-		    	phoneno: data.phoneno,
-		    	head: selectedHead
+		    	taxcode: data.taxcode,
+		    	description: data.description
 		    })
   		}	
-  	let url = 'http://localhost:8081/branches/add'
+  	let url = 'http://localhost:8081/taxstatus/add'
   	if (editMode==true){
-  		url='http://localhost:8081/branches/update'
+  		url='http://localhost:8081/taxstatus/update'
   	}
 	return dispatch=>{
 		dispatch(saveForm())		
@@ -261,7 +224,7 @@ export function saveBranch(data, editMode){
 
 export function loadDeleteDialog(id, msg){
 	return{
-		type: ACT.BRANCH_LOAD_DELETE_DIALOG,
+		type: ACT.TAXSTATUS_LOAD_DELETE_DIALOG,
 		isDeleteDialogOpen: true,
 		isDeleting: false,
 		deleteHasError: false,
@@ -274,7 +237,7 @@ export function loadDeleteDialog(id, msg){
 
 export function cancelDelete(){
 	return{
-		type: ACT.BRANCH_CANCEL_DELETE,
+		type: ACT.TAXSTATUS_CANCEL_DELETE,
 		isDeleteDialogOpen: false,
 		isDeleting: false,
 		deleteHasError: false,
@@ -286,7 +249,7 @@ export function cancelDelete(){
 
 export function deleteAttempt(){
 	return{
-		type: ACT.BRANCH_DELETE_ATTEMPT,
+		type: ACT.TAXSTATUS_DELETE_ATTEMPT,
 		isDeleting: true,
 		deleteHasError: false,
 		deleteSuccess: false,
@@ -296,7 +259,7 @@ export function deleteAttempt(){
 }
 export function deleteFailed(message){
 	return{
-		type: ACT.BRANCH_DELETE_FAILED,
+		type: ACT.TAXSTATUS_DELETE_FAILED,
 		isDeleting: false,
 		deleteHasError: true,	
 		deleteSuccess: false,
@@ -306,7 +269,7 @@ export function deleteFailed(message){
 
 export function deleteSuccess(id){
 	return{
-		type: ACT.BRANCH_DELETE_SUCCESS,
+		type: ACT.TAXSTATUS_DELETE_SUCCESS,
 		isDeleteDialogOpen: false,
 		isDeleting: false,
 		deleteHasError: false,
@@ -318,10 +281,10 @@ export function deleteSuccess(id){
 	}
 }
 
-export function deleteBranch(id){
+export function deleteTaxStatus(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://localhost:8081/branches/delete/'+id)
+		fetch('http://localhost:8081/taxstatus/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

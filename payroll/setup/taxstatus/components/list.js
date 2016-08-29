@@ -23,11 +23,10 @@ class List extends Component{
 	}
 
 	handleCreate(e){
-		this.context.router.push('/leave/setup/lt/add')
+		this.context.router.push('/py/setup/taxstatus/add')
 	}
 
 	componentWillReceiveProps(nextProps){		
-
 		if (nextProps.deleteSuccess){
 			this.showNotif(this.props.deletemsg + ' successfully deleted.')		
 		}

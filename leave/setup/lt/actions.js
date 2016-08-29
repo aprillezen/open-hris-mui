@@ -36,31 +36,31 @@ export function loadListFailed(message){
 
 export function fetchLeaveTypes(){	
 
-	let fakedata = [
- 			{ "id": '1',"leavecode":'VL', "description":'Vacation Leave', "linkId": ''},
- 			{ "id": '2',"leavecode":'SL', "description":'Sick Leave', "linkId": ''},
+	// let fakedata = [
+ // 			{ "id": '1',"leavecode":'VL', "description":'Vacation Leave', "linkId": ''},
+ // 			{ "id": '2',"leavecode":'SL', "description":'Sick Leave', "linkId": ''},
 
-	]
+	// ]
 
 	return dispatch=>{
 		dispatch(loadList())
-		return setTimeout(()=>{
-			dispatch(loadListSuccess(fakedata))	
-			//dispatch(loadListFailed("test error"))
-		}, 1000)
-		// fetch('http://52.77.70.200:8081/department')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadListSuccess(fakedata))	
+		// 	//dispatch(loadListFailed("test error"))
+		// }, 1000)
+		fetch('http://localhost:8081/lt')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(loadListSuccess(ret.data))	
+		 	}else{
+		 		dispatch(loadListFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadListFailed('Database error'))			
+		})
 	}
 }
 
@@ -101,37 +101,38 @@ export function loadFormFailed(message){
 
 export function loaddAdd(data, title){
 
-	let py = [
-		{"value": '1', "label":'Vacation Leave'},
-		{"value": '2', "label":'Sick Leave'},
-	]
+	// let py = [
+	// 	{"value": '1', "label":'Vacation Leave'},
+	// 	{"value": '2', "label":'Sick Leave'},
+	// ]
 
 	return dispatch=>{
 		dispatch(loadAddForm(title))
-		return setTimeout(()=>{
-			dispatch(loadFormSuccess(data,py))	
-			//dispatch(loadListFailed("test error"))
-		}, 1000)
-		// fetch('http://52.77.70.200:8081/employee/list')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{			 	 	
-		//  	if (parseInt(ret.status)==1){
-		//  		//console.log(ret.data)
-		// 		dispatch(loadFormSuccess(data, ret.data))	
-		//  	}else{
-		//  		dispatch(loadFormFailed(ret.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadFormFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadFormSuccess(data,py))	
+		// 	//dispatch(loadListFailed("test error"))
+		// }, 1000)
+		fetch('http://localhost:8081/paycode/list')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{			 	 	
+		 	if (parseInt(ret.status)==1){
+		 		//console.log(ret.data)
+				dispatch(loadFormSuccess(data, ret.data))	
+				//dispatch(loadFormFailed("error"))
+		 	}else{
+		 		dispatch(loadFormFailed(ret.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFormFailed('Database error'))			
+		})
 	}
 }
 
-export function headvalueChangeForm(id){
+export function linkidvalueChangeForm(id){
 	return{
-		type: ACT.LT_FORM_HEAD_VALUE_CHANGED,
+		type: ACT.LT_FORM_LINKID_VALUE_CHANGED,
 		id
 	}
 }
@@ -152,12 +153,12 @@ export function loadEditForm(title){
 export function loadEdit(id,title){
 	return dispatch=>{
 		dispatch(loadEditForm(title))		
-		fetch('http://52.77.70.200:8081/department/edit/'+id)
+		fetch('http://localhost:8081/lt/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{			 	 	
 		 	if (parseInt(ret.status)==1){		 		
-				dispatch(loadFormSuccess(ret.data, ret.employees))	
+				dispatch(loadFormSuccess(ret.data, ret.payaccount))	
 		 	}else{
 		 		dispatch(loadFormFailed(ret.message))
 		 	}		 	
@@ -221,11 +222,7 @@ export function valueChangeForm(data, field, value){
 }
 
 export function saveLeaveType(data, editMode){
-
-	let selectedHead = 0
-	if (!_.isEmpty(data.head)){
-		selectedHead = data.head.value
-	}
+	
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -234,13 +231,14 @@ export function saveLeaveType(data, editMode){
 		    },
 		    body: JSON.stringify({
 		    	id : data.id,
+		    	leavecode : data.leavecode,
 		    	description: data.description,
-		    	head: selectedHead
+		    	linkId: data.linkId.value
 		    })
   		}	
-  	let url = 'http://52.77.70.200:8081/department/add'
+  	let url = 'http://localhost:8081/lt/add'
   	if (editMode==true){
-  		url='http://52.77.70.200:8081/department/update'
+  		url='http://localhost:8081/lt/update'
   	}
 	return dispatch=>{
 		dispatch(saveForm())		
@@ -287,7 +285,7 @@ export function cancelDelete(){
 		isDeleting: false,
 		deleteHasError: false,
 		deleteSuccess: false,
-		deleteErrorMsg:'',
+		deleteErrorMsg:'',		
 		deleteId: 0
 	}
 }
@@ -329,7 +327,7 @@ export function deleteSuccess(id){
 export function deleteleaveType(id){
 	return dispatch=>{
 		dispatch(deleteAttempt())		
-		fetch('http://52.77.70.200:8081/department/delete/'+id)
+		fetch('http://localhost:8081/lt/delete/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	

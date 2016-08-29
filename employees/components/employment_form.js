@@ -7,7 +7,9 @@ import SaveButton from   '../../shared/SaveButton'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import { JOB_LEVELS_DROPDOWN, PAY_SCHEDULE_DROPDOWN, EMPLOYMENT_STATUS_DROPDOWN } from '../../shared/Const'
+
 class Employment_Form extends Component{
+
 
 	cancel(e){
 		this.props.cancelEdit(1)
@@ -31,7 +33,8 @@ class Employment_Form extends Component{
 
 	render(){
 		
-		const { data, isSaving, jobtitles, branches, department, groups, taxtable } = this.props
+		const { data, isSaving, jobtitles, branches, department, taxstatus, withdata } = this.props
+
 		//onChange={this.birthdateChanged.bind(this)
 		return(
 				<div className="col-md-12">
@@ -112,13 +115,7 @@ class Employment_Form extends Component{
 							    <div className="col-sm-5">								    	
 							    	<Select name="department" value={data.department} options={department} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={true} />
 							    </div>								   
-							 </div>	
-							 <div className="form-group">	
-							 	<label className="col-sm-3 control-label field_label">Group</label>					    
-							    <div className="col-sm-5">								    	
-							    	<Select name="group" value={data.group} options={groups} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={true} />
-							    </div>								   
-							 </div>	
+							 </div>								 
 							 <div className="form-group">	
 							 	<label className="col-sm-3 control-label field_label">S.S.S #</label>					    
 							    <div className="col-sm-3">								    	
@@ -146,7 +143,7 @@ class Employment_Form extends Component{
 							 <div className="form-group">	
 							 	<label className="col-sm-3 control-label field_label">Tax Status</label>					    
 							    <div className="col-sm-3">								    	
-							    	<Select name="taxstatus" value={data.taxstatus} options={taxtable} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={true} />
+							    	<Select name="taxstatus" value={data.taxstatus} options={taxstatus} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={true} />
 							    </div>								   
 							 </div>						 
 							 <br/>
@@ -166,6 +163,7 @@ class Employment_Form extends Component{
 			)
 	}
 }
+
 
 export default Employment_Form
 

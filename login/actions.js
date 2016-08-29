@@ -47,7 +47,7 @@ export function gologin(username, password){
 	//console.log(config)
 	return dispatch=>{
 		dispatch(loginAttempt(username))	
-		fetch('http://52.77.70.200:8081/login', config)
+		fetch('http://localhost:8081/login', config)
 		.then(response=>response.json()
 			.then(data=>({ data, response }))
 		 ).then(({ data, response })=>{

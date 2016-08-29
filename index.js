@@ -14,10 +14,13 @@ import {branchReducer, branchFormReducer } from './settings/orgunit/branches/red
 import { emp_list_reducer,emp_add_form_reducer, emp_general_reducer,emp_employment_reducer } from './employees/reducer'
 
 import {leavetypeReducer,leavetypeFormReducer} from './leave/setup/lt/reducer'
+import {taxStatusReducer, taxStatusFormReducer} from './payroll/setup/taxstatus/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
+	taxstatus: taxStatusReducer,
+	taxstatusForm: taxStatusFormReducer,
 	leavetype: leavetypeReducer,
 	leavetypeForm: leavetypeFormReducer,
 	jobtitle: jobTitleReducer,

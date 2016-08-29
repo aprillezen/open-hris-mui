@@ -29,27 +29,7 @@ export function loadFailedEmployeeList(message){
 	}
 }
 
-export function load(){
-     const fakedata =  [
-				  {
-				    "id": 0,
-				    "employeeId": "00001",
-				    "fname": "Kaissieh Louella",
-				    "lname": "Abion"				    
-				  },
-				  {
-				     "id": 1,
-				     "employeeId": "00002",
-				     "fname": "Shiela",
-				     "lname": "Abion"	
-				  },
-				   {
-				     "id": 2,
-				     "employeeId": "00003",
-				     "fname": "Aprille",
-				     "lname": "Abion"	
-				  }
-		]
+export function load(){     
 	return dispatch=>{
 		dispatch(loadEmployeeList())
 		// return setTimeout(()=>{
@@ -57,7 +37,7 @@ export function load(){
 		// 	//dispatch(loadFailedEmployeeList("test error"))
 		// }, 2000)
 
-		fetch('http://52.77.70.200:8081/employee')
+		fetch('http://localhost:8081/employee')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -114,7 +94,7 @@ export function birthdate_ValueChanged(value){
 export function saveDB(data, editMode){
 
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/add'
+	let url = 'http://localhost:8081/employee/add'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -220,7 +200,7 @@ export function loadEmployeeGeneral(id){
 		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
 		// }, 1000)
 
-		fetch('http://52.77.70.200:8081/employee/edit/'+id)
+		fetch('http://localhost:8081/employee/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -318,7 +298,7 @@ export function saveFailedEmployeeGeneral_PI(message){
 }
 export function updateEmployeeGeneral_PI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/update'
+	let url = 'http://localhost:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -379,7 +359,7 @@ export function saveFailedEmployeeGeneral_CI(message){
 }
 export function updateEmployeeGeneral_CI(data){	
 	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://52.77.70.200:8081/employee/update'
+	let url = 'http://localhost:8081/employee/update'
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -425,6 +405,15 @@ export function loadSuccessEmployeeEmploymentView(data){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_LOAD_VIEW,
 		isFetching: false,
+		withdata: true,
+		data
+	}
+}
+export function loadSuccessEmployeeEmploymentNoDataView(data){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_NO_DATA_LOAD_VIEW,
+		isFetching: false,
+		withdata: false,
 		data
 	}
 }
@@ -439,49 +428,48 @@ export function loadFailedEmployeeEmploymentView(message){
 }
 
 export function loadEmployeeEmployment(id){
-	let fakedata = {
-					"id":0,
-					"startdate": '2006-10-09',
-					"jobTitle":'Janitor',
-					"joblevel": 1,								
-					"category":'0',
-					"schedule":'0',
-					"empstatus":"0",
-					"separationdate": null,
-					"paymentmode":1,
-					"branch":'Head Office',
-					"department":'Finance',
-					"group":'Team A',
-					"sssno":'562-0983-12888',
-					"philhealthno":'987-0938-0292',
-					"pagibigno":'10-0293-2',
-					"tin":'19-02928',
-					"taxstatus":'Single'									
+	let nodata = {
+					"id":id,
+					"startdate": '-not set-',
+					"jobtitle": '-not set-',
+					"joblevel": '-not set-',
+					"category": '-not set-',
+					"schedule": '-not set-',
+					"empstatus": '-not set-',
+					"separationdate": '-not set-',
+					"paymentmode": '-not set-',
+					"branch": '-not set-',
+					"department": '-not set-',					
+					"sssno": '-not set-',
+					"philhealthno": '-not set-',
+					"pagibigno": '-not set-',
+					"tin": '-not set-',
+					"taxstatus": '-not set-'
 				   }
 	return dispatch=>{
 		dispatch(loadEmployeeEmploymentView())
-		return setTimeout(()=>{
-			dispatch(loadSuccessEmployeeEmploymentView(fakedata))	
-			//dispatch(loadFailedEmployeeGeneralView("test error"))
-		}, 1000)
+		// return setTimeout(()=>{
+		// 	dispatch(loadSuccessEmployeeEmploymentView(fakedata))	
+		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
+		// }, 1000)
 
-		// fetch('http://52.77.70.200:8081/employee/employment/'+id)
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){		 		
-		// 		dispatch(loadSuccessEmployeeEmploymentView(ret.data))	
-		//  	}else{
-		//  		dispatch(loadFailedEmployeeEmploymentView(ret.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadFailedEmployeeEmploymentView('Database error'))			
-		// })
+		fetch('http://localhost:8081/employee/employment/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){		 		
+				dispatch(loadSuccessEmployeeEmploymentView(ret.data))	
+		 	}else{
+		 		dispatch(loadSuccessEmployeeEmploymentNoDataView(nodata))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadFailedEmployeeEmploymentView('Database error'))			
+		})
 	}
 }
 
-export function loadEmploymentForm(id){
+export function loadEmploymentForm(id){	
 	let fakedata = {
 					"id": id,
 					"startdate": null,
@@ -503,18 +491,19 @@ export function loadEmploymentForm(id){
 				   }
 	return dispatch=>{
 		dispatch(loadEmployeeEmploymentEdit())
-		return setTimeout(()=>{
-			let data = {
-				"dataForm": fakedata,
-				"jobTitles": [],
-				"branches": [],
-				"department": [],
-				"groups": [],
-				"taxtable": []
-			}
-			dispatch(loadEmployeeEmploymentEditSuccess(data))	
-			//dispatch(loadFailedEmployeeGeneralView("test error"))
-		}, 1000)		
+		fetch('http://localhost:8081/employee/employment/edit/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	//console.log(ret.data)		 			 
+		 	if (ret.data.withdata){
+		 		ret.data.employment.startdate= moment(ret.data.employment.startdate,'YYYY/MM/DD')   
+		 	}	 			 
+		 	dispatch(loadEmployeeEmploymentEditSuccess(ret.data))	
+		 })
+		.catch(error => { 
+			dispatch(loadEmployeeEmploymentEditFailed('Database error'))			
+		})	
 	}
 }
 

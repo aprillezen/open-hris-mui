@@ -213,7 +213,8 @@ const mapStateToPropsEmployment = (state)=>{
 				isSaving: state.employeeEmployment.isSaving,
 				updateSuccess: state.employeeEmployment.updateSuccess,
 				updateError: state.employeeEmployment.updateError,
-				isLoadEdit: state.employeeEmployment.isLoadEdit
+				isLoadEdit: state.employeeEmployment.isLoadEdit,
+				withdata: state.employeeEmployment.withdata
 			}
 }
 const mapDispatchToPropsEmployment= (dispatch)=>{
@@ -221,8 +222,8 @@ const mapDispatchToPropsEmployment= (dispatch)=>{
 		load: (id)=> {
 			dispatch(loadEmployeeEmployment(id))
 		},
-		edit: ()=>{
-			dispatch(loadEmploymentForm())
+		edit: (id)=>{
+			dispatch(loadEmploymentForm(id))
 		}
 	}
 }
@@ -232,6 +233,7 @@ export const EmployeeEmploymentContainer = connect(mapStateToPropsEmployment,map
 // EMPLOYEE EMPLOYMENT FORM (EDIT)
 // ********************************************************************************
 const mapStateToPropsEmploymentForm = (state)=>{
+
 	return { 
 				data: state.employeeEmployment.data,									
 				errorMessage: state.employeeEmployment.errorMessage,
@@ -240,9 +242,9 @@ const mapStateToPropsEmploymentForm = (state)=>{
 				updateError: state.employeeEmployment.updateError,
 				jobtitles: state.employeeEmployment.jobtitles,
 				branches: state.employeeEmployment.branches,
-				department: state.employeeEmployment.department,
-				groups: state.employeeEmployment.groups,
-				taxtable: state.employeeEmployment.taxtable
+				department: state.employeeEmployment.department,				
+				taxstatus: state.employeeEmployment.taxstatus,
+				withdata: state.employeeEmployment.withdata
 			}
 }
 const mapDispatchToPropsEmploymentForm= (dispatch)=>{
@@ -259,6 +261,9 @@ const mapDispatchToPropsEmploymentForm= (dispatch)=>{
 		},
 		saveFailed: (message)=>{
 			
+		},
+		load: (id)=>{			
+			dispatch(loadEmploymentForm(id))
 		}
 	}
 }

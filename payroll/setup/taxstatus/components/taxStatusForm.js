@@ -9,15 +9,14 @@ import 'react-select/dist/react-select.css'
 import Notification from 'react-notification-system'
 
 
-class LtForm extends Component{
+class TaxStatusForm extends Component{
 
 	constructor(props){
 		super(props)
-
 		if (props.params.id!='add'){						
 			this.props.edit(this.props.params.id)
 		}else{
-			props.add()
+			props.add()				
 		}
 	}
 
@@ -30,80 +29,75 @@ class LtForm extends Component{
 		})
 	}
 
+	componentDidMount(){
+		if (this.props.params.id=='add'){											
+			this.refs.description.value=''			
+		}
+		this.refs.taxcode.focus()
+	}
 
 	handleSubmit(e){
 		e.preventDefault()
-		if (_.isEmpty(this.props.data.leavecode)){
-			this.props.saveFailed("Please enter leave code!")	
+		if (_.isEmpty(this.props.data.taxcode)){
+			this.props.saveFailed("Please enter tax code!")	
 			return
-		}
-		if (_.isEmpty(this.props.data.description)){
+		}else if (_.isEmpty(this.props.data.description)){
 			this.props.saveFailed("Please enter description!")	
-			return
-		}
-
-		if (_.isEmpty(this.props.data.linkId)){
-			this.props.saveFailed("Please select pay account!")	
 			return
 		}
 
 		this.props.save(this.props.data, this.props.editMode)
 	}
 
-	onValueChanged(e){
-		this.props.valueChanged(this.props.data, e.target.name, e.target.value)	
+	onValueChanged(e){		
+		this.props.valueChanged(this.props.data, e.target.name, e.target.value )	
 	}
 
 	handleBack(e){
-		this.context.router.push('/leave/setup/lt/list')
-	}
-
-	onSelectChanged(val){
-		this.props.linkidChange(val)
+		this.context.router.push('/py/setup/taxstatus/list')
 	}
 
 	componentWillReceiveProps(nextProps){		
 		if (nextProps.saveAddSuccess){
-			this.showNotif('New Leave Type successfully created.')	
+			this.showNotif('New Tax status successfully created.')	
 			setTimeout(()=>{
-				this.context.router.push('/leave/setup/lt/list')
+				this.context.router.push('/py/setup/taxstatus/list')
 			},1000)
 			
 		}else if (nextProps.updateSuccess){
-			this.showNotif('Leave Type successfully modified.')	
+			this.showNotif('Tax status successfully modified.')	
 			setTimeout(()=>{
-				this.context.router.push('/leave/setup/lt/list')
+				this.context.router.push('/py/setup/taxstatus/list')
 			},1000)
 		}
 		
 	}
 
-	render(){		
+	render(){
 
-		const { hasError, isSaving, message, data, isFetching, editMode, title, payaccounts} = this.props
+		const textareaStyle = {
+		  width: '100%'
+		}
+
+		const { hasError, isSaving, message, data, isFetching, editMode, title } = this.props
 
 
 		let content = <div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
-							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>	
-								<div className="form-group">	
-								 	<label className="col-sm-3 control-label">Leave Code<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-2">								    	
-								    	<input ref="leavecode" name="leavecode" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.leavecode}/>
-								    </div>
-								 </div>												    		
+							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>												    		
 								 <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Description<sup className="required_asterisk">*</sup> </label>						    
+								 	<label className="col-sm-3 control-label">Tax code<sup className="required_asterisk">*</sup> </label>						    
 								    <div className="col-sm-5">								    	
-								    	<input ref="description" name="description" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.description}/>
+								    	<input ref="taxcode" name="taxcode" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.taxcode}/>
 								    </div>
 								 </div>								 								
-								  <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Linked Account</label>							    
-								    <div className="col-sm-5">								    	
-								    	<Select name="linkId" value={data.linkId} options={payaccounts} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={true} />
+								
+								<div className="form-group">
+								 	<label className="col-sm-3 control-label">Description<sup className="required_asterisk">*</sup> </label>						    							    
+								    <div className="col-sm-7">		
+								    	<textarea ref="description" name="description" style={textareaStyle} className="form-control" rows="3" onChange={this.onValueChanged.bind(this)} defaultValue={data.description}></textarea>						    									    	
 								    </div>						   
-								 </div>		
+								 </div>
 								 
 								 <div className="form-group">	
 								  	<div className="col-sm-3"></div>						    
@@ -141,11 +135,11 @@ class LtForm extends Component{
 }
 
 
-LtForm.contextTypes={
+TaxStatusForm.contextTypes={
 	router: React.PropTypes.object
 }
 
-export default LtForm
+export default TaxStatusForm
 
 
 

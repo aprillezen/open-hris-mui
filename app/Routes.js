@@ -4,6 +4,20 @@ import App from './App'
 import Nav from './Appnav'
 import Login from './Login'
 import Dashboard from './Dashboard'
+
+import Timekeeping from './Timekeeping'
+import TmSetup from '../ta/setup'
+import TmOption from '../ta/setup/options/container'
+
+import TmSched from '../ta/schedule'
+
+import Payroll from './Payroll'
+import PayrollSetup from '../payroll/setup'
+import PayrollOption from '../payroll/setup/options/container'
+
+import TaxStatusContainer from '../payroll/setup/taxstatus/components'
+import {TaxStatus_List_Container, TaxStatus_Form_Container} from '../payroll/setup/taxstatus/container'
+
 import Leave from './Leave'
 import LeaveSetup from '../leave/setup'
 import LeaveOption from '../leave/setup/options/container'
@@ -91,7 +105,28 @@ module.exports = (
                         <Route path='/leave/setup/lt/:id' component={Lt_Form_Container}/>
                     </Route>                    
                 </Route>                  
-            </Route>	  			  		
+            </Route>
+            <Route path='/ta' component={Timekeeping}>
+                <IndexRedirect to="/ta/setup" />
+                <Route path='/ta/setup' component={TmSetup}>
+                    <IndexRedirect to="/ta/setup/options" />  
+                    <Route path='/ta/setup/options' component={TmOption}/>                                     
+                </Route>       
+                 <Route path='/ta/schedule' component={TmSched} />           
+            </Route>    	
+            <Route path='/py' component={Payroll}>
+                <IndexRedirect to="/py/setup" />
+                <Route path='/py/setup' component={PayrollSetup}>
+                    <IndexRedirect to="/py/setup/options" />  
+                    <Route path='/py/setup/options' component={PayrollOption}/>
+                    <Route path='/py/setup/taxstatus' component={TaxStatusContainer}>
+                        <IndexRedirect to='/py/setup/taxstatus/list'/>   
+                        <Route path='/py/setup/taxstatus/list' component={TaxStatus_List_Container}/>
+                        <Route path='/py/setup/taxstatus/:id' component={TaxStatus_Form_Container}/>
+                    </Route>   
+                </Route>                  
+            </Route>   
+
         </Route>
         <Route path='/login' component={Login} />
     </Route>  

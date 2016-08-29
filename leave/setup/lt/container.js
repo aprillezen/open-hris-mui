@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchLeaveTypes,loaddAdd,valueChangeForm,saveFailedForm,
-		 headvalueChangeForm, saveLeaveType,loadEdit,
+		 linkidvalueChangeForm, saveLeaveType,loadEdit,
 		 loadDeleteDialog, cancelDelete} from './actions'
 import List from './components/list'
 import LtForm from './components/ltForm'
@@ -13,7 +13,8 @@ const mapStateToProps = (state)=>{
 		hasError: state.leavetype.hasError,
 		message: state.leavetype.message,
 		data: state.leavetype.data,
-		deleteSuccess: state.leavetype.deleteSuccess
+		deleteSuccess: state.leavetype.deleteSuccess,
+		deletemsg: state.leavetype.deletemsg
 	}
 }
 
@@ -62,8 +63,8 @@ const mapDispatchToPropsForm = (dispatch)=>{
 		saveFailed: (message)=>{
 			dispatch(saveFailedForm(message))
 		},
-	 	headChange: (val)=>{
-	 		dispatch(headvalueChangeForm(val))
+	 	linkidChange: (val)=>{
+	 		dispatch(linkidvalueChangeForm(val))
 	 	},
 	 	edit: (id)=>{
 	 		dispatch(loadEdit(id,"Edit leave type"))

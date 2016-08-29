@@ -418,8 +418,7 @@ const dataForm_employment_initvalue = {
 								"separationdate": null,
 								"paymentmode":0,
 								"branch":'',
-								"department":'',
-								"group":'',
+								"department":'',								
 								"sssno":'',
 								"philhealthno":'',
 								"pagibigno":'',
@@ -438,9 +437,9 @@ const emp_employment_initialState = {
 								updateError: false,
 								jobtitles: [],
 								branches: [],
-								department: [],
-								groups: [],
-								taxtable: []
+								department: [],								
+								taxstatus: [],
+								withdata: false
 							 }
 export const emp_employment_reducer = (state = emp_employment_initialState, action)=>{	
 	switch(action.type){
@@ -457,10 +456,21 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 		case ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_LOAD_VIEW:
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
+				withdata: action.withdata,
 				isFetchFailed: false,
 				hasError:false,
 				isSaving: false,
 				errorMessage:'',
+				data: action.data
+			})	
+		case ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_NO_DATA_LOAD_VIEW:
+			return Object.assign({}, state,{
+				isFetching: action.isFetching,
+				withdata: action.withdata,
+				isFetchFailed: false,
+				hasError:false,
+				isSaving: false,
+				errorMessage:'',				
 				data: action.data
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_FAILED_LOAD_VIEW:
@@ -495,12 +505,12 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 				updateError: false,
 				saveSuccess: false,
 				saveError: false,
-				data: action.data.dataForm,
+				data: action.data.employment,
+				withdata: action.data.withdata,		
 				jobtitles: action.data.jobtitles,
 				branches: action.data.branches,
-				department: action.data.department,
-				groups: action.data.groups,
-				taxtable: action.data.taxtable
+				department: action.data.department,				
+				taxstatus: action.data.taxstatus
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_FAILED:
 			return Object.assign({}, state,{
