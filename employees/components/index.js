@@ -3,12 +3,29 @@ import Grid from 'griddle-react'
 import { cols, colmetadata} from './colConfig'
 import { Link } from 'react-router'
 import Alert from '../../shared/Alert'
+import Notification from 'react-notification-system'
 
 class index extends Component{
 
 	constructor(props){
 		super(props)
 		props.fetch()
+	}
+
+	showNotif(msg){
+		this.refs.notify.addNotification({
+			message: msg,
+			level: 'success',
+			position: 'tc',
+			autoDismiss: 3
+		})
+	}
+
+	componentWillReceiveProps(nextProps){		
+		if (nextProps.deleteSuccess){
+			this.showNotif('Employee successfully deleted.')		
+		}
+		
 	}
 
 	render(){
@@ -35,6 +52,7 @@ class index extends Component{
 		return(
 			<div>
 				{ body }	
+				<Notification ref="notify"/>
 			</div>																	
 		)
 	}

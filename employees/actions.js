@@ -11,7 +11,6 @@ export function loadEmployeeList(){
 		isFetching: true
 	}
 }
-
 export function loadSucessEmployeeList(data){
 	return{
 		type: ACT.EMP_LOAD_SUCCESS_LIST,
@@ -19,7 +18,6 @@ export function loadSucessEmployeeList(data){
 		data
 	}
 }
-
 export function loadFailedEmployeeList(message){
 	return{
 		type: ACT.EMP_LOAD_FAILED_LIST,		
@@ -28,15 +26,9 @@ export function loadFailedEmployeeList(message){
 		message
 	}
 }
-
 export function load(){     
 	return dispatch=>{
-		dispatch(loadEmployeeList())
-		// return setTimeout(()=>{
-		// 	dispatch(loadSucessEmployeeList(fakedata))	
-		// 	//dispatch(loadFailedEmployeeList("test error"))
-		// }, 2000)
-
+		dispatch(loadEmployeeList())		
 		fetch('http://localhost:8081/employee')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -53,16 +45,89 @@ export function load(){
 	}
 }
 
+export function loadDeleteDialog(id, msg){
+	return{
+		type: ACT.EMP_LOAD_DELETE_DIALOG,
+		isDeleteDialogOpen: true,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteErrorMsg: '',
+		deleteSuccess: false,
+		id,
+		msg		
+	}
+}
+
+export function cancelDelete(){
+	return{
+		type: ACT.EMP_CANCEL_DELETE,
+		isDeleteDialogOpen: false,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteSuccess: false,
+		deleteErrorMsg:'',
+		deleteId: 0
+	}
+}
+
+export function deleteAttempt(){
+	return{
+		type: ACT.EMP_DELETE_ATTEMPT,
+		isDeleting: true,
+		deleteHasError: false,
+		deleteSuccess: false,
+		deleteErrorMsg:''
+		
+	}
+}
+export function deleteFailed(message){
+	return{
+		type: ACT.EMP_DELETE_FAILED,
+		isDeleting: false,
+		deleteHasError: true,	
+		deleteSuccess: false,
+		message
+	}
+}
+
+export function deleteSuccess(id){
+	return{
+		type: ACT.EMP_DELETE_SUCCESS,
+		isDeleteDialogOpen: false,
+		isDeleting: false,
+		deleteHasError: false,
+		deleteSuccess: true,
+		deleteErrorMsg:'',
+		deleteSuccess: true
+	}
+}
+
+export function deleteEmployee(id){
+	return dispatch=>{
+		dispatch(deleteAttempt())		
+		fetch('http://localhost:8081/employee/delete/'+id)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(deleteSuccess(id))	
+		 	}else{
+		 		dispatch(deleteFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(deleteFailed('Database error'))			
+		})
+	}
+}
+
 
 // ********************************************************************************
 // EMPLOYEE ADD
 // ********************************************************************************
-export function loadEmployeeForm(editMode, title, data){	
+export function loadEmployeeForm(){	
 	return{
-		type: ACT.EMP_LOAD_FORM,
-		editMode: editMode,		
-		title: title,
-		data
+		type: ACT.EMP_LOAD_FORM
 	}
 }
 export function valueChangeEmployeeForm(data, field, value){
@@ -105,11 +170,7 @@ export function saveDB(data, editMode){
   		}	
   	data.birthdate = moment(data.birthdate,'MM/DD/YYYY')
 	return dispatch=>{
-		dispatch(savingEmployeeForm())
-		// return setTimeout(()=>{			
-		// 	dispatch(saveSuccessEmployeeForm(data))
-		// 	//dispatch(loadFailedEmployeeList("test error"))
-		// }, 2000)
+		dispatch(savingEmployeeForm())	
 		fetch(url, dataForm)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -133,8 +194,7 @@ export function savingEmployeeForm(){
 		type: ACT.EMP_SAVE_FORM,
 		isSaving: true,		
 		hasError: false,
-		saveSuccess: false,
-		saveError: false
+		saveSuccess: false		
 	}
 }
 export function saveFailedEmployeeForm(message){
@@ -142,8 +202,7 @@ export function saveFailedEmployeeForm(message){
 		type: ACT.EMP_SAVE_FAILED_FORM,
 		isSaving: false,		
 		hasError: true,				
-		saveSuccess: false,
-		saveError: true,
+		saveSuccess: false,		
 		message
 	}
 }
@@ -152,8 +211,7 @@ export function saveSuccessEmployeeForm(data){
 		type: ACT.EMP_SAVE_SUCCESS_FORM,
 		isSaving: false,		
 		hasError: false,
-		saveSuccess: true,
-		saveError: false,
+		saveSuccess: true,		
 		data	
 	}
 }
@@ -182,24 +240,9 @@ export function loadFailedEmployeeGeneralView(message){
 		message
 	}
 }
-export function loadEmployeeGeneral(id){
-	// let fakedata = {
-	// 					"id":0,
-	// 					"employeeId":'00006',
-	// 					"fname":'Barbie',
-	// 					"lname":'Almabis',
-	// 					"mname":'Makoy',
-	// 					"birthdate": '10/1/1979',
-	// 					"civilstat":"2",
-	// 					"gender":'1'								
-	// 				 }
+export function loadEmployeeGeneral(id){	
 	return dispatch=>{
-		dispatch(loadEmployeeGeneralView())
-		// return setTimeout(()=>{
-		// 	dispatch(loadSuccessEmployeeGeneralView(initial_data))	
-		// 	//dispatch(loadFailedEmployeeGeneralView("test error"))
-		// }, 1000)
-
+		dispatch(loadEmployeeGeneralView())	
 		fetch('http://localhost:8081/employee/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -473,33 +516,36 @@ export function loadEmploymentForm(id){
 	let fakedata = {
 					"id": id,
 					"startdate": null,
-					"jobtitle":'',
-					"joblevel": 0,								
+					"jobtitle": '',
+					"joblevel": '',
 					"category": 0,
-					"schedule": 0,
-					"empstatus": 0,
+					"schedule": '',
+					"empstatus": null,
 					"separationdate": null,
-					"paymentmode":1,
+					"paymentmode": 0,
 					"branch":'',
-					"department":'',
-					"group":'',
+					"department":'',								
 					"sssno":'',
 					"philhealthno":'',
 					"pagibigno":'',
 					"tin":'',
-					"taxstatus":''
+					"taxstatus":''	
 				   }
 	return dispatch=>{
 		dispatch(loadEmployeeEmploymentEdit())
 		fetch('http://localhost:8081/employee/employment/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{		 	
-		 	//console.log(ret.data)		 			 
+		 ).then(({ ret, response })=>{		 		 	
 		 	if (ret.data.withdata){
-		 		ret.data.employment.startdate= moment(ret.data.employment.startdate,'YYYY/MM/DD')   
-		 	}	 			 
-		 	dispatch(loadEmployeeEmploymentEditSuccess(ret.data))	
+		 		ret.data.employment.startdate= moment(ret.data.employment.startdate)
+		 		if (!_.isEmpty(ret.data.employment.separationdate)){
+					ret.data.employment.separationdate= moment(ret.data.employment.separationdate)
+		 		}
+		 	}else{
+		 		ret.data.employment = fakedata	
+		 	} 	
+		 	dispatch(loadEmployeeEmploymentEditSuccess(ret.data))		 		 	
 		 })
 		.catch(error => { 
 			dispatch(loadEmployeeEmploymentEditFailed('Database error'))			
@@ -515,8 +561,6 @@ export function loadEmployeeEmploymentEdit(){
 		isLoadEdit: true
 	}
 }
-
-
 export function loadEmployeeEmploymentEditSuccess(data){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_SUCCESS,
@@ -524,7 +568,6 @@ export function loadEmployeeEmploymentEditSuccess(data){
 		data
 	}
 }
-
 export function loadEmployeeEmploymentEditFailed(message){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_FAILED,
@@ -534,10 +577,110 @@ export function loadEmployeeEmploymentEditFailed(message){
 		message
 	}
 }
-
 export function loadEmployeeEmploymentEditCancel(){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL,
 		isLoadEdit: false
 	}
 }
+
+export function employmentDateChanged(field, value){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_DATE_CHANGED,
+		field,
+		value
+	}
+}
+export function employmentValueChanged(field, value){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_VALUE_CHANGED,		
+		field,
+		value
+	}
+}
+export function employmentSaveFailed(message){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_SAVE_FAILED,
+		hasError: true,		
+		isSaving: false,
+		updateSuccess: false,		
+		message
+	}
+}
+export function employmentSaving(){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_SAVING,
+		isSaving: true,		
+		hasError: false,
+		updateSuccess: false
+	}
+}
+
+export function employmentSaveSuccess(){
+	return{
+		type: ACT.EMP_PROFILE_EMPLOYMENT_SAVE_SUCCESS,
+		isSaving: false,		
+		hasError: false,
+		updateSuccess: true
+	}
+}
+
+export function saveEmployment(data, withdata){		
+	let tmpData = Object.assign({}, data)
+
+	tmpData.startdate =  tmpData.startdate.format('YYYY/MM/DD HH:mm:ss')		
+	if (typeof tmpData.jobtitle=='object'){
+		tmpData.jobtitle = tmpData.jobtitle.value	
+	}
+	if (typeof tmpData.joblevel=='object'){
+		tmpData.joblevel = tmpData.joblevel.value	
+	}
+	if (typeof tmpData.schedule=='object'){
+		tmpData.schedule = tmpData.schedule.value	
+	}
+	if (typeof tmpData.empstatus=='object'){
+		tmpData.empstatus = tmpData.empstatus.value	
+	}
+	if (typeof tmpData.branch=='object'){
+		tmpData.branch = tmpData.branch.value	
+	}
+	if (typeof tmpData.department=='object'){
+		tmpData.department = tmpData.department.value	
+	}
+	if (typeof tmpData.taxstatus=='object'){
+		tmpData.taxstatus = tmpData.taxstatus.value	
+	}
+	if (!_.isEmpty(tmpData.separationdate)){
+		tmpData.separationdate = tmpData.separationdate.format('YYYY/MM/DD HH:mm:ss')
+	}
+	//console.log(tmpData)	
+	let url = 'http://localhost:8081/employee/employment/add'
+	if (withdata){
+		url = 'http://localhost:8081/employee/employment/update'
+	}
+	let dataForm = {
+					    method: 'POST',
+					    headers: { 
+					    	 'Accept': 'application/json',
+					    	 'Content-Type': 'application/json',
+					    },
+					    body: JSON.stringify(tmpData)
+					}	  	 
+	return dispatch=>{
+		dispatch(employmentSaving())		
+		fetch(url, dataForm)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		dispatch(employmentSaveSuccess())	 				 				
+		 	}else{
+		 		dispatch(employmentSaveFailed(ret.message))		 			 		
+		 	}		 	
+		 })
+		.catch(error => { 					
+			dispatch(employmentSaveFailed(error))			
+		})		
+	}
+}
+

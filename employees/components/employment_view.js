@@ -7,9 +7,9 @@ import {JOB_LEVELS,EMPLOYEE_CATEGORY,PAY_SCHEDULE,PAY_MODE,EMPLOYMENT_STATUS} fr
 class Employment_View extends Component{
 
 	render(){
-		
-		const { data, withdata } = this.props
 
+		const { data, withdata } = this.props
+		
 		let joblevel = '-not set-'
 		let category = '-not set-'
 		let schedule = '-not set-'
@@ -129,10 +129,7 @@ class Employment_View extends Component{
 						    	<label className="field_value">{data.taxstatus}</label>
 						    </div>								   
 						 </div>						 
-						 <br/>
-						 <h3>Career Movement</h3>	
-						 <hr/>	
-						 <br/>
+						 <br/>						
 						 <br/>				 							 						
 					</div>
 			    </div>
@@ -143,6 +140,7 @@ class Employment_View extends Component{
 
 Employment_View.propTypes = {
 	data: React.PropTypes.object.isRequired,
+	withdata: React.PropTypes.bool.isRequired,
 	onEdit: React.PropTypes.func.isRequired
 }
 

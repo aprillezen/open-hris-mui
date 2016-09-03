@@ -18,7 +18,8 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
 		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,
 		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI,
-		 loadEmployeeEmployment, loadEmploymentForm,loadEmployeeEmploymentEditCancel} from './actions'
+		 loadEmployeeEmployment, loadEmploymentForm,loadEmployeeEmploymentEditCancel, 
+		 employmentDateChanged, employmentValueChanged, employmentSaveFailed, saveEmployment} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -29,7 +30,8 @@ const mapStateToProps = (state)=>{
 		isFetchFailed: state.employees.isFetchFailed,
 		hasError: state.employees.hasError,
 		errorMessage: state.employees.errorMessage,
-		data: state.employees.data
+		data: state.employees.data,
+		deleteSuccess: state.employees.deleteSuccess
 	}
 }
 const mapDispatchToProps = (dispatch)=>{
@@ -45,27 +47,18 @@ export const EmployeesListContainer = connect(mapStateToProps, mapDispatchToProp
 // EMPLOYEE ADD
 // ********************************************************************************
 const mapStateToPropsForm = (state)=>{
-	return { 
-		editMode: state.employeeForm.editMode,
-		dataForm: state.employeeForm.dataForm,	
-		title: state.employeeForm.title,
+	return { 		
+		data: state.employeeForm.data,			
 		hasError: state.employeeForm.hasError,
 		errorMessage:state.employeeForm.errorMessage,														
-		isSaving: state.employeeForm.isSaving,										
-		saveError: state.employeeForm.saveError,
-		saveSuccess: state.employeeForm.saveSuccess,
-		saveEditSuccess: state.employeeForm.saveEditSuccess,
-		isDeleting: state.employeeForm.isDeleting,
-		deleteHasError: state.employeeForm.deleteHasError,
-		deleteErrorMsg: state.employeeForm.deleteErrorMsg,
-		deletemsg: state.employeeForm.deletemsg,
-		deleteSuccess: state.employeeForm.deleteSuccess
+		isSaving: state.employeeForm.isSaving,												
+		saveSuccess: state.employeeForm.saveSuccess		
 	}
 }
 const mapDispatchToPropsForm = (dispatch)=>{
 	return{
-		loadForm: (editmode, title, data)=> {
-			dispatch(loadEmployeeForm(editmode, title, data))
+		loadForm: ()=> {
+			dispatch(loadEmployeeForm())
 		},
 		valueChanged: (data, field, value)=>{
 			dispatch(valueChangeEmployeeForm(data, field,value))
@@ -235,7 +228,8 @@ export const EmployeeEmploymentContainer = connect(mapStateToPropsEmployment,map
 const mapStateToPropsEmploymentForm = (state)=>{
 
 	return { 
-				data: state.employeeEmployment.data,									
+				data: state.employeeEmployment.dataForm,		
+				hasError: state.employeeEmployment.hasError,									
 				errorMessage: state.employeeEmployment.errorMessage,
 				isSaving: state.employeeEmployment.isSaving,
 				updateSuccess: state.employeeEmployment.updateSuccess,
@@ -250,20 +244,19 @@ const mapStateToPropsEmploymentForm = (state)=>{
 const mapDispatchToPropsEmploymentForm= (dispatch)=>{
 	return{		
 		valueChanged: (field, value)=>{
-			
+			dispatch(employmentValueChanged(field, value))
 		},
-		cancelEdit: (id)=>{
-			dispatch(loadEmployeeEmploymentEditCancel())
-			dispatch(loadEmployeeEmployment(id))
+		cancelEdit: ()=>{
+			dispatch(loadEmployeeEmploymentEditCancel())			
 		},
-		update: (data)=>{
-			
+		update: (data, withdata)=>{			
+			dispatch(saveEmployment(data, withdata))
 		},
 		saveFailed: (message)=>{
-			
-		},
-		load: (id)=>{			
-			dispatch(loadEmploymentForm(id))
+			dispatch(employmentSaveFailed(message))
+		},		
+		dateChanged: (field, value)=>{
+			dispatch(employmentDateChanged(field, value))
 		}
 	}
 }
