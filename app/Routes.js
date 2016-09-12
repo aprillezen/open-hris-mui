@@ -9,7 +9,14 @@ import Timekeeping from './Timekeeping'
 import TmSetup from '../ta/setup'
 import TmOption from '../ta/setup/options/container'
 
+import TmShiftContainer from '../ta/setup/shift/components'
+import {ShiftListContainer, ShiftFormContainer} from '../ta/setup/shift/container'
+
 import TmSched from '../ta/schedule'
+
+import TmAttendance from '../ta/attendance'
+import TmDailyContainer from '../ta/attendance/daily/components'
+import {TmDailyListContainer} from '../ta/attendance/daily/container'
 
 import Payroll from './Payroll'
 import PayrollSetup from '../payroll/setup'
@@ -110,9 +117,22 @@ module.exports = (
                 <IndexRedirect to="/ta/setup" />
                 <Route path='/ta/setup' component={TmSetup}>
                     <IndexRedirect to="/ta/setup/options" />  
-                    <Route path='/ta/setup/options' component={TmOption}/>                                     
+                    <Route path='/ta/setup/options' component={TmOption}/>
+                    <Route path='/ta/setup/shift' component={TmShiftContainer}>
+                        <IndexRedirect to='/ta/setup/shift/list'/>   
+                        <Route path='/ta/setup/shift/list' component={ShiftListContainer}/>
+                        <Route path='/ta/setup/shift/:id' component={ShiftFormContainer}/>
+                    </Route>                                                            
                 </Route>       
-                 <Route path='/ta/schedule' component={TmSched} />           
+                 <Route path='/ta/schedule' component={TmSched} />   
+
+                 <Route path='/ta/attendance' component={TmAttendance}>
+                    <IndexRedirect to="/ta/attendance/daily" />                     
+                    <Route path='/ta/attendance/daily' component={TmDailyContainer}>
+                        <IndexRedirect to='/ta/attendance/daily/list'/>   
+                        <Route path='/ta/attendance/daily/list' component={TmDailyListContainer}/>                        
+                    </Route>                                                            
+                </Route>        
             </Route>    	
             <Route path='/py' component={Payroll}>
                 <IndexRedirect to="/py/setup" />
