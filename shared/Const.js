@@ -5,6 +5,7 @@ export const PAY_SCHEDULE = [ "Once a month", "Twice a month","Every week","Ever
 export const PAY_MODE = [ "Bank", "Cash"]
 export const EMPLOYMENT_STATUS = [ "Regular", "Contractual","Probationary","Resigned","Terminated","Temporary","End of Contract"]
 
+export const HOLIDAY_TYPE = [ "Legal Holiday", "Special Holiday","Non-Working Holiday","Work Suspension"]
 
 export const JOB_LEVELS_DROPDOWN = [ 
 			{ value: 0, label: 'Top Management' },

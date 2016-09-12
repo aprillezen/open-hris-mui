@@ -17,10 +17,13 @@ import {leavetypeReducer,leavetypeFormReducer} from './leave/setup/lt/reducer'
 import {taxStatusReducer, taxStatusFormReducer} from './payroll/setup/taxstatus/reducer'
 
 import {shiftReducer, shiftFormReducer} from './ta/setup/shift/reducer'
+import {holidayReducer, holidayFormReducer} from './ta/setup/holiday/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
+	holiday: holidayReducer,
+	holidayForm: holidayFormReducer,
 	shift: shiftReducer,
 	shiftForm: shiftFormReducer,
 	taxstatusForm: taxStatusFormReducer,
