@@ -6,7 +6,7 @@ import { loadDeleteDialog, cancelDelete, deleteShift} from '../actions'
 class RowLink extends Component{
 
 	handleClick(e){		
-		this.context.router.push('/ta/setup/shift/'+this.props.rowData.id)
+		this.context.router.push('/ta/setup/holiday/'+this.props.rowData.id)
 	}
 
 	handleDelete(e){

@@ -5,7 +5,14 @@ export const PAY_SCHEDULE = [ "Once a month", "Twice a month","Every week","Ever
 export const PAY_MODE = [ "Bank", "Cash"]
 export const EMPLOYMENT_STATUS = [ "Regular", "Contractual","Probationary","Resigned","Terminated","Temporary","End of Contract"]
 
-export const HOLIDAY_TYPE = [ "Legal Holiday", "Special Holiday","Non-Working Holiday","Work Suspension"]
+export const HOLIDAY_TYPE = [ "Legal Holiday", "Special Holiday","Other Holiday","Work Suspension"]
+
+export const HOLIDAY_TYPE_DROPDOWN = [ 
+			{ value: 0, label: 'Legal Holiday' },
+			{ value: 1, label: 'Special Holiday' },
+			{ value: 2, label: 'Other Holiday' },
+			{ value: 3, label: 'Work Suspension' }								
+		]
 
 export const JOB_LEVELS_DROPDOWN = [ 
 			{ value: 0, label: 'Top Management' },
@@ -29,4 +36,14 @@ export const PAY_SCHEDULE_DROPDOWN = [
 			{ value: 1, label: 'Twice a month' },
 			{ value: 2, label: 'Every week' },
 			{ value: 3, label: 'Everday' }
+		]
+
+export const YEAR_SELECTION = [ 
+			{ value: 2011, label: '2011' },
+			{ value: 2012, label: '2012' },
+			{ value: 2013, label: '2013' },
+			{ value: 2014, label: '2014' },
+			{ value: 2015, label: '2015' },
+			{ value: 2016, label: '2016' },
+			{ value: 2017, label: '2017' }									
 		]

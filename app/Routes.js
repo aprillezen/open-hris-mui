@@ -12,6 +12,9 @@ import TmOption from '../ta/setup/options/container'
 import TmShiftContainer from '../ta/setup/shift/components'
 import {ShiftListContainer, ShiftFormContainer} from '../ta/setup/shift/container'
 
+import TmHolContainer from '../ta/setup/holiday/components'
+import {HolidayListContainer, HolidayFormContainer} from '../ta/setup/holiday/container'
+
 import TmSched from '../ta/schedule'
 
 import TmAttendance from '../ta/attendance'
@@ -122,6 +125,11 @@ module.exports = (
                         <IndexRedirect to='/ta/setup/shift/list'/>   
                         <Route path='/ta/setup/shift/list' component={ShiftListContainer}/>
                         <Route path='/ta/setup/shift/:id' component={ShiftFormContainer}/>
+                    </Route> 
+                    <Route path='/ta/setup/holiday' component={TmHolContainer}>
+                        <IndexRedirect to='/ta/setup/holiday/list'/>   
+                        <Route path='/ta/setup/holiday/list' component={HolidayListContainer}/>
+                        <Route path='/ta/setup/holiday/add/:id' component={HolidayFormContainer}/>
                     </Route>                                                            
                 </Route>       
                  <Route path='/ta/schedule' component={TmSched} />   

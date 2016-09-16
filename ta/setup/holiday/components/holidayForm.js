@@ -7,17 +7,28 @@ import { Link } from 'react-router'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import Notification from 'react-notification-system'
-
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import { HOLIDAY_TYPE_DROPDOWN } from '../../../../shared/Const'
 
 class HolidayForm extends Component{
 
-	constructor(props){
+	constructor(props,context){
 		super(props)
-		if (props.params.id!='add'){						
-			this.props.edit(this.props.params.id)
-		}else{			
-			props.add()				
-		}				
+		// if (props.params.id!='add'){						
+		// 	this.props.edit(this.props.params.id)
+		// }else{			
+		// 	props.add()				
+		// }		
+		var path = props.location.pathname.split("/")
+		var year = path[path.length-1]
+		var act = path[path.length-2]
+		if (act!='add'){		
+
+		}else{
+			props.add(year)
+		}
+
 	}
 
 	showNotif(msg){
@@ -36,15 +47,22 @@ class HolidayForm extends Component{
 		this.refs.description.focus()				
 	}
 
+	dateChanged(field, e){		
+		this.props.valueChanged(this.props.data, field, e)
+	}
+
 	handleSubmit(e){
 		e.preventDefault()
-		if (_.isEmpty(this.props.data.description) || _.isEmpty(this.props.data.starttime) || 
-			_.isEmpty(this.props.data.breakfrom) || _.isEmpty(this.props.data.breakto) ||
-			_.isEmpty(this.props.data.endtime)){
+		if (_.isEmpty(this.props.data.description) || _.isEmpty(this.props.data.transdate) || 			
+			_.isEmpty(this.props.data.holidaytype)){
 			this.props.saveFailed("Please required fields!")	
 			return		
 		}
 		this.props.save(this.props.data, this.props.editMode)
+	}
+
+	onSelectChanged(field, val){	
+		this.props.valueChanged(this.props.data, field, val)		
 	}
 
 	onValueChanged(e){		
@@ -84,62 +102,40 @@ class HolidayForm extends Component{
 		}	
 
 		const { hasError, isSaving, message, data, isFetching, editMode, title } = this.props
-	
+
 		let content = <div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
 							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>												    		
-								 <div className="form-group">	
+								<div className="form-group">	
+								 	<label className="col-sm-3 control-label field_label">Date of Holiday<sup className="required_asterisk">*</sup></label>					    
+								    <div className="col-sm-4">								    	
+								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.transdate} onChange={this.dateChanged.bind(this,'transdate')}/>
+								    </div>						    							  
+								</div>	
+								<div className="form-group">	
 								 	<label className="col-sm-3 control-label">Description<sup className="required_asterisk">*</sup> </label>						    
 								    <div className="col-sm-6">								    	
 								    	<input ref="description" name="description" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.description}/>
 								    </div>
-								 </div>	
-
-								  <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Start Time<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-3">								    	
-								    	<input ref="starttime" name="starttime" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.starttime}/>
+								</div>	
+								<div className="form-group">	
+								 	<label className="col-sm-3 control-label">Holiday Type<sup className="required_asterisk">*</sup> </label>						    
+								    <div className="col-sm-6">								    									    	
+								    	<Select name="holidaytype" value={data.holidaytype} options={HOLIDAY_TYPE_DROPDOWN} onChange={this.onSelectChanged.bind(this,'holidaytype')} clearable={false} searchable={false} />
 								    </div>
-								 </div>	
-
-								 <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Break - From<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-3">								    	
-								    	<input ref="breakfrom" name="breakfrom" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.breakfrom}/>
-								    </div>
-								 </div>	
-
-								  <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Break - To<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-3">								    	
-								    	<input ref="breakto" name="breakto" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.breakto}/>
-								    </div>
-								 </div>		
-
-								  <div className="form-group">	
-								 	<label className="col-sm-3 control-label">End Time<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-3">								    	
-								    	<input ref="endtime" name="endtime" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.endtime}/>
-								    </div>
-								 </div>							 								
-											
-								<div className="form-group">									 	
-									<div className="col-sm-3"></div>	
-								    <div className="col-sm-8">								    	
-										<div className="checkbox">										 
-										  <input type="checkbox" ref="isdefault" name="isdefault" onChange={this.onCheckChanged.bind(this)} checked={data.isdefault==1} value='1'/> This the default shift
-										</div>
-								    </div>
-								 </div>							 								
-																
-								 
-
-								 <div className="form-group">	
+								</div>	
+								<div className="form-group">	
+								 	<label className="col-sm-3 control-label field_label">Required Workdate</label>					    
+								    <div className="col-sm-4">								    	
+								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.requiredworkdate} onChange={this.dateChanged.bind(this,'requiredworkdate')}/>
+								    </div>						    							  
+								</div>	
+								<div className="form-group">	
 								  	<div className="col-sm-3"></div>						    
 								    <div className="col-sm-3">
 								    	<SaveButton isSaving={isSaving} sStyle="btn btn-success btn-lg" caption="&nbsp; Save &nbsp;" />
 								    </div>								   
-								 </div>
+								</div>
 					    	</form>
 					    </div>
 

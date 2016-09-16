@@ -1,16 +1,16 @@
 import * as ACT from './actionTypes'
-import moment from 'moment'
 
 // ********************************************************************************
-// LISTS
+// LISTS  moment().year(),	
 // ********************************************************************************
-export function loadList(){	
+export function loadList(year){	
 	return{
 		type: ACT.HOL_LOAD_LIST,
 		isFetching: true,
 		isFetchFailed: false,		
-		message: '',
-		hasError: false
+		message: '',		
+		hasError: false,
+		year
 	}
 }
 
@@ -35,14 +35,14 @@ export function loadListFailed(message){
 	}
 }
 
-export function fetchHoliday(){	
+export function fetchHoliday(year){	
 	return dispatch=>{
-		dispatch(loadList())
+		dispatch(loadList(year))
 		// return setTimeout(()=>{
 		// 	dispatch(loadListSuccess(fakedata))	
 		// 	//dispatch(loadListFailed("test error"))
 		// }, 1000)
-		fetch('http://localhost:8081/holiday')
+		fetch('http://localhost:8081/holiday/'+ year)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
 		 ).then(({ ret, response })=>{		 	
@@ -115,10 +115,10 @@ export function loadEdit(id,title){
 		 ).then(({ ret, response })=>{			 	 	
 		 	if (parseInt(ret.status)==1){	
 		 		var data = ret.data
-		 		data.starttime = moment(data.starttime,'h:mm:ss').format('h:mm A')
-		 		data.breakfrom = moment(data.breakfrom,'h:mm:ss').format('h:mm A')	 		
-		 		data.breakto = moment(data.breakto,'h:mm:ss').format('h:mm A')	 		
-		 		data.endtime = moment(data.endtime,'h:mm:ss').format('h:mm A')	 		
+		 		// data.starttime = moment(data.starttime,'h:mm:ss').format('h:mm A')
+		 		// data.breakfrom = moment(data.breakfrom,'h:mm:ss').format('h:mm A')	 		
+		 		// data.breakto = moment(data.breakto,'h:mm:ss').format('h:mm A')	 		
+		 		// data.endtime = moment(data.endtime,'h:mm:ss').format('h:mm A')	 		
 				dispatch(loadFormSuccess(ret.data))	
 		 	}else{
 		 		dispatch(loadFormFailed(ret.message))

@@ -1,4 +1,5 @@
 import * as ACT from './actionTypes'
+import moment from 'moment'
 
 const initialstate = {
 	isFetching: false,
@@ -13,6 +14,7 @@ const initialstate = {
 	deletemsg:'',
 	deleteId:0,
 	deleteSuccess: false,
+	currentyear: moment().year()
 }
 
 const deleteData=(data, id)=>{	
@@ -22,7 +24,6 @@ const deleteData=(data, id)=>{
 	return newdata
 }
 
-
 export const holidayReducer = (state= initialstate, action)=>{
 	switch(action.type){
 		case ACT.HOL_LOAD_LIST:
@@ -31,6 +32,7 @@ export const holidayReducer = (state= initialstate, action)=>{
 				isFetchFailed: action.isFetchFailed,
 				hasError: action.hasError,
 				message: action.message,
+				currentyear: action.year,
 				isDeleteDialogOpen: false,
 				isDeleting: false,
 				deleteHasError: false,
@@ -44,7 +46,7 @@ export const holidayReducer = (state= initialstate, action)=>{
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				hasError: action.hasError,
-				message: action.message,
+				message: action.message,				
 				data: action.data
 			})
 		case ACT.HOL_LOAD_LIST_FAILED:
@@ -99,7 +101,7 @@ export const holidayReducer = (state= initialstate, action)=>{
 				saveAddSuccess: action.saveAddSuccess,
 				data: deleteData(state.data, action.deleteId),
 				deleteId: 0
-			})		
+			})				
 		default:
 			return state
 
@@ -110,8 +112,9 @@ const dataForm_initvalue = {
 							 "id": 0, 
 							 "transyear":'', 						
 							 "description":'',
-							 "transdate":'',
-							 "holidaytype": 0	
+							 "transdate": null,
+							 "holidaytype": 0,
+							 "requiredworkdate": null
 							}
 
 const form_initialstate = {
@@ -123,7 +126,8 @@ const form_initialstate = {
 	message: '',
 	saveAddSuccess: false,
 	updateSuccess: false,
-	data: dataForm_initvalue
+	data: dataForm_initvalue,
+	currentyear: moment().year()
 }
 
 const fieldvalues=(data, field, value)=>{
@@ -136,12 +140,13 @@ const fieldvalues=(data, field, value)=>{
 		case "transdate": newdata.transdate = value
 			break	
 		case "holidaytype": newdata.holidaytype = value
+			break	
+		case "requiredworkdate": newdata.requiredworkdate = value
 			break			
 		default:
 			break
 	}
 	return newdata
-
 }
 
 
@@ -157,7 +162,8 @@ export const holidayFormReducer = (state = form_initialstate, action)=>{
 				message: action.message,				
 				saveAddSuccess: action.saveAddSuccess,
 				updateSuccess: false,
-				data: action.data				
+				data: action.data,
+				currentyear: action.data.transyear		
 			})
 		case ACT.HOL_LOAD_FORM_SUCCESS:
 			return Object.assign({}, state, {		

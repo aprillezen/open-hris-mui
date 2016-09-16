@@ -4,13 +4,16 @@ import Grid from 'griddle-react'
 import { cols, colmetadata} from './colConfig'
 import Alert from '../../../../shared/Alert'
 import Notification from 'react-notification-system'
-
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
+import { YEAR_SELECTION } from '../../../../shared/Const'
+import moment from 'moment'
 
 class List extends Component{
 
 	constructor(props){
-		super(props)
-		props.fetch()
+		super(props)		
+		props.fetch(props.currentyear)
 	}
 
 	showNotif(msg){
@@ -23,7 +26,7 @@ class List extends Component{
 	}
 
 	handleCreate(e){
-		this.context.router.push('/ta/setup/shift/add')
+		this.context.router.push('/ta/setup/holiday/add/'+this.props.currentyear)
 	}
 
 	componentWillReceiveProps(nextProps){		
@@ -32,16 +35,21 @@ class List extends Component{
 		}
 		
 	}
+	onSelectChanged(e){		
+		this.props.fetch(e.value)
+	}
 
 	render(){
 
-		const { isFetching, isFetchFailed, message, data, hasError } = this.props 				
+		const { isFetching, isFetchFailed, message, data, hasError, currentyear } = this.props 				
 
 		let body= <div className="row">		 				
 						<div className="panel panel-default">	  						
 			  				<div className="panel-heading">				  
 							   <div className="pull-left">&nbsp;<button className="btn btn-success" onClick={this.handleCreate.bind(this)}>Create</button></div>
-								<button className="btn btn-default pull-right">Import</button>
+							   <div className='paramyear pull-right'>
+									<Select name="currentyear" value={currentyear} options={YEAR_SELECTION} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={false} />
+								</div>		
 						        <div className="clearfix"></div>						
 							</div>
 							<div className="panel-body">

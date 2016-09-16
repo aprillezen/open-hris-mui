@@ -14,14 +14,15 @@ const mapStateToProps = (state)=>{
 		message: state.holiday.message,
 		data: state.holiday.data,
 		deleteSuccess: state.holiday.deleteSuccess,
-		deletemsg: state.holiday.deletemsg
+		deletemsg: state.holiday.deletemsg,
+		currentyear: state.holiday.currentyear
 	}
 }
 
 const mapDispatchToProps= (dispatch)=>{
 	return {
-		fetch: ()=>{
-			dispatch(fetchHoliday())
+		fetch: (val)=>{
+			dispatch(fetchHoliday(val))
 		}
 	}
 
@@ -39,7 +40,8 @@ const mapStateToPropsForm=(state)=>{
 		data : state.holidayForm.data,		
 		title: state.holidayForm.title,		
 		saveAddSuccess: state.holidayForm.saveAddSuccess,
-		updateSuccess: state.holidayForm.updateSuccess
+		updateSuccess: state.holidayForm.updateSuccess,
+		currentyear: state.holidayForm.currentyear
 	}
 }
 
@@ -48,11 +50,13 @@ const mapDispatchToPropsForm = (dispatch)=>{
 						"id": 0, 
 						"transyear":'', 						
 						"description":'',
-						"transdate":'',
-						"holidaytype": 0						
+						"transdate": null,
+						"holidaytype": 0,
+						"requiredworkdate": null					
 					   }
 	return {
-		add: ()=>{
+		add: (yr)=>{
+			blankdata.transyear = yr
 			dispatch(loadAddForm(blankdata, "Create new holiday"))
 		},
 		save: (data,editMode)=>{
@@ -65,7 +69,7 @@ const mapDispatchToPropsForm = (dispatch)=>{
 			dispatch(saveFailedForm(message))
 		},	 
 	 	edit: (id)=>{
-	 		dispatch(loadEdit(id,"Edit shift"))
+	 		dispatch(loadEdit(id,"Edit Holiday"))
 	 	}
 	}
 
