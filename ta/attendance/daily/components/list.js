@@ -5,7 +5,6 @@ class List extends Component {
 	render(){
 		return(<div> LIST </div>)
 	}
-
 }
 
 List.contextTypes={
