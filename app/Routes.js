@@ -130,6 +130,7 @@ module.exports = (
                         <IndexRedirect to='/ta/setup/holiday/list'/>   
                         <Route path='/ta/setup/holiday/list' component={HolidayListContainer}/>
                         <Route path='/ta/setup/holiday/add/:id' component={HolidayFormContainer}/>
+                        <Route path='/ta/setup/holiday/edit/:id' component={HolidayFormContainer}/>
                     </Route>                                                            
                 </Route>       
                  <Route path='/ta/schedule' component={TmSched} />   

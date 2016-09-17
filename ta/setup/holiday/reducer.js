@@ -99,7 +99,7 @@ export const holidayReducer = (state= initialstate, action)=>{
 				deleteSuccess: action.deleteSuccess,
 				updateSuccess: action.updateSuccess,
 				saveAddSuccess: action.saveAddSuccess,
-				data: deleteData(state.data, action.deleteId),
+				data: deleteData(state.data, action.id),
 				deleteId: 0
 			})				
 		default:
@@ -168,7 +168,8 @@ export const holidayFormReducer = (state = form_initialstate, action)=>{
 		case ACT.HOL_LOAD_FORM_SUCCESS:
 			return Object.assign({}, state, {		
 				isFetching: action.isFetching,
-				data: action.data				
+				data: action.data,
+				currentyear: action.data.transyear				
 			})
 		case ACT.HOL_LOAD_FORM_FAILED:
 			return Object.assign({}, state, {		

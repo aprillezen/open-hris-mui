@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { SkyLightStateless } from 'react-skylight'
-import { loadDeleteDialog, cancelDelete, deleteShift} from '../actions'
+import { loadDeleteDialog, cancelDelete, deleteHoliday} from '../actions'
 
 class RowLink extends Component{
 
 	handleClick(e){		
-		this.context.router.push('/ta/setup/holiday/'+this.props.rowData.id)
+		this.context.router.push('/ta/setup/holiday/edit/'+this.props.rowData.id)
 	}
 
 	handleDelete(e){
@@ -21,8 +21,8 @@ class RowLink extends Component{
 		this.props.dispatch(cancelDelete())
 	}
 
-	deleteNow(e){		
-		this.props.dispatch(deleteShift(this.props.deleteId))
+	deleteNow(e){				
+		this.props.dispatch(deleteHoliday(this.props.deleteId))
 	}
 	
 	render(){
@@ -82,12 +82,12 @@ RowLink.contextTypes = {
 
 const mapStateToProps =(state)=>{		
 	return{		
-		isDeleteDialogOpen: state.shift.isDeleteDialogOpen,
-		isDeleting: state.shift.isDeleting,
-		deleteErrorMsg: state.shift.deleteErrorMsg,
-		deleteHasError: state.shift.hasError,
-		deletemsg: state.shift.deletemsg,
-		deleteId: state.shift.deleteId
+		isDeleteDialogOpen: state.holiday.isDeleteDialogOpen,
+		isDeleting: state.holiday.isDeleting,
+		deleteErrorMsg: state.holiday.deleteErrorMsg,
+		deleteHasError: state.holiday.hasError,
+		deletemsg: state.holiday.deletemsg,
+		deleteId: state.holiday.deleteId
 	}
 }
 

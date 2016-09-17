@@ -35,19 +35,8 @@ export function loadListFailed(message){
 }
 
 export function fetchLeaveTypes(){	
-
-	// let fakedata = [
- // 			{ "id": '1',"leavecode":'VL', "description":'Vacation Leave', "linkId": ''},
- // 			{ "id": '2',"leavecode":'SL', "description":'Sick Leave', "linkId": ''},
-
-	// ]
-
 	return dispatch=>{
-		dispatch(loadList())
-		// return setTimeout(()=>{
-		// 	dispatch(loadListSuccess(fakedata))	
-		// 	//dispatch(loadListFailed("test error"))
-		// }, 1000)
+		dispatch(loadList())		
 		fetch('http://localhost:8081/lt')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -101,17 +90,8 @@ export function loadFormFailed(message){
 
 export function loaddAdd(data, title){
 
-	// let py = [
-	// 	{"value": '1', "label":'Vacation Leave'},
-	// 	{"value": '2', "label":'Sick Leave'},
-	// ]
-
 	return dispatch=>{
-		dispatch(loadAddForm(title))
-		// return setTimeout(()=>{
-		// 	dispatch(loadFormSuccess(data,py))	
-		// 	//dispatch(loadListFailed("test error"))
-		// }, 1000)
+		dispatch(loadAddForm(title))		
 		fetch('http://localhost:8081/paycode/list')
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
@@ -320,7 +300,8 @@ export function deleteSuccess(id){
 		deleteErrorMsg:'',
 		deleteSuccess: true,
 		updateSuccess: false,
-		saveAddSuccess: false
+		saveAddSuccess: false,
+		id
 	}
 }
 

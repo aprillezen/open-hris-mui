@@ -97,7 +97,7 @@ export const departmentReducer = (state= initialstate, action)=>{
 				deleteSuccess: action.deleteSuccess,
 				updateSuccess: action.updateSuccess,
 				saveAddSuccess: action.saveAddSuccess,
-				data: deleteData(state.data, action.deleteId),
+				data: deleteData(state.data, action.id),
 				deleteId: 0
 			})		
 		default:

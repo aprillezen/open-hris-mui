@@ -1,4 +1,5 @@
 import * as ACT from './actionTypes'
+import moment from 'moment'
 
 // ********************************************************************************
 // LISTS  moment().year(),	
@@ -112,13 +113,12 @@ export function loadEdit(id,title){
 		fetch('http://localhost:8081/holiday/edit/'+id)
 		.then(response=>response.json()
 			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{			 	 	
-		 	if (parseInt(ret.status)==1){	
-		 		var data = ret.data
-		 		// data.starttime = moment(data.starttime,'h:mm:ss').format('h:mm A')
-		 		// data.breakfrom = moment(data.breakfrom,'h:mm:ss').format('h:mm A')	 		
-		 		// data.breakto = moment(data.breakto,'h:mm:ss').format('h:mm A')	 		
-		 		// data.endtime = moment(data.endtime,'h:mm:ss').format('h:mm A')	 		
+		 ).then(({ ret, response })=>{				 		 	 	
+		 	if (parseInt(ret.status)==1){			 		
+		 		ret.data.transdate= moment(ret.data.transdate)
+		 		if (!_.isEmpty(ret.data.requiredworkdate)){
+					ret.data.requiredworkdate= moment(ret.data.requiredworkdate)
+		 		}		 		
 				dispatch(loadFormSuccess(ret.data))	
 		 	}else{
 		 		dispatch(loadFormFailed(ret.message))
@@ -184,6 +184,16 @@ export function valueChangeForm(data, field, value){
 
 export function saveHoliday(data, editMode){
 	
+	let tmpData = Object.assign({}, data)		
+	if (!_.isEmpty(tmpData.requiredworkdate)){
+		tmpData.requiredworkdate = tmpData.requiredworkdate.format('YYYY/MM/DD HH:mm:ss')	
+	}else{
+		tmpData.requiredworkdate = null
+	}
+	if (typeof tmpData.holidaytype=='object'){
+		tmpData.holidaytype = tmpData.holidaytype.value	
+	}
+		    	
 	let dataForm = {
 		    method: 'POST',
 		    headers: { 
@@ -191,17 +201,14 @@ export function saveHoliday(data, editMode){
 	        	 'Content-Type': 'application/json',
 		    },
 		    body: JSON.stringify({
-		    	id : data.id,		    	
-		    	description: data.description,
-		    	starttime: moment(data.starttime,'h:mm A').format('HH:mm:ss'),
-		    	breakfrom: moment(data.breakfrom,'h:mm A').format('HH:mm:ss'),
-		    	breakto: moment(data.breakto,'h:mm A').format('HH:mm:ss'),
-		    	endtime: moment(data.endtime,'h:mm A').format('HH:mm:ss'),
-		    	isdefault: data.isdefault
+		    	id : tmpData.id,		
+		    	transyear: tmpData.transyear,    	
+		    	description: tmpData.description,
+		    	transdate: tmpData.transdate.format('YYYY/MM/DD HH:mm:ss'), 
+		    	holidaytype: tmpData.holidaytype,
+		    	requiredworkdate: tmpData.requiredworkdate
 		    })
-  		}	
-
-  	//console.log(dataForm)
+  		}	  	
 
   	let url = 'http://localhost:8081/holiday/add'
   	if (editMode==true){
@@ -287,7 +294,8 @@ export function deleteSuccess(id){
 		deleteErrorMsg:'',
 		deleteSuccess: true,
 		updateSuccess: false,
-		saveAddSuccess: false
+		saveAddSuccess: false,
+		id
 	}
 }
 

@@ -14,19 +14,14 @@ import { HOLIDAY_TYPE_DROPDOWN } from '../../../../shared/Const'
 class HolidayForm extends Component{
 
 	constructor(props,context){
-		super(props)
-		// if (props.params.id!='add'){						
-		// 	this.props.edit(this.props.params.id)
-		// }else{			
-		// 	props.add()				
-		// }		
+		super(props)			
 		var path = props.location.pathname.split("/")
 		var year = path[path.length-1]
 		var act = path[path.length-2]
-		if (act!='add'){		
-
-		}else{
+		if (act=='add'){		
 			props.add(year)
+		}else{
+			this.props.edit(this.props.params.id)			
 		}
 
 	}
@@ -52,9 +47,8 @@ class HolidayForm extends Component{
 	}
 
 	handleSubmit(e){
-		e.preventDefault()
-		if (_.isEmpty(this.props.data.description) || _.isEmpty(this.props.data.transdate) || 			
-			_.isEmpty(this.props.data.holidaytype)){
+		e.preventDefault()		
+		if (_.isEmpty(this.props.data.description) || _.isEmpty(this.props.data.transdate)){			
 			this.props.saveFailed("Please required fields!")	
 			return		
 		}
@@ -101,7 +95,7 @@ class HolidayForm extends Component{
 		  width: '100%'
 		}	
 
-		const { hasError, isSaving, message, data, isFetching, editMode, title } = this.props
+		const { hasError, isSaving, message, data, isFetching, editMode, title , currentyear} = this.props
 
 		let content = <div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
@@ -109,7 +103,7 @@ class HolidayForm extends Component{
 								<div className="form-group">	
 								 	<label className="col-sm-3 control-label field_label">Date of Holiday<sup className="required_asterisk">*</sup></label>					    
 								    <div className="col-sm-4">								    	
-								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.transdate} onChange={this.dateChanged.bind(this,'transdate')}/>
+								    	<DatePicker openToDate={moment(currentyear + '-01-1')} className="form-control" showYearDropdown selected={data.transdate} onChange={this.dateChanged.bind(this,'transdate')}/>
 								    </div>						    							  
 								</div>	
 								<div className="form-group">	
@@ -127,7 +121,7 @@ class HolidayForm extends Component{
 								<div className="form-group">	
 								 	<label className="col-sm-3 control-label field_label">Required Workdate</label>					    
 								    <div className="col-sm-4">								    	
-								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.requiredworkdate} onChange={this.dateChanged.bind(this,'requiredworkdate')}/>
+								    	<DatePicker openToDate={moment(currentyear + '-01-1')} className="form-control" showYearDropdown selected={data.requiredworkdate}  isClearable={true} onChange={this.dateChanged.bind(this,'requiredworkdate')}/>
 								    </div>						    							  
 								</div>	
 								<div className="form-group">	

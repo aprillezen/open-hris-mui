@@ -287,7 +287,8 @@ export function deleteSuccess(id){
 		deleteErrorMsg:'',
 		deleteSuccess: true,
 		updateSuccess: false,
-		saveAddSuccess: false
+		saveAddSuccess: false,
+		id
 	}
 }
 

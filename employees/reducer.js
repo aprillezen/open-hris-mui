@@ -101,7 +101,7 @@ export const emp_list_reducer = (state = initialState, action)=>{
 				deleteErrorMsg: action.deleteErrorMsg,
 				deleteSuccess: action.deleteSuccess,
 				updateSuccess: action.updateSuccess,				
-				data: deleteData(state.data, action.deleteId),
+				data: deleteData(state.data, action.id),
 				deleteId: 0
 			})
 		default:

@@ -98,7 +98,8 @@ export function deleteSuccess(id){
 		deleteHasError: false,
 		deleteSuccess: true,
 		deleteErrorMsg:'',
-		deleteSuccess: true
+		deleteSuccess: true,
+		id
 	}
 }
 
