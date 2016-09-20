@@ -4,12 +4,15 @@ import DatePicker from 'react-datepicker'
 import _ from 'lodash'
 import Grid from 'griddle-react'
 import { cols, colmetadata} from './colConfig'
+import { SkyLightStateless } from 'react-skylight'
 
 class List extends Component {
 
 	constructor(props){
 		super(props)		
+		this.state = { isDeleteDialogOpen: false }
 		this.props.fetch(this.props.dateStart, this.props.dateEnd)	
+
 	}
 
 	handleChangeStart(val){				
@@ -29,11 +32,23 @@ class List extends Component {
 		
 	}
 
-	browseEmployee(e){
-
+	browseEmployee(e){		
+		this.setState({ isDeleteDialogOpen: true })
 	}
 
+	closeClick(e){
+		this.setState({ isDeleteDialogOpen: false })
+	}
 	render(){
+
+		var browseDialog = {		      		    
+		      width: '40%',
+		      height: '250px',
+		      marginTop: '-200px',
+		      marginLeft: '-20%',
+		      paddingLeft: 30,
+		      paddingRight: 30
+	    }
 
 		const { isFetching, isFetchFailed, hasError, dateStart, dateEnd, data  } = this.props
 
@@ -68,7 +83,7 @@ class List extends Component {
 							 <div className="form-group minusLeft">	
 							 	<label className="col-sm-2 control-label field_label">Employee</label>					    
 							    <div className="col-sm-7">								    	
-									<button className="btn btn-default"><i className="fa fa-search" aria-hidden="true" onClick={this.browseEmployee.bind(this)}></i> &nbsp; Browse...&nbsp;</button>
+									<button onClick={this.browseEmployee.bind(this)} className="btn btn-default"><i className="fa fa-search" aria-hidden="true"></i> &nbsp; Browse...&nbsp;</button>
 							    </div>							    						  
 							 </div>	
 						</div>	
@@ -77,6 +92,14 @@ class List extends Component {
 					<div className="col-md-12">
 						{grid}
 					</div>
+
+					<SkyLightStateless dialogStyles={browseDialog} hideOnOverlayClicked ref="dialog" title="" isVisible={this.state.isDeleteDialogOpen} onCloseClicked={this.closeClick.bind(this)}>			 		   
+					    <div className="dialogTitle">Select employee</div>
+	         			
+						 <div className="pull-right">
+							 <button className="btn btn-default" onClick={this.closeClick.bind(this)}>Close</button>								
+						 </div>			          			          
+		        	</SkyLightStateless>
 			  </div>
 		 )
 	}
