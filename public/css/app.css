@@ -200,6 +200,11 @@ ul.nav-style > li.active-nav > a{
     margin-top: -26px;
 }
 
+.minusLeft{
+    margin-left: -26px;
+}
+
+
 .profile-photo{
   margin-left: 0px;
   height: 180px;
@@ -294,4 +299,9 @@ ul.nav-style > li.active-nav > a{
 
 .paramyear{
    width: 150px;
+}
+
+.add_padding_tb{
+   padding-top: 15px;
+   padding-bottom: 15px;
 }

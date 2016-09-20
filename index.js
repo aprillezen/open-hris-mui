@@ -19,9 +19,12 @@ import {taxStatusReducer, taxStatusFormReducer} from './payroll/setup/taxstatus/
 import {shiftReducer, shiftFormReducer} from './ta/setup/shift/reducer'
 import {holidayReducer, holidayFormReducer} from './ta/setup/holiday/reducer'
 
+import {dailyIOReducer} from './ta/attendance/daily/reducer'
+
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
+	dailyio: dailyIOReducer,
 	holiday: holidayReducer,
 	holidayForm: holidayFormReducer,
 	shift: shiftReducer,
