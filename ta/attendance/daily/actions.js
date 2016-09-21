@@ -80,5 +80,74 @@ export function fetchDailyIO(dateStart, dateEnd){
 	}
 }
 
+export function loadSearchEmployee(){	
+	return{
+		type: ACT.DAILY_LOAD_SEARCH_EMPLOYEE,
+		isSearchDialogOpen: true,		
+		isFetchingSearch: true,
+		isFetchSearchFailed: false,
+		searchDialogMessage:''
+	}
+}
 
+export function loadSearchEmployeeSuccess(data){	
+	return{
+		type: ACT.DAILY_LOAD_SEARCH_EMPLOYEE_SUCCESS,		
+		isFetchingSearch: false,
+		isFetchSearchFailed: false,
+		searchDialogMessage:'',
+		data
+	}
+}
 
+export function loadSearchEmployeeFailed(message){	
+	return{
+		type: ACT.DAILY_LOAD_SEARCH_EMPLOYEE_FAILED,		
+		isFetchingSearch: false,
+		isFetchSearchFailed: true,
+		message
+	}
+}
+
+export function closeSearchEmployee(message){	
+	return{
+		type: ACT.DAILY_SEARCH_EMPLOYEE_CLOSED,
+		isSearchDialogOpen: false,		
+		isFetchingSearch: false,
+		isFetchSearchFailed: false		
+	}
+}
+
+export function selectSearchEmployee(id){	
+	return{
+		type: ACT.DAILY_SEARCH_EMPLOYEE_SELECT,
+		isSearchDialogOpen: false,
+		id	
+	}
+}
+export function fetchEmployees(){	
+	let fakedata =[
+					{ "id":0, "employeeId":'00001', "fullname": 'Dondon Abion' },
+					{ "id":1, "employeeId":'00002', "fullname": 'Aprille Abion' }
+				  ] 
+
+	return dispatch=>{		
+		return setTimeout(()=>{
+			dispatch(loadSearchEmployeeSuccess(fakedata))	
+			//dispatch(loadListFailed("test error"))
+		}, 1000)
+		// fetch('http://localhost:8081/shift')
+		// .then(response=>response.json()
+		// 	.then(ret=>({ ret, response }))
+		//  ).then(({ ret, response })=>{		 	
+		//  	if (parseInt(ret.status)==1){
+		// 		dispatch(loadListSuccess(ret.data))	
+		//  	}else{
+		//  		dispatch(loadListFailed(data.message))
+		//  	}		 	
+		//  })
+		// .catch(error => { 
+		// 	dispatch(loadListFailed('Database error'))			
+		// })
+	}
+}

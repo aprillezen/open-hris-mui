@@ -1,5 +1,5 @@
 import List from './components/list'
-import { fetchDailyIO, changeDateStart, changeDateEnd } from './actions'
+import { fetchDailyIO, changeDateStart, changeDateEnd,loadSearchEmployee,closeSearchEmployee,fetchEmployees } from './actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state)=>{	
@@ -14,6 +14,11 @@ const mapStateToProps = (state)=>{
 		employeeId: state.dailyio.employeeId,
 		dateStart: state.dailyio.dateStart,
 		dateEnd: state.dailyio.dateEnd,
+		employees: state.dailyio.employees,
+		isSearchDialogOpen: state.dailyio.isSearchDialogOpen,
+		isFetchingSearch: state.dailyio.isFetchingSearch,
+		isFetchSearchFailed: state.dailyio.isFetchSearchFailed,
+		searchDialogMessage: state.dailyio.searchDialogMessage
 	}
 }
 const mapDispatchToProps= (dispatch)=>{
@@ -26,6 +31,15 @@ const mapDispatchToProps= (dispatch)=>{
 		},
 		changeEnd:(dateEnd)=>{
 			dispatch(changeDateEnd(dateEnd))
+		},
+		loadSearch:()=>{
+			dispatch(loadSearchEmployee())
+		},
+		fetchEmp:()=>{
+			dispatch(fetchEmployees())
+		},
+		closeSearch:()=>{
+			dispatch(closeSearchEmployee())
 		}
 	}
 

@@ -14,9 +14,14 @@ const initialstate = {
 	deletemsg:'',
 	deleteId:0,
 	deleteSuccess: false,
-	employeeId: '',
+	employeeId: 0,
 	dateStart: moment().subtract(15,'days'),
-	dateEnd: moment()
+	dateEnd: moment(),
+	employees: [],
+	isSearchDialogOpen: false,
+	isFetchingSearch: false,
+	isFetchSearchFailed: false,	
+	searchDialogMessage:''
 }
 
 const deleteData=(data, id)=>{	
@@ -67,6 +72,36 @@ export const dailyIOReducer = (state= initialstate, action)=>{
 		case ACT.DAILY_CHANGE_DATE_END:
 			return Object.assign({}, state, {
 				dateEnd: action.dateEnd
+			})	
+		case ACT.DAILY_LOAD_SEARCH_EMPLOYEE:
+			return Object.assign({}, state, {
+				isSearchDialogOpen: action.isSearchDialogOpen,		
+				isFetchingSearch: action.isFetchingSearch,
+				isFetchSearchFailed: action.isFetchSearchFailed,
+				searchDialogMessage:''
+			})	
+		case ACT.DAILY_LOAD_SEARCH_EMPLOYEE_SUCCESS:
+			return Object.assign({}, state, {				
+				isFetchingSearch: action.isFetchingSearch,
+				isFetchSearchFailed: action.isFetchSearchFailed,
+				employees: action.data
+			})		
+		case ACT.DAILY_LOAD_SEARCH_EMPLOYEE_FAILED:
+			return Object.assign({}, state, {				
+				isFetchingSearch: action.isFetchingSearch,
+				isFetchSearchFailed: action.isFetchSearchFailed,
+				searchDialogMessage: action.message
+			})		
+		case ACT.DAILY_SEARCH_EMPLOYEE_CLOSED:
+			return Object.assign({}, state, {		
+				isSearchDialogOpen: action.isSearchDialogOpen,			
+				isFetchingSearch: action.isFetchingSearch,
+				isFetchSearchFailed: action.isFetchSearchFailed
+			})		
+		case ACT.DAILY_SEARCH_EMPLOYEE_SELECT:
+			return Object.assign({}, state, {		
+				isSearchDialogOpen: action.isSearchDialogOpen,			
+				employeeId: action.id
 			})		
 		default:
 			return state

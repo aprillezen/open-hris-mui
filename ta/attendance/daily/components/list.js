@@ -3,14 +3,13 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import _ from 'lodash'
 import Grid from 'griddle-react'
-import { cols, colmetadata} from './colConfig'
+import { cols, colmetadata, empcols, empcolmetadata} from './colConfig'
 import { SkyLightStateless } from 'react-skylight'
 
 class List extends Component {
 
 	constructor(props){
-		super(props)		
-		this.state = { isDeleteDialogOpen: false }
+		super(props)				
 		this.props.fetch(this.props.dateStart, this.props.dateEnd)	
 
 	}
@@ -33,31 +32,42 @@ class List extends Component {
 	}
 
 	browseEmployee(e){		
-		this.setState({ isDeleteDialogOpen: true })
+		this.props.loadSearch()
+		this.props.fetchEmp()
 	}
 
 	closeClick(e){
-		this.setState({ isDeleteDialogOpen: false })
+		this.props.closeSearch()
 	}
 	render(){
 
 		var browseDialog = {		      		    
-		      width: '40%',
-		      height: '250px',
-		      marginTop: '-200px',
-		      marginLeft: '-20%',
+		      width: '60%',
+		      height: '450px',
+		      marginTop: '-230px',
+		      marginLeft: '-30%',
 		      paddingLeft: 30,
 		      paddingRight: 30
 	    }
 
-		const { isFetching, isFetchFailed, hasError, dateStart, dateEnd, data  } = this.props
+		const { isFetching, isFetchFailed, hasError, dateStart, dateEnd, data, 
+				isSearchDialogOpen,employees, isFetchingSearch, isFetchSearchFailed, searchDialogMessage } = this.props
 
-		let grid = <Grid results={data} tableClassName="griddle-table" showTableHeading={true} useGriddleStyles={true} columnMetadata={colmetadata} columns={cols}/>
+		let grid = <Grid results={data} tableClassName="griddle-table" showTableHeading={true}
+						 useGriddleStyles={true} columnMetadata={colmetadata} columns={cols}/>
 		if (isFetching){
 			grid = <div>
         			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
         		   </div>
 		}
+
+		let gridSearch = <Grid results={employees} tableClassName="griddle-table" showTableHeading={true} useGriddleStyles={true} columnMetadata={empcolmetadata} columns={empcols}/>
+		if (isFetchingSearch){
+			gridSearch = <div>
+        			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
+        		   </div>
+		}
+
 
 		return(<div> 
 					<div className="col-md-12">
@@ -93,9 +103,8 @@ class List extends Component {
 						{grid}
 					</div>
 
-					<SkyLightStateless dialogStyles={browseDialog} hideOnOverlayClicked ref="dialog" title="" isVisible={this.state.isDeleteDialogOpen} onCloseClicked={this.closeClick.bind(this)}>			 		   
-					    <div className="dialogTitle">Select employee</div>
-	         			
+					<SkyLightStateless dialogStyles={browseDialog} hideOnOverlayClicked ref="dialog" title="" isVisible={isSearchDialogOpen} onCloseClicked={this.closeClick.bind(this)}>			 		   					   
+	         			{gridSearch}
 						 <div className="pull-right">
 							 <button className="btn btn-default" onClick={this.closeClick.bind(this)}>Close</button>								
 						 </div>			          			          
