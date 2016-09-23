@@ -5,17 +5,21 @@ import _ from 'lodash'
 import Grid from 'griddle-react'
 import { cols, colmetadata, empcols, empcolmetadata} from './colConfig'
 import { SkyLightStateless } from 'react-skylight'
+import Profile from './profile'
 
 class List extends Component {
 
 	constructor(props){
-		super(props)				
-		this.props.fetch(this.props.dateStart, this.props.dateEnd)	
-
+		super(props)	
+		let empId=0
+		if (!_.isEmpty(this.props.selectedEmployee)){
+			empId = this.props.selectedEmployee.id
+		}					
+		this.props.fetch(this.props.dateStart, this.props.dateEnd, empId)	
 	}
 
 	handleChangeStart(val){				
-		if (_.isEmpty(this.props.employeeId)){
+		if (_.isEmpty(this.props.selectedEmployee)){
 			this.props.changeStart(val)
 		}else{
 			this.props.fetch(val,this.props.dateEnd)
@@ -23,7 +27,7 @@ class List extends Component {
 	}
 
 	handleChangeEnd(val){
-		if (_.isEmpty(this.props.employeeId)){
+		if (_.isEmpty(this.props.selectedEmployee)){
 			this.props.changeEnd(val)
 		}else{
 			this.props.fetch(this.props.dateStart, val)
@@ -51,7 +55,7 @@ class List extends Component {
 	    }
 
 		const { isFetching, isFetchFailed, hasError, dateStart, dateEnd, data, 
-				isSearchDialogOpen,employees, isFetchingSearch, isFetchSearchFailed, searchDialogMessage } = this.props
+				isSearchDialogOpen,employees, isFetchingSearch, isFetchSearchFailed, searchDialogMessage, selectedEmployee } = this.props
 
 		let grid = <Grid results={data} tableClassName="griddle-table" showTableHeading={true}
 						 useGriddleStyles={true} columnMetadata={colmetadata} columns={cols}/>
@@ -66,9 +70,7 @@ class List extends Component {
 			gridSearch = <div>
         			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
         		   </div>
-		}
-
-
+		}				
 		return(<div> 
 					<div className="col-md-12">
 						<div className="form-horizontal">
@@ -88,13 +90,18 @@ class List extends Component {
 									    startDate={dateStart}
 									    endDate={dateEnd}
 									    onChange={this.handleChangeEnd.bind(this)} />
+							    </div>	
+							     <div className="col-sm-3">
+							    	<button className="btn btn-default pull-right"><i className="fa fa-download" aria-hidden="true"></i> &nbsp; Import from file</button>
 							    </div>							    						  
 							 </div>	
 							 <div className="form-group minusLeft">	
 							 	<label className="col-sm-2 control-label field_label">Employee</label>					    
-							    <div className="col-sm-7">								    	
+							    <div className="col-sm-7">	
+							    	 <Profile data={selectedEmployee}/>
 									<button onClick={this.browseEmployee.bind(this)} className="btn btn-default"><i className="fa fa-search" aria-hidden="true"></i> &nbsp; Browse...&nbsp;</button>
-							    </div>							    						  
+							    </div>	
+
 							 </div>	
 						</div>	
 					</div>	

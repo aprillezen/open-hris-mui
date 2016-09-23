@@ -35,7 +35,7 @@ export const colmetadata = [
 				]
 
 
-export const empcols = [ "employeeId","fullname", "id" ]
+export const empcols = [ "employeeId","fullname", "jobtitle", "id" ]
 export const empcolmetadata = [
 					{
 						"columnName": "id",
@@ -58,5 +58,12 @@ export const empcolmetadata = [
 					    "locked": false,
 					    "visible": true,
 					    "displayName": "Employee Name",					    
+					},
+					{
+						"columnName": "jobtitle",
+					    "order": 3,
+					    "locked": false,
+					    "visible": true,
+					    "displayName": "Job Title",					    
 					}					
 				]

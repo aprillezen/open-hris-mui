@@ -305,3 +305,16 @@ ul.nav-style > li.active-nav > a{
    padding-top: 15px;
    padding-bottom: 15px;
 }
+
+.small_profile_tbl{
+  border: 1px solid #F5F5F5;
+  margin-bottom: 10px;
+}
+.small_profile_tbl > img {
+  height: 100px;
+  width: 100px;
+}
+
+.small_profile_tbl td {
+  padding: 10px;
+}

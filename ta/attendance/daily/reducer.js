@@ -14,7 +14,7 @@ const initialstate = {
 	deletemsg:'',
 	deleteId:0,
 	deleteSuccess: false,
-	employeeId: 0,
+	selectedEmployee: {},
 	dateStart: moment().subtract(15,'days'),
 	dateEnd: moment(),
 	employees: [],
@@ -30,6 +30,12 @@ const deleteData=(data, id)=>{
 	newdata.splice(index,1)
 	return newdata
 }
+
+const searchEmp=(data, id)=>{	
+	var ret = data.find((d)=>d.id==id)		
+	return ret
+}
+
 
 
 export const dailyIOReducer = (state= initialstate, action)=>{
@@ -101,7 +107,7 @@ export const dailyIOReducer = (state= initialstate, action)=>{
 		case ACT.DAILY_SEARCH_EMPLOYEE_SELECT:
 			return Object.assign({}, state, {		
 				isSearchDialogOpen: action.isSearchDialogOpen,			
-				employeeId: action.id
+				selectedEmployee: searchEmp(state.employees, action.id)
 			})		
 		default:
 			return state

@@ -11,7 +11,7 @@ const mapStateToProps = (state)=>{
 		data: state.dailyio.data,
 		deleteSuccess: state.dailyio.deleteSuccess,
 		deletemsg: state.dailyio.deletemsg,
-		employeeId: state.dailyio.employeeId,
+		selectedEmployee: state.dailyio.selectedEmployee,
 		dateStart: state.dailyio.dateStart,
 		dateEnd: state.dailyio.dateEnd,
 		employees: state.dailyio.employees,
@@ -23,8 +23,8 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchToProps= (dispatch)=>{
 	return {
-		fetch: (dateStart, dateEnd)=>{
-			dispatch(fetchDailyIO(dateStart, dateEnd))
+		fetch: (dateStart, dateEnd, emp)=>{
+			dispatch(fetchDailyIO(dateStart, dateEnd,emp))
 		},
 		changeStart: (dateStart)=>{
 			dispatch(changeDateStart(dateStart))

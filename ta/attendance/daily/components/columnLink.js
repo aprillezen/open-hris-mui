@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSearchEmployee } from '../actions'
+import { selectSearchEmployee,fetchDailyIO } from '../actions'
 
 class columnLink extends Component{
 	
-	handleSelect(e){
+	handleSelect(e){		
 		this.props.dispatch(selectSearchEmployee(this.props.data))
+		this.props.dispatch(fetchDailyIO(this.props.dateStart, this.props.dateEnd, this.props.data))
 	}
 
 	render(){		
@@ -17,8 +18,14 @@ class columnLink extends Component{
 	}
 }
 
-columnLink = connect()(columnLink)
+const mapStateToProps = (state)=>{	
+	return{					
+		dateStart: state.dailyio.dateStart,
+		dateEnd: state.dailyio.dateEnd		
+	}
+}
 
+columnLink = connect(mapStateToProps)(columnLink)
 export default columnLink
 
 

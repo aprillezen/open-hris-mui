@@ -52,31 +52,34 @@ export function changeDateEnd(dateEnd){
 	}
 }
 
-export function fetchDailyIO(dateStart, dateEnd){	
-	let fakedata =[
-					{ "id":1,"transdate": '09/20/206', "transtime":'8:15 AM', "transtype":'IN' },
-					{ "id":2,"transdate": '09/20/206', "transtime":'6:15 PM', "transtype":'OUT' }
-				  ] 
-
+export function fetchDailyIO(dateStart, dateEnd, empId){	
+	// let fakedata =[
+	// 				{ "id":1,"transdate": '09/20/206', "transtime":'8:15 AM', "transtype":'IN' },
+	// 				{ "id":2,"transdate": '09/20/206', "transtime":'6:15 PM', "transtype":'OUT' }
+	// 			  ] 	
+	let ds =  moment(dateStart).format('YYYY-MM-DD')
+	let de =  moment(dateEnd).format('YYYY-MM-DD')
+	var url = 'http://localhost:8081/attlog/' + empId + '/' + ds + '/' + de
+	//console.log(url)
 	return dispatch=>{
 		dispatch(loadList(dateStart, dateEnd))
-		return setTimeout(()=>{
-			dispatch(loadListSuccess(fakedata))	
-			//dispatch(loadListFailed("test error"))
-		}, 1000)
-		// fetch('http://localhost:8081/shift')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadListSuccess(fakedata))	
+		// 	//dispatch(loadListFailed("test error"))
+		// }, 1000)
+		fetch(url)
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){
+				dispatch(loadListSuccess(ret.data))	
+		 	}else{
+		 		dispatch(loadListFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadListFailed('Database error'))			
+		})
 	}
 }
 
@@ -125,29 +128,31 @@ export function selectSearchEmployee(id){
 		id	
 	}
 }
+
+
 export function fetchEmployees(){	
-	let fakedata =[
-					{ "id":0, "employeeId":'00001', "fullname": 'Dondon Abion' },
-					{ "id":1, "employeeId":'00002', "fullname": 'Aprille Abion' }
-				  ] 
+	// let fakedata =[
+	// 				{ "id":0, "employeeId":'00001', "fullname": 'Dondon Abion' },
+	// 				{ "id":1, "employeeId":'00002', "fullname": 'Aprille Abion' }
+	// 			  ] 
 
 	return dispatch=>{		
-		return setTimeout(()=>{
-			dispatch(loadSearchEmployeeSuccess(fakedata))	
-			//dispatch(loadListFailed("test error"))
-		}, 1000)
-		// fetch('http://localhost:8081/shift')
-		// .then(response=>response.json()
-		// 	.then(ret=>({ ret, response }))
-		//  ).then(({ ret, response })=>{		 	
-		//  	if (parseInt(ret.status)==1){
-		// 		dispatch(loadListSuccess(ret.data))	
-		//  	}else{
-		//  		dispatch(loadListFailed(data.message))
-		//  	}		 	
-		//  })
-		// .catch(error => { 
-		// 	dispatch(loadListFailed('Database error'))			
-		// })
+		// return setTimeout(()=>{
+		// 	dispatch(loadSearchEmployeeSuccess(fakedata))	
+		// 	//dispatch(loadListFailed("test error"))
+		// }, 1000)
+		fetch('http://localhost:8081/employee/personal')
+		.then(response=>response.json()
+			.then(ret=>({ ret, response }))
+		 ).then(({ ret, response })=>{		 	
+		 	if (parseInt(ret.status)==1){				
+				dispatch(loadSearchEmployeeSuccess(ret.data))	
+		 	}else{
+		 		dispatch(loadSearchEmployeeFailed(data.message))
+		 	}		 	
+		 })
+		.catch(error => { 
+			dispatch(loadSearchEmployeeFailed('Database error'))			
+		})
 	}
 }
