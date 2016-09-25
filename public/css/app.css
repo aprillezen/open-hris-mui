@@ -248,7 +248,7 @@ ul.nav-style > li.active-nav > a{
 
 .rowLinkBorder{
   border-bottom:1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
   padding-left: 20px;
 }
 
@@ -270,8 +270,8 @@ ul.nav-style > li.active-nav > a{
 }
 
 .form-horizontal h3 {
-  font-family: 'Open Sans Bold';
-  font-size: 22px;  
+  font-family: 'Open Sans Regular';
+  font-size: 20px;  
   color: #0E4D69;
   padding-left: -5px;
   padding-bottom: 10px;
@@ -295,3 +295,12 @@ ul.nav-style > li.active-nav > a{
 .paramyear{
    width: 150px;
 }
+
+.rowDetails{  
+  padding: 10px;
+  margin: 0;
+  background-color: #F7F9FA;
+}
+
+
+

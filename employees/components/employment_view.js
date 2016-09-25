@@ -36,8 +36,8 @@ class Employment_View extends Component{
 					<div className="form-horizontal">
 						 <h3>Employment</h3>	
 						 <hr/>		
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Start of Employment</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Start of Employment</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{startdate}</label>
 						    </div>
@@ -45,86 +45,86 @@ class Employment_View extends Component{
 						    	<button type="button" className="btn btn-default pull-right" onClick={this.props.onEdit}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">
-						 	<label className="col-sm-3 control-label field_label">Job Title</label>					    
+						 <div className="form-group form-group-view">
+						 	<label className="col-sm-3 control-label">Job Title</label>					    
 						    <div className="col-sm-5">								    	
 						    	<label className="field_value">{data.jobtitle}</label>
 						    </div>								 									  
 						 </div>	
-						 <div className="form-group">
-						 	<label className="col-sm-3 control-label field_label">Job Level</label>					    
+						 <div className="form-group form-group-view">
+						 	<label className="col-sm-3 control-label">Job Level</label>					    
 						    <div className="col-sm-5">								    	
 						    	<label className="field_value">{joblevel}</label>
 						    </div>								 									  
 						 </div>	
-						  <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Employee Category</label>					    
+						  <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Employee Category</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{category}</label>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Payroll Schedule</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Payroll Schedule</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{schedule}</label>
 						    </div>								   
 						 </div>		
-						  <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Employment Status</label>					    
+						  <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Employment Status</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{empstatus}</label>
 						    </div>								   
 						 </div>		
-						<div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Separation Date</label>					    
+						<div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Separation Date</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{separationdate}</label>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Mode of Payment</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Mode of Payment</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{paymentmode}</label>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Assignment/Branch</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Assignment/Branch</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.branch}</label>
 						    </div>								   
 						 </div>		
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Department</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Department</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.department}</label>
 						    </div>								   
 						 </div>							 
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">S.S.S #</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">S.S.S #</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.sssno}</label>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">PhilHealth #</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">PhilHealth #</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.philhealthno}</label>
 						    </div>								   
 						 </div>							 
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">PagIbig #</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">PagIbig #</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.pagibigno}</label>
 						    </div>								   
 						 </div>		
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">T.I.N.</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">T.I.N.</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.tin}</label>
 						    </div>								   
 						 </div>	
-						 <div className="form-group">	
-						 	<label className="col-sm-3 control-label field_label">Tax Status</label>					    
+						 <div className="form-group form-group-view">	
+						 	<label className="col-sm-3 control-label">Tax Status</label>					    
 						    <div className="col-sm-4">								    	
 						    	<label className="field_value">{data.taxstatus}</label>
 						    </div>								   

@@ -12,7 +12,7 @@ class General_CI extends Component{
 					<div className="form-horizontal">
 						<h3>Contact Information</h3>		
 						 <hr/>					 
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						 	<label className="col-sm-3 control-label">Address</label>						    
 						    <div className="col-sm-5">								    	
 						    	<label className="field_value">{data.address}</label>
@@ -21,37 +21,37 @@ class General_CI extends Component{
 						    	<button type="button" className="btn btn-default pull-right" onClick={this.props.onEdit}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
 						    </div>								   
 						 </div>
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">City</label>							    								   						    
 						    <div className="col-sm-6">								    	
 						    	<label className="field_value">{data.city}</label>
 						    </div>								   
 						 </div>
-						<div className="form-group">	
+						<div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">Province</label>							    								   						    
 						    <div className="col-sm-6">								    	
 						    	<label className="field_value">{data.province}</label>
 						    </div>								   
 						 </div>
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">Zip</label>							    								   						    
 						    <div className="col-sm-3">								    	
 						    	<label className="field_value">{data.zipcode}</label>
 						    </div>								   
 						 </div>
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">Home Phone</label>							    								   						    
 						    <div className="col-sm-5">								    	
 						    	<label className="field_value">{data.homephone}</label>
 						    </div>								   
 						 </div>
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">Mobile Phone</label>							    								   						    
 						    <div className="col-sm-5">								    	
 						    	<label className="field_value">{data.mobilephone}</label>
 						    </div>								   
 						 </div>
-						 <div className="form-group">	
+						 <div className="form-group form-group-view">	
 						    <label className="col-sm-3 control-label">Email</label>							    								   						    
 						    <div className="col-sm-6">								    	
 						    	<label className="field_value">{data.emailadd}</label>
