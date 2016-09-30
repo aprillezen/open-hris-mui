@@ -13,7 +13,7 @@ class List extends Component{
 
 	constructor(props){
 		super(props)		
-		props.fetch(props.currentyear)
+		props.fetch()
 	}
 
 	showNotif(msg){
@@ -26,7 +26,7 @@ class List extends Component{
 	}
 
 	handleCreate(e){
-		this.context.router.push('/ta/setup/holiday/add/'+this.props.currentyear)
+		this.context.router.push('/ta/setup/policies/add')
 	}
 
 	componentWillReceiveProps(nextProps){		
@@ -47,8 +47,7 @@ class List extends Component{
 						<div className="panel panel-default">	  						
 			  				<div className="panel-heading">				  
 							   <div className="pull-left">&nbsp;<button className="btn btn-success" onClick={this.handleCreate.bind(this)}>Create</button></div>
-							   <div className='paramyear pull-right'>
-									<Select name="currentyear" value={currentyear} options={YEAR_SELECTION} onChange={this.onSelectChanged.bind(this)} clearable={false} searchable={false} />
+							   <div className='pull-right'>									
 								</div>		
 						        <div className="clearfix"></div>						
 							</div>

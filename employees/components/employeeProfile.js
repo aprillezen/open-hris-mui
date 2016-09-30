@@ -16,7 +16,7 @@ class EmployeeProfile extends Component{
 					</div>
 
 				    <div className="row">														
-						<div className="col-sm-3">
+						<div className="col-sm-2">
 							<div className="well profile-photo"></div>
 							<LeftNav employeeId={params.id}/>					
 						</div>

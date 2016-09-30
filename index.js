@@ -18,12 +18,15 @@ import {taxStatusReducer, taxStatusFormReducer} from './payroll/setup/taxstatus/
 
 import {shiftReducer, shiftFormReducer} from './ta/setup/shift/reducer'
 import {holidayReducer, holidayFormReducer} from './ta/setup/holiday/reducer'
+import {policyReducer, policyFormReducer} from './ta/setup/policies/reducer'
 
 import {dailyIOReducer} from './ta/attendance/daily/reducer'
 
 const routermiddleware = routerMiddleware(browserHistory)
 
 const rootReducer = combineReducers({
+	policy: policyReducer,
+	policyForm:policyFormReducer,
 	dailyio: dailyIOReducer,
 	holiday: holidayReducer,
 	holidayForm: holidayFormReducer,

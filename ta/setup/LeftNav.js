@@ -9,7 +9,7 @@ class LeftNav extends Component{
 			      <ListNav to="/ta/setup/options" className="list-group-item">Options</ListNav>			      
 			      <ListNav to="/ta/setup/shift" className="list-group-item">Shift</ListNav>		
 			      <ListNav to="/ta/setup/holiday" className="list-group-item">Holiday</ListNav>			      
-			      <ListNav to="/ta/setup/policy" className="list-group-item">Attendance Policy</ListNav>			      
+			      <ListNav to="/ta/setup/policies" className="list-group-item">Attendance Policy</ListNav>			      
 			  </div>
 			
 			)

@@ -14,15 +14,14 @@ const mapStateToProps = (state)=>{
 		message: state.policy.message,
 		data: state.policy.data,
 		deleteSuccess: state.policy.deleteSuccess,
-		deletemsg: state.policy.deletemsg,
-		currentyear: state.policy.currentyear
+		deletemsg: state.policy.deletemsg		
 	}
 }
 
 const mapDispatchToProps= (dispatch)=>{
 	return {
-		fetch: (val)=>{
-			dispatch(fetchPolicy(val))
+		fetch: ()=>{
+			dispatch(fetchPolicy())
 		}
 	}
 
@@ -41,22 +40,18 @@ const mapStateToPropsForm=(state)=>{
 		title: state.policyForm.title,		
 		saveAddSuccess: state.policyForm.saveAddSuccess,
 		updateSuccess: state.policyForm.updateSuccess,
-		currentyear: state.policyForm.currentyear
+		schedules: state.policyForm.schedules	
 	}
 }
 
 const mapDispatchToPropsForm = (dispatch)=>{
 	const blankdata = { 
-						"id": 0, 
-						"transyear":'', 						
-						"description":'',
-						"transdate": null,
-						"holidaytype": 0,
-						"requiredworkdate": null					
+						 "id": 0, 							 
+						 "description":'',							 
+						 "isdefault": false
 					   }
 	return {
-		add: (yr)=>{
-			blankdata.transyear = yr
+		add: ()=>{			
 			dispatch(loadAddForm(blankdata, "Create new policy"))
 		},
 		save: (data,editMode)=>{

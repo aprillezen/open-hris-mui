@@ -4,14 +4,13 @@ import moment from 'moment'
 // ********************************************************************************
 // LISTS  moment().year(),	
 // ********************************************************************************
-export function loadList(year){	
+export function loadList(){	
 	return{
 		type: ACT.POL_LOAD_LIST,
 		isFetching: true,
 		isFetchFailed: false,		
 		message: '',		
-		hasError: false,
-		year
+		hasError: false
 	}
 }
 
@@ -36,26 +35,40 @@ export function loadListFailed(message){
 	}
 }
 
-export function fetchPolicy(year){	
+export function fetchPolicy(){	
+	let pol = [
+				{ "id":1,"description": 'Regular Schedule', "scheduleid": 0, "isdefault": true},
+				{ "id":2,"description": 'Night Shift', "scheduleid": 0, "isdefault": false},
+			] 
+
+	let sched = [ 
+					{ value: 0, label: 'Regular' },
+					{ value: 1, label: 'Early Morning' },
+					{ value: 2, label: 'Night' },
+					{ value: 3, label: 'Broken' }								
+				]
+
+	let fakedata = { "policies" : pol, "schedules": sched }
+
 	return dispatch=>{
-		dispatch(loadList(year))
-		// return setTimeout(()=>{
-		// 	dispatch(loadListSuccess(fakedata))	
-		// 	//dispatch(loadListFailed("test error"))
-		// }, 1000)
-		fetch('http://localhost:8081/policy/'+ year)
-		.then(response=>response.json()
-			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{		 	
-		 	if (parseInt(ret.status)==1){
-				dispatch(loadListSuccess(ret.data))	
-		 	}else{
-		 		dispatch(loadListFailed(data.message))
-		 	}		 	
-		 })
-		.catch(error => { 
-			dispatch(loadListFailed('Database error'))			
-		})
+		dispatch(loadList())
+		return setTimeout(()=>{
+			dispatch(loadListSuccess(fakedata))	
+			//dispatch(loadListFailed("test error"))
+		}, 1000)
+		// fetch('http://localhost:8081/policy/'+ year)
+		// .then(response=>response.json()
+		// 	.then(ret=>({ ret, response }))
+		//  ).then(({ ret, response })=>{		 	
+		//  	if (parseInt(ret.status)==1){
+		// 		dispatch(loadListSuccess(ret.data))	
+		//  	}else{
+		//  		dispatch(loadListFailed(data.message))
+		//  	}		 	
+		//  })
+		// .catch(error => { 
+		// 	dispatch(loadListFailed('Database error'))			
+		// })
 	}
 }
 

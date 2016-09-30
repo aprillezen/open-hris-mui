@@ -15,6 +15,9 @@ import {ShiftListContainer, ShiftFormContainer} from '../ta/setup/shift/containe
 import TmHolContainer from '../ta/setup/holiday/components'
 import {HolidayListContainer, HolidayFormContainer} from '../ta/setup/holiday/container'
 
+import TmPolContainer from '../ta/setup/policies/components'
+import {PolicyListContainer, PolicyFormContainer} from '../ta/setup/policies/container'
+
 import TmSched from '../ta/schedule'
 
 import TmAttendance from '../ta/attendance'
@@ -131,6 +134,11 @@ module.exports = (
                         <Route path='/ta/setup/holiday/list' component={HolidayListContainer}/>
                         <Route path='/ta/setup/holiday/add/:id' component={HolidayFormContainer}/>
                         <Route path='/ta/setup/holiday/edit/:id' component={HolidayFormContainer}/>
+                    </Route> 
+                    <Route path='/ta/setup/policies' component={TmPolContainer}>
+                        <IndexRedirect to='/ta/setup/policies/list'/>   
+                        <Route path='/ta/setup/policies/list' component={PolicyListContainer}/>
+                        <Route path='/ta/setup/policies/:id' component={PolicyFormContainer}/>                        
                     </Route>                                                            
                 </Route>       
                  <Route path='/ta/schedule' component={TmSched} />   

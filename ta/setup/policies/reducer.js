@@ -13,8 +13,7 @@ const initialstate = {
 	deleteErrorMsg:'',
 	deletemsg:'',
 	deleteId:0,
-	deleteSuccess: false,
-	currentyear: moment().year()
+	deleteSuccess: false	
 }
 
 const deleteData=(data, id)=>{	
@@ -31,8 +30,7 @@ export const policyReducer = (state= initialstate, action)=>{
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
 				hasError: action.hasError,
-				message: action.message,
-				currentyear: action.year,
+				message: action.message,				
 				isDeleteDialogOpen: false,
 				isDeleting: false,
 				deleteHasError: false,
@@ -109,12 +107,10 @@ export const policyReducer = (state= initialstate, action)=>{
 }
 
 const dataForm_initvalue = {
-							 "id": 0, 
-							 "transyear":'', 						
-							 "description":'',
-							 "transdate": null,
-							 "holidaytype": 0,
-							 "requiredworkdate": null
+							 "id": 0, 							 
+							 "description":'',	
+							 "scheduleid":'0',						 
+							 "isdefault": false
 							}
 
 const form_initialstate = {
@@ -127,22 +123,16 @@ const form_initialstate = {
 	saveAddSuccess: false,
 	updateSuccess: false,
 	data: dataForm_initvalue,
-	currentyear: moment().year()
+	schedules: []
 }
 
 const fieldvalues=(data, field, value)=>{
 	var newdata = Object.assign({}, data)
-	switch(field){
-		case "transyear": newdata.transyear = value
-			break
+	switch(field){		
 		case "description": newdata.description = value
 			break	
-		case "transdate": newdata.transdate = value
-			break	
-		case "holidaytype": newdata.holidaytype = value
-			break	
-		case "requiredworkdate": newdata.requiredworkdate = value
-			break			
+		case "isdefault": newdata.isdefault = value
+			break				
 		default:
 			break
 	}
@@ -162,14 +152,12 @@ export const policyFormReducer = (state = form_initialstate, action)=>{
 				message: action.message,				
 				saveAddSuccess: action.saveAddSuccess,
 				updateSuccess: false,
-				data: action.data,
-				currentyear: action.data.transyear		
+				data: action.data
 			})
 		case ACT.POL_LOAD_FORM_SUCCESS:
 			return Object.assign({}, state, {		
 				isFetching: action.isFetching,
-				data: action.data,
-				currentyear: action.data.transyear				
+				data: action.data
 			})
 		case ACT.POL_LOAD_FORM_FAILED:
 			return Object.assign({}, state, {		

@@ -14,7 +14,7 @@ class RowLink extends Component{
 	}
 
 	handleClick(e){		
-		this.context.router.push('/ta/setup/holiday/edit/'+this.props.rowData.id)
+		this.context.router.push('/ta/setup/policies/edit/'+this.props.rowData.id)
 	}
 
 	handleDelete(e){

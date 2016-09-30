@@ -11,19 +11,15 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { HOLIDAY_TYPE_DROPDOWN } from '../../../../shared/Const'
 
-class HolidayForm extends Component{
+class PolicyForm extends Component{
 
 	constructor(props,context){
 		super(props)			
-		var path = props.location.pathname.split("/")
-		var year = path[path.length-1]
-		var act = path[path.length-2]
-		if (act=='add'){		
-			props.add(year)
-		}else{
-			this.props.edit(this.props.params.id)			
-		}
-
+		if (props.params.id!='add'){						
+			this.props.edit(this.props.params.id)
+		}else{			
+			props.add()				
+		}	
 	}
 
 	showNotif(msg){
@@ -42,13 +38,10 @@ class HolidayForm extends Component{
 		this.refs.description.focus()				
 	}
 
-	dateChanged(field, e){		
-		this.props.valueChanged(this.props.data, field, e)
-	}
-
+	
 	handleSubmit(e){
 		e.preventDefault()		
-		if (_.isEmpty(this.props.data.description) || _.isEmpty(this.props.data.transdate)){			
+		if (_.isEmpty(this.props.data.description)){			
 			this.props.saveFailed("Please required fields!")	
 			return		
 		}
@@ -70,20 +63,20 @@ class HolidayForm extends Component{
 	}
 
 	handleBack(e){
-		this.context.router.push('/ta/setup/holiday/list')
+		this.context.router.push('/ta/setup/policies/list')
 	}
 
 	componentWillReceiveProps(nextProps){		
 		if (nextProps.saveAddSuccess){
-			this.showNotif('New Holiday successfully created.')	
+			this.showNotif('New Policy successfully created.')	
 			setTimeout(()=>{
-				this.context.router.push('/ta/setup/holiday/list')
+				this.context.router.push('/ta/setup/policies/list')
 			},1000)
 			
 		}else if (nextProps.updateSuccess){
-			this.showNotif('Holiday successfully modified.')	
+			this.showNotif('Policy successfully modified.')	
 			setTimeout(()=>{
-				this.context.router.push('/ta/setup/holiday/list')
+				this.context.router.push('/ta/setup/policies/list')
 			},1000)
 		}
 		
@@ -95,35 +88,17 @@ class HolidayForm extends Component{
 		  width: '100%'
 		}	
 
-		const { hasError, isSaving, message, data, isFetching, editMode, title , currentyear} = this.props
+		const { hasError, isSaving, message, data, isFetching, editMode, title} = this.props
 
 		let content = <div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
-							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>												    		
+							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>												    										
 								<div className="form-group">	
-								 	<label className="col-sm-3 control-label field_label">Date of Holiday<sup className="required_asterisk">*</sup></label>					    
-								    <div className="col-sm-4">								    	
-								    	<DatePicker openToDate={moment(currentyear + '-01-1')} className="form-control" showYearDropdown selected={data.transdate} onChange={this.dateChanged.bind(this,'transdate')}/>
-								    </div>						    							  
-								</div>	
-								<div className="form-group">	
-								 	<label className="col-sm-3 control-label">Description<sup className="required_asterisk">*</sup> </label>						    
+								 	<label className="col-sm-2 control-label">Description<sup className="required_asterisk">*</sup> </label>						    
 								    <div className="col-sm-6">								    	
 								    	<input ref="description" name="description" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.description}/>
 								    </div>
-								</div>	
-								<div className="form-group">	
-								 	<label className="col-sm-3 control-label">Holiday Type<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-6">								    									    	
-								    	<Select name="holidaytype" value={data.holidaytype} options={HOLIDAY_TYPE_DROPDOWN} onChange={this.onSelectChanged.bind(this,'holidaytype')} clearable={false} searchable={false} />
-								    </div>
-								</div>	
-								<div className="form-group">	
-								 	<label className="col-sm-3 control-label field_label">Required Workdate</label>					    
-								    <div className="col-sm-4">								    	
-								    	<DatePicker openToDate={moment(currentyear + '-01-1')} className="form-control" showYearDropdown selected={data.requiredworkdate}  isClearable={true} onChange={this.dateChanged.bind(this,'requiredworkdate')}/>
-								    </div>						    							  
-								</div>	
+								</div>									
 								<div className="form-group">	
 								  	<div className="col-sm-3"></div>						    
 								    <div className="col-sm-3">
@@ -160,11 +135,11 @@ class HolidayForm extends Component{
 }
 
 
-HolidayForm.contextTypes={
+PolicyForm.contextTypes={
 	router: React.PropTypes.object
 }
 
-export default HolidayForm
+export default PolicyForm
 
 
 
