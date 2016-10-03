@@ -68,13 +68,13 @@ class BatchForm extends Component{
 			this.showNotif('New branch successfully created.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/unit/branch/list')
-			},2000)
+			},1000)
 			
 		}else if (nextProps.updateSuccess){
 			this.showNotif('Branch successfully modified.')	
 			setTimeout(()=>{
 				this.context.router.push('/settings/unit/branch/list')
-			},2000)
+			},1000)
 		}
 		
 	}

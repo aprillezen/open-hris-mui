@@ -9,7 +9,12 @@ import 'react-select/dist/react-select.css'
 import Notification from 'react-notification-system'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import { HOLIDAY_TYPE_DROPDOWN } from '../../../../shared/Const'
+import ContentTabs from './contentTabs'
+
+
+const desc = {
+  width: '50%'
+}	
 
 class PolicyForm extends Component{
 
@@ -32,10 +37,10 @@ class PolicyForm extends Component{
 	}	
 
 	componentDidMount(){		
-		if (this.props.params.id=='add'){											
-			this.refs.description.value=''									
-		}
-		this.refs.description.focus()				
+		// if (this.props.params.id=='add'){											
+		// 	this.refs.description.value=''									
+		// }
+		// this.refs.description.focus()				
 	}
 
 	
@@ -55,12 +60,7 @@ class PolicyForm extends Component{
 	onValueChanged(e){		
 		this.props.valueChanged(this.props.data, e.target.name, e.target.value )	
 	}
-
-	onCheckChanged(e){		
-		var def = 0
-		if (e.target.checked) def=1		
-		this.props.valueChanged(this.props.data, e.target.name, def)		
-	}
+	
 
 	handleBack(e){
 		this.context.router.push('/ta/setup/policies/list')
@@ -84,27 +84,24 @@ class PolicyForm extends Component{
 
 	render(){
 
-		const textareaStyle = {
-		  width: '100%'
-		}	
 
 		const { hasError, isSaving, message, data, isFetching, editMode, title} = this.props
 
 		let content = <div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
-							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>												    										
+							<form>												    										
+								<div className="form-group">										
+							 		<label className="settingTitle">Description<sup className="required_asterisk">*</sup> </label>						    								   
+							    	<input ref="description" name="description" type="text" className="form-control" style={desc} />								    								   	
+								</div>	
+
 								<div className="form-group">	
-								 	<label className="col-sm-2 control-label">Description<sup className="required_asterisk">*</sup> </label>						    
-								    <div className="col-sm-6">								    	
-								    	<input ref="description" name="description" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.description}/>
-								    </div>
-								</div>									
-								<div className="form-group">	
-								  	<div className="col-sm-3"></div>						    
-								    <div className="col-sm-3">
-								    	<SaveButton isSaving={isSaving} sStyle="btn btn-success btn-lg" caption="&nbsp; Save &nbsp;" />
-								    </div>								   
-								</div>
+							 		<div className="checkbox">										 
+									  <input type="checkbox" ref="isdefault" name="isdefault" 	 value='1'/> Set this as a your default attendance policy
+									</div>
+								</div>	
+								<br/>
+								<ContentTabs/>								
 					    	</form>
 					    </div>
 
@@ -118,7 +115,10 @@ class PolicyForm extends Component{
 				<div className="panel panel-default">
 					<div className="panel-heading">				  
 					   <h3 className="panel-title pull-left">{title}</h3>
-						<button onClick={this.handleBack.bind(this)} className="btn btn-default pull-right">Cancel</button>
+					   <div className="pull-right">
+					    	<SaveButton isSaving={isSaving} sStyle="btn btn-success" caption="&nbsp; Save &nbsp;" /> &nbsp;
+							<button onClick={this.handleBack.bind(this)} className="btn btn-default">Cancel</button>
+						</div>
 				        <div className="clearfix"></div>						
 					</div>
 
@@ -128,6 +128,7 @@ class PolicyForm extends Component{
 						<br/>
 					</div>
 				 	
+
 				 	<Notification ref="notify"/>
 				</div>
 			)
