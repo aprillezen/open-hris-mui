@@ -84,7 +84,6 @@ class PolicyForm extends Component{
 
 	render(){
 
-
 		const { hasError, isSaving, message, data, isFetching, editMode, title} = this.props
 
 		let content = <div className="col-sm-12">
