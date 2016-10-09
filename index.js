@@ -1,5 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { grey300,cyan500 } from 'material-ui/styles/colors'
+
 import { Router, browserHistory } from 'react-router'
 import routes from './app/Routes'
 import { createStore, combineReducers, applyMiddleware , compose} from 'redux'
@@ -21,6 +27,8 @@ import {holidayReducer, holidayFormReducer} from './ta/setup/holiday/reducer'
 import {policyReducer, policyFormReducer} from './ta/setup/policies/reducer'
 
 import {dailyIOReducer} from './ta/attendance/daily/reducer'
+
+injectTapEventPlugin()
 
 const routermiddleware = routerMiddleware(browserHistory)
 
@@ -59,9 +67,16 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store)
 
+const muiTheme = getMuiTheme({ 
+  appBar: {   
+    height: 50
+  },
+});
+
 render(
-	<Provider store={store}>
-  		<Router routes={routes} history={history}/>
-	</Provider>,
-  document.getElementById('app')
-)
+		<MuiThemeProvider muiTheme={muiTheme}>
+			<Provider store={store}>
+		  		<Router routes={routes} history={history}/>
+			</Provider>
+		</MuiThemeProvider>, document.getElementById('app')
+	)
