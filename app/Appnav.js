@@ -34,6 +34,17 @@ const iconContainerStyle = {
 	marginRight: 16
 }
 
+const menuStyle = {
+	fontSize: 15,
+	paddingLeft: 5
+}
+const menuLabel = {
+	marginLeft: -10
+}
+const subHeaderStyle = {
+	height:40
+}
+
 const rightIcons = <div style={iconContainerStyle}>	
 						<IconButton tooltip="Notifications" iconStyle={btnStyles.smallIcon} style={btnStyles.small}>
 							<Notif color={white}/>
@@ -84,21 +95,41 @@ class Appnav extends React.Component{
 					docked={false}					
 					open={this.state.open}
 					onRequestChange={(open) => this.setState({open})} 
-					width={300}>
+					width={310}>
 
 					<AppBar 
 				    	title="Open Hris"
-				    	showMenuIconButton={false} />		
-
-				    <MenuItem primaryText="Dashboard"/>			
+				    	showMenuIconButton={false} />						    
+				    <Divider/>	
+				    <List>				    	
+				    	<ListItem style={menuStyle} leftIcon={ <People/>}><div style={menuLabel}>Dashboard</div></ListItem>
+				    	 <ListItem style={menuStyle} leftIcon={ <LeaveIco/>}><div style={menuLabel}>Company</div></ListItem>
+				        <ListItem style={menuStyle} href="/employees" leftIcon={ <People/>}><div style={menuLabel}>Employees</div></ListItem>				        				        
+				    </List>		
+				    <Divider/>		
 				    <List>
-				    	<Subheader>MAIN</Subheader>	
-				    	<ListItem primaryText="Employees" href="/employees" leftIcon={ <People/>}/>
-				        <ListItem primaryText="Leave" href="/leave" leftIcon={ <LeaveIco/>}/>
-				        <ListItem primaryText="Time and Attendance" href="/ta" leftIcon={ <TaIco/>}/>
-				        <ListItem primaryText="Manage Payroll" href="/py" leftIcon={ <PayIco/>}/>
+				    	<Subheader style={subHeaderStyle}>MANAGE LEAVE</Subheader>	
+				    	<ListItem style={menuStyle} href="/leave" leftIcon={ <People/>}><div style={menuLabel}>Setup</div></ListItem>
+				        <ListItem style={menuStyle} href="/leave/entitlement" leftIcon={ <LeaveIco/>}><div style={menuLabel}>Entitlement</div></ListItem>
+				        <ListItem style={menuStyle} href="/leave/card" leftIcon={ <TaIco/>}><div style={menuLabel}>Employee's Leave</div></ListItem>				        
 				    </List>			                			        		       			        
 			        <Divider/>
+			        <List>
+				    	<Subheader style={subHeaderStyle}>TIME AND ATTENDANCE</Subheader>	
+				    	<ListItem style={menuStyle} href="/ta" leftIcon={ <People/>}><div style={menuLabel}>Setup</div></ListItem>
+				        <ListItem style={menuStyle} href="/ta/schedule" leftIcon={ <LeaveIco/>}><div style={menuLabel}>Schedule</div></ListItem>
+				        <ListItem style={menuStyle} href="/ta/attendance" leftIcon={ <TaIco/>}><div style={menuLabel}>Attendance</div></ListItem>
+				        <ListItem style={menuStyle} leftIcon={ <PayIco/>}><div style={menuLabel}>Reports</div></ListItem>
+				    </List>	
+				    <Divider/>
+				    <List>
+				    	<Subheader style={subHeaderStyle}>MANAGE PAYROLL</Subheader>	
+				    	<ListItem style={menuStyle} href="/py" leftIcon={ <People/>}><div style={menuLabel}>Setup</div></ListItem>
+				        <ListItem style={menuStyle} leftIcon={ <LeaveIco/>}><div style={menuLabel}>Payroll Entries</div></ListItem>
+				        <ListItem style={menuStyle} leftIcon={ <TaIco/>}><div style={menuLabel}>Payroll Run</div></ListItem>
+				        <ListItem style={menuStyle} leftIcon={ <PayIco/>}><div style={menuLabel}>Employee Payroll</div></ListItem>
+				        <ListItem style={menuStyle} leftIcon={ <PayIco/>}><div style={menuLabel}>13th Month</div></ListItem>
+				    </List>
 		        </Drawer>
 			 </div>
 

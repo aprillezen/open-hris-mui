@@ -4,7 +4,7 @@ import LeftNav from './LeftNav'
 class index extends Component {
 
 	render(){
-		return(<div className="row">
+		return(<div className="row-fluid">
 					<br/>				
 					<div className="col-sm-2">
 						<LeftNav/>					
