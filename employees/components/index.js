@@ -1,9 +1,20 @@
 import React, {Component} from 'react'
-import Grid from 'griddle-react'
-import { cols, colmetadata} from './colConfig'
 import { Link } from 'react-router'
 import Alert from '../../shared/Alert'
 import Notification from 'react-notification-system'
+import {Table, Column, Cell} from 'fixed-data-table'
+
+class TextCell extends Component {
+  render() {
+    const {rowIndex, field, data} = this.props;
+    return (
+      <Cell {...this.props}>
+        {data[rowIndex][field]}
+      </Cell>
+    )
+  }
+}
+
 
 class index extends Component{
 
@@ -32,16 +43,23 @@ class index extends Component{
 
 		const { isFetching, isFetchFailed, errorMessage, data, hasError } = this.props 	
 
-		let body =  <div className="col-sm-12">
-						<h3>Employees</h3>	
-						<div className="panel panel-default">
-	  						<div className="panel-heading">&nbsp;<Link className="btn btn-success" to="/employees/add">Create</Link></div>
-								<div className="panel-body"> 
-							 	<Alert hasError={isFetchFailed} message={errorMessage}/>
-							    <Grid results={data} tableClassName="griddle-table" showTableHeading={false} useGriddleStyles={false} columnMetadata={colmetadata} columns={cols}/>							   
-							</div>						 	
-						</div>		
-					</div>
+		let body =  <Table
+						rowsCount={data.length}
+				        rowHeight={35}
+				        headerHeight={40}
+				        width={400}
+				        height={550}>	
+						<Column
+							header={<Cell>Name</Cell>}
+							cell={props => (
+							<Cell {...props}>
+							  {data[props.rowIndex].fname + " " + data[props.rowIndex].lname}
+							</Cell>
+							)}
+							width={200}	
+						/>	       
+
+					</Table>
 
 		if (isFetching){
 			body = <div>

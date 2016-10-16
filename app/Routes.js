@@ -62,109 +62,55 @@ import BranchContainer from '../settings/orgunit/branches/components'
 import {Branch_List_Container, Branch_Form_Container} from '../settings/orgunit/branches/container'
 
 module.exports = (
-    <Route component={App} >	
-        <Route path="/" component={Nav}>    
-            <IndexRoute component={Dashboard}/>  	 	
-            <Route path='/dashboard' component={Dashboard}/>
-        	<Route path='/employees' component={Employees}>
-                <IndexRedirect to="/employees/list" />
-                <Route path='/employees/list' component={EmployeesListContainer} />
-                <Route path='/employees/add' component={EmployeeAddFormContainer} />
-                <Route path='/employees/profile/:id' component={EmployeeProfile}>
-                    <IndexRedirect to="/employees/profile/:id/general" />
-                    <Route path='/employees/profile/:id/general' component={EmployeeGeneralContainer} />
-                    <Route path='/employees/profile/:id/employment' component={EmployeeEmploymentContainer} />
-                    <Route path='/employees/profile/:id/bc' component={EmployeeBC} />
-                    <Route path='/employees/profile/:id/ta' component={EmployeeTA} />
-                    <Route path='/employees/profile/:id/loan' component={EmployeeLoan} />
-                    <Route path='/employees/profile/:id/payroll' component={EmployeePY} />
-                </Route>
+    <Route component={Nav} >	
+        <IndexRoute component={Dashboard}/>         
+        <Route path='/' component={Dashboard}/>
+        <Route path='/dashboard' component={Dashboard}/>
+        <Route path='/employees' component={Employees}>
+            <IndexRedirect to="/employees/list" />
+            <Route path='/employees/list' component={EmployeesListContainer} />
+            <Route path='/employees/add' component={EmployeeAddFormContainer} />
+            <Route path='/employees/profile/:id' component={EmployeeProfile}>
+                <IndexRedirect to="/employees/profile/:id/general" />
+                <Route path='/employees/profile/:id/general' component={EmployeeGeneralContainer} />
+                <Route path='/employees/profile/:id/employment' component={EmployeeEmploymentContainer} />
+                <Route path='/employees/profile/:id/bc' component={EmployeeBC} />
+                <Route path='/employees/profile/:id/ta' component={EmployeeTA} />
+                <Route path='/employees/profile/:id/loan' component={EmployeeLoan} />
+                <Route path='/employees/profile/:id/payroll' component={EmployeePY} />
             </Route>
-        	<Route path='/settings' component={Settings}>
-                <IndexRedirect to="/settings/company" />	 	
-                <Route path='/settings/company' component={Company}>
-                    <IndexRedirect to="/settings/company/profile" />               
-                    <Route path='/settings/company/profile' component={Profile}/>
-                    <Route path='/settings/company/setup' component={CompanySetup}/>
-                    <Route path='/settings/company/jobtitle' component={JobContainer}>
-                        <IndexRedirect to='/settings/company/jobtitle/list'/>   
-                        <Route path='/settings/company/jobtitle/list' component={Job_List_Container}/>
-                        <Route path='/settings/company/jobtitle/:id' component={Job_Form_Container}/>
-                    </Route> 
-
-                </Route>
-                <Route path='/settings/unit' component={Orgunit}>
-                    <IndexRedirect to="/settings/unit/branch" />    
-                    <Route path='/settings/unit/branch' component={BranchContainer}>
-                        <IndexRedirect to='/settings/unit/branch/list'/>   
-                        <Route path='/settings/unit/branch/list' component={Branch_List_Container}/>
-                        <Route path='/settings/unit/branch/:id' component={Branch_Form_Container}/>
-                    </Route> 
-                    <Route path='/settings/unit/department' component={DeptContainer}>
-                        <IndexRedirect to='/settings/unit/department/list'/>   
-                        <Route path='/settings/unit/department/list' component={Dept_List_Container}/>
-                        <Route path='/settings/unit/department/:id' component={Dept_Form_Container}/>
-                    </Route> 
-                </Route>  
-            </Route>  
-            <Route path='/leave' component={Leave}>
-                <IndexRedirect to="/leave/setup" />
-                <Route path='/leave/setup' component={LeaveSetup}>
-                    <IndexRedirect to="/leave/setup/options" />  
-                    <Route path='/leave/setup/options' component={LeaveOption}/>
-                    <Route path='/leave/setup/lt' component={LeaveTypeContainer}>
-                        <IndexRedirect to='/leave/setup/lt/list'/>   
-                        <Route path='/leave/setup/lt/list' component={Lt_List_Container}/>
-                        <Route path='/leave/setup/lt/:id' component={Lt_Form_Container}/>
-                    </Route>                    
-                </Route>                  
-            </Route>
-            <Route path='/ta' component={Timekeeping}>
-                <IndexRedirect to="/ta/setup" />
-                <Route path='/ta/setup' component={TmSetup}>
-                    <IndexRedirect to="/ta/setup/options" />  
-                    <Route path='/ta/setup/options' component={TmOption}/>
-                    <Route path='/ta/setup/shift' component={TmShiftContainer}>
-                        <IndexRedirect to='/ta/setup/shift/list'/>   
-                        <Route path='/ta/setup/shift/list' component={ShiftListContainer}/>
-                        <Route path='/ta/setup/shift/:id' component={ShiftFormContainer}/>
-                    </Route> 
-                    <Route path='/ta/setup/holiday' component={TmHolContainer}>
-                        <IndexRedirect to='/ta/setup/holiday/list'/>   
-                        <Route path='/ta/setup/holiday/list' component={HolidayListContainer}/>
-                        <Route path='/ta/setup/holiday/add/:id' component={HolidayFormContainer}/>
-                        <Route path='/ta/setup/holiday/edit/:id' component={HolidayFormContainer}/>
-                    </Route> 
-                    <Route path='/ta/setup/policies' component={TmPolContainer}>
-                        <IndexRedirect to='/ta/setup/policies/list'/>   
-                        <Route path='/ta/setup/policies/list' component={PolicyListContainer}/>
-                        <Route path='/ta/setup/policies/:id' component={PolicyFormContainer}/>                        
-                    </Route>                                                            
-                </Route>       
-                 <Route path='/ta/schedule' component={TmSched} />   
-
-                 <Route path='/ta/attendance' component={TmAttendance}>
-                    <IndexRedirect to="/ta/attendance/daily" />                     
-                    <Route path='/ta/attendance/daily' component={TmDailyContainer}>
-                        <IndexRedirect to='/ta/attendance/daily/list'/>   
-                        <Route path='/ta/attendance/daily/list' component={TmDailyListContainer}/>                        
-                    </Route>                                                            
-                </Route>        
-            </Route>    	
-            <Route path='/py' component={Payroll}>
-                <IndexRedirect to="/py/setup" />
-                <Route path='/py/setup' component={PayrollSetup}>
-                    <IndexRedirect to="/py/setup/options" />  
-                    <Route path='/py/setup/options' component={PayrollOption}/>
-                    <Route path='/py/setup/taxstatus' component={TaxStatusContainer}>
-                        <IndexRedirect to='/py/setup/taxstatus/list'/>   
-                        <Route path='/py/setup/taxstatus/list' component={TaxStatus_List_Container}/>
-                        <Route path='/py/setup/taxstatus/:id' component={TaxStatus_Form_Container}/>
-                    </Route>   
-                </Route>                  
-            </Route>   
-
         </Route>
-        <Route path='/login' component={Login} />
+        <Route path='/ta' component={Timekeeping}>
+            <IndexRedirect to="/ta/setup" />
+            <Route path='/ta/setup' component={TmSetup}>
+                <IndexRedirect to="/ta/setup/options" />  
+                <Route path='/ta/setup/options' component={TmOption}/>
+                <Route path='/ta/setup/shift' component={TmShiftContainer}>
+                    <IndexRedirect to='/ta/setup/shift/list'/>   
+                    <Route path='/ta/setup/shift/list' component={ShiftListContainer}/>
+                    <Route path='/ta/setup/shift/:id' component={ShiftFormContainer}/>
+                </Route> 
+                <Route path='/ta/setup/holiday' component={TmHolContainer}>
+                    <IndexRedirect to='/ta/setup/holiday/list'/>   
+                    <Route path='/ta/setup/holiday/list' component={HolidayListContainer}/>
+                    <Route path='/ta/setup/holiday/add/:id' component={HolidayFormContainer}/>
+                    <Route path='/ta/setup/holiday/edit/:id' component={HolidayFormContainer}/>
+                </Route> 
+                <Route path='/ta/setup/policies' component={TmPolContainer}>
+                    <IndexRedirect to='/ta/setup/policies/list'/>   
+                    <Route path='/ta/setup/policies/list' component={PolicyListContainer}/>
+                    <Route path='/ta/setup/policies/:id' component={PolicyFormContainer}/>                        
+                </Route>                                                            
+            </Route>       
+             <Route path='/ta/schedule' component={TmSched} />   
+
+             <Route path='/ta/attendance' component={TmAttendance}>
+                <IndexRedirect to="/ta/attendance/daily" />                     
+                <Route path='/ta/attendance/daily' component={TmDailyContainer}>
+                    <IndexRedirect to='/ta/attendance/daily/list'/>   
+                    <Route path='/ta/attendance/daily/list' component={TmDailyListContainer}/>                        
+                </Route>                                                            
+            </Route>        
+        </Route>    
     </Route>  
 )

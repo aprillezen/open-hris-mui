@@ -16,34 +16,9 @@ import { white } from 'material-ui/styles/colors'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
 import {List, ListItem} from 'material-ui/List'
+import SplitterLayout from 'react-splitter-layout'
+import { btnStyles, menuStyle, subHeaderStyle, menuLabel, iconContainerStyle } from '../styles'
 
-const btnStyles = {
-  smallIcon: {
-    width: 22,
-    height: 22,
-  },
-  small: {
-    width: 40,
-    height: 40,
-    padding: 10    
-  },
-}
-
-const iconContainerStyle = {
-	marginTop:2,
-	marginRight: 16
-}
-
-const menuStyle = {
-	fontSize: 15,
-	paddingLeft: 5
-}
-const menuLabel = {
-	marginLeft: -10
-}
-const subHeaderStyle = {
-	height:40
-}
 
 const rightIcons = <div style={iconContainerStyle}>	
 						<IconButton tooltip="Notifications" iconStyle={btnStyles.smallIcon} style={btnStyles.small}>
@@ -82,16 +57,20 @@ class Appnav extends React.Component{
 	render(){
 		return(
 			<div>
-				<AppBar 
-			    	title="" 
-			    	onLeftIconButtonTouchTap={this.handleLeftIconClick.bind(this)} 
-			    	showMenuIconButton={true}
-					iconElementRight = {rightIcons}
+				<header>
+					<AppBar 
+				    	title="" 
+				    	onLeftIconButtonTouchTap={this.handleLeftIconClick.bind(this)} 
+				    	showMenuIconButton={true}
+						iconElementRight = {rightIcons}
 			    	/>
-				<div>    			
-					{ this.props.children }
-				</div>				
-				<Drawer 
+				</header>
+
+				{this.props.children}
+				
+				<footer>Licensed under MIT</footer>
+
+				 <Drawer 
 					docked={false}					
 					open={this.state.open}
 					onRequestChange={(open) => this.setState({open})} 
@@ -102,7 +81,7 @@ class Appnav extends React.Component{
 				    	showMenuIconButton={false} />						    
 				    <Divider/>	
 				    <List>				    	
-				    	<ListItem style={menuStyle} leftIcon={ <People/>}><div style={menuLabel}>Dashboard</div></ListItem>
+				    	<ListItem style={menuStyle} href="/dashboard" leftIcon={ <People/>}><div style={menuLabel}>Dashboard</div></ListItem>
 				    	 <ListItem style={menuStyle} leftIcon={ <LeaveIco/>}><div style={menuLabel}>Company</div></ListItem>
 				        <ListItem style={menuStyle} href="/employees" leftIcon={ <People/>}><div style={menuLabel}>Employees</div></ListItem>				        				        
 				    </List>		

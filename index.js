@@ -1,6 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import './public/css/index.css'
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -59,10 +61,10 @@ const rootReducer = combineReducers({
 	profile: profilereducer,
 	routing: routerReducer
 })
-
+//,window.devToolsExtension && window.devToolsExtension()
 const store = createStore(
 				rootReducer,
-				compose(applyMiddleware(thunkMiddleware, routermiddleware),window.devToolsExtension && window.devToolsExtension())
+				compose(applyMiddleware(thunkMiddleware, routermiddleware))
 			  )
 
 const history = syncHistoryWithStore(browserHistory, store)
