@@ -1,11 +1,11 @@
 html {
-  font-family: 'Open Sans Regular', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 
 body{
 	font-size: 15px;
-	font-family: "Open Sans Regular";
+	font-family: "Roboto";
 }
 
 .navbar-default{
@@ -52,7 +52,7 @@ body{
 
 .navbar-nav > li > a{
 	padding:18px 22px;
-	font-family:'Open Sans Regular';
+	font-family:'Roboto';
 }
 .nav > li > a:focus{
 	background-color:#136dac;
@@ -91,7 +91,7 @@ p{
 	border: 1px solid #c9c9c9;
 	border-radius: 0px;
 	box-shadow:0px;
-	font-family:'Open Sans Regular';	
+	font-family:'Roboto';	
 	font-size:15px;	
 }
 .form-control:focus{
@@ -298,7 +298,7 @@ UI DATEPICKER CUSTOM
 	border-radius:0px;
 }
 .ui-widget{
-	font-family:'Open Sans Regular';
+	font-family:'Roboto';
 }
 .ui-widget-header{
 	background:#136dac;
@@ -348,7 +348,7 @@ UI DATEPICKER CUSTOM
 	border: 1px solid #136dac; 
 	background: #136dac /*url(images/ui-bg_glass_55_fbf9ee_1x400.png)*/ 50% 50% repeat-x; 
 /*	color: #363636; */
-	font-family:'Open Sans Bold';
+	font-family:'Roboto';
 	color:#fff;
 }
 .ui-state-default .ui-state-hover{
@@ -384,14 +384,14 @@ span.ui-button-text{
 }
 
 .list-group-item{
-	font-family:'Open Sans Regular';
+	font-family:'Roboto';
     font-size:15px;
 }
 a.list-group-item {
     color: #4078c0;
 }
 .list-group-header{
-	font-family:'Open Sans Bold';
+	font-family:'Roboto';
     font-size:16px;
     background-color: #f5f5f5;
     color: #000;
@@ -405,7 +405,7 @@ a.list-group-item {
     background-color: #fff;
     border: 1px solid #ddd;
     border-left: 3px solid #d26911;
-    font-family:'Open Sans Bold';    
+    font-family:'Roboto';    
 }
 
 .list-group-item.active:hover, .list-group-item.active:focus {
@@ -418,7 +418,7 @@ a.list-group-item {
 }
 
 .panel-title{
-	font-family:'Open Sans Bold';
+	font-family:'Roboto';
     font-size:18px;
 }
 .panel-heading{
@@ -433,7 +433,7 @@ a.list-group-item {
     width: 75%;
     padding-top: 4px;
     padding-left:10px;
-    font-family:'Open Sans Bold';
+    font-family:'Roboto';
     font-size:16px;    
     color: #000;    
 }
@@ -445,16 +445,16 @@ hr{
 }
 
 label{
-	font-family:'Open Sans Regular';
+	font-family:'Roboto';
 }
 
 .nav-tabs{
-	font-family:'Open Sans Regular';	
+	font-family:'Roboto';	
 }
 .nav-tabs > li.active > a, 
 .nav-tabs > li.active > a:hover, 
 .nav-tabs > li.active > a:focus{		
-	font-family:'Open Sans Bold';
+	font-family:'Roboto';
 }
 
 .form-group{
@@ -485,18 +485,18 @@ label{
 	font-size:18px;
 	text-align: center;
 	color: #666;
-	font-family:'Open Sans Regular';
+	font-family:'Roboto';
 
 }
 .griddle-row-table-td2{
 	width: 70%;
 }
 .griddle-row-table-td2 > h4{
-	font-family:'Open Sans Semi Bold';
+	font-family:'Roboto';
     font-size:16px;	
 }
 .griddle-row-table-td2 > p {	
-    font-family:'Open Sans Regular';
+    font-family:'Roboto';
 }
 .griddle-row-table-td3{
 	width: 20%;
@@ -505,7 +505,7 @@ label{
 
 .control-label{
 	color: #626769;
-	font-family:'Open Sans Light';
+	font-family:'Roboto';
 	font-size:15px;	
 }
 

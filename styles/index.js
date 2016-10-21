@@ -34,3 +34,9 @@ export const subMenuLabel = {
   fontColor: 'rgba(0, 0, 0, 0.4)'
 }
 
+export const tableIcon = {
+  smallIcon: {
+    width: 22,
+    height: 22,
+  }
+}
