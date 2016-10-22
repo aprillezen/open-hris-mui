@@ -47,7 +47,7 @@ class index extends Component{
 						rowsCount={data.length}
 				        rowHeight={35}
 				        headerHeight={40}
-				        width={400}
+				        width={800}
 				        height={550}>	
 						<Column
 							header={<Cell>Name</Cell>}
