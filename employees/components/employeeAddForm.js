@@ -6,9 +6,19 @@ import Alert from '../../shared/Alert'
 import Notification from 'react-notification-system'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import FlatButton from 'material-ui/FlatButton'
+import BackIco from 'material-ui/svg-icons/navigation/arrow-back'
+import DoneIco from 'material-ui/svg-icons/action/done'
+import FontIcon from 'material-ui/FontIcon'
+import { emp_headerStyle, emp_iconStyle,emp_iconDoneStyle} from '../../styles'
+
+const Id_fldWidth = {
+	width: 200
+}
+
 
 class EmployeeAddForm extends Component{
-
 
 	constructor(props){
 		super(props)
@@ -52,6 +62,10 @@ class EmployeeAddForm extends Component{
 		})
 	}
 
+	handleBack(e){
+		this.context.router.push('/employees/list')
+	}
+
 	componentWillReceiveProps(nextProps){
 		if (nextProps.saveSuccess){
 			this.showNotif("New employee sucessfully saved.")
@@ -67,151 +81,144 @@ class EmployeeAddForm extends Component{
 		const {data ,hasError, errorMessage, isSaving} = this.props	
 
 		return(
-			<div>
-				<br/>
-				<div className="panel panel-default">
-					<div className="panel-heading">
-						<h3 className="panel-title pull-left">Add new employee</h3>
-						<Link  to="/employees/list" className="btn btn-default pull-right">Cancel</Link>
-				        <div className="clearfix"></div>
-					</div>
-					<div className="panel-body">
-						<br/>
-						<Alert hasError={hasError} message={errorMessage}/>
-						<div className="col-md-3">					    
-					    	<div className="well profile-photo"></div>
-					    </div>
-											
-						<div className="col-md-7">
-							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-								 <h3>Personal Information</h3>	
-								 <hr/>							 
-								 <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Employee Id<sup className="required_asterisk">*</sup> </label>					    
-								    <div className="col-sm-4">								    	
-								    	<input ref="employeeId" name="employeeId" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.employeeId}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">		
-									<label className="col-sm-3 control-label">First Name<sup className="required_asterisk">*</sup></label>						    					    
-								    <div className="col-sm-6">								    	
-								    	<input ref="fname" name="fname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.fname}/>
-								    </div>								  
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Last Name<sup className="required_asterisk">*</sup></label>							    								   
-								    <div className="col-sm-6">								    	
-								    	<input ref="lname" name="lname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.lname}/>
-								    </div>								    
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Middle Name<sup className="required_asterisk">*</sup></label>							    								   
-								    <div className="col-sm-6">								    	
-								    	<input ref="mname" name="mname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mname}/>
-								    </div>
-								 </div>
-								  <div className="form-group">	
-								    <label className="col-sm-3 control-label">Birthdate<sup className="required_asterisk">*</sup></label>							    								   						    
-								    <div className="col-sm-5">								    	
-								    	
-								    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.birthdate} onChange={this.birthdateChanged.bind(this)}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Civil Status</label>									  	
-								    <div className="col-sm-4">								    	
-									    <div className="radio">										  
-										    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="0"} value="0"/>
-										    Single										  
-									    </div>			
-									     <div className="radio">										   
-										    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="1"} value="1"/>
-										    Married										  
-									    </div>
-									    <div className="radio">						 				   
-										    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="2"} value="2"/>
-										    Widowed/Widower										  
-									    </div>	
-									    <div className="radio">										   
-										    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="3"} value="3"/>
-										    Separated									  
-									    </div>
-									 </div>						   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Gender</label>									  	
-								    <div className="col-sm-4">								    	
-									    <div className="radio">										  
-										    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="0"} value="0"/>
-										    Male										  
-									    </div>			
-									     <div className="radio">										   
-										    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="1"} value="1"/>
-										    Female										  
-									    </div>									   
-									 </div>						   
-								 </div>
-								 <br/>
-								 <h3>Contact Information</h3>		
-								 <hr/>					 
-								 <div className="form-group">	
-								 	<label className="col-sm-3 control-label">Address</label>						    
-								    <div className="col-sm-7">								    	
-								    	<textarea ref="address" name="address" style={textareaStyle} className="form-control" rows="2" onChange={this.onValueChanged.bind(this)} defaultValue={data.address}></textarea>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">City</label>							    								   						    
-								    <div className="col-sm-6">								    	
-								    	<input ref="city" name="city" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.city}/>
-								    </div>								   
-								 </div>
+				<div className="child-content">			         
+					<div className="child-content-header">
+						<Toolbar style={emp_headerStyle}>
+							 <ToolbarGroup>							 	
+							 	<FlatButton 
+							 		label="BACK" 
+							 		primary={true} 
+							 		style={emp_iconStyle} 
+							 		icon={<BackIco/>} 
+							 		onClick = {this.handleBack.bind(this)}
+							 	/>							 	
+							 </ToolbarGroup>
+							 <ToolbarGroup>							 	
+							 	<FlatButton 
+							 		label="DONE" 
+							 		primary={true} 							 		
+							 		icon={<DoneIco/>}		
+							 		style={emp_iconDoneStyle}					 		
+							 	/>							 	
+							 </ToolbarGroup>
+						</Toolbar>											
+					</div>		
+
+					<div className="child-main-content">		
+						<Alert hasError={hasError} message={errorMessage}/>				
+						<form onSubmit={this.handleSubmit.bind(this)}>
+							<div className="col-md-4">	
 								<div className="form-group">	
-								    <label className="col-sm-3 control-label">Province</label>							    								   						    
-								    <div className="col-sm-6">								    	
-								    	<input ref="province" name="province" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.province}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Zip</label>							    								   						    
-								    <div className="col-sm-3">								    	
-								    	<input ref="zipcode" name="zipcode" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.zipcode}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Home Phone</label>							    								   						    
-								    <div className="col-sm-5">								    	
-								    	<input ref="homephone" name="homephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.homephone}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Mobile Phone</label>							    								   						    
-								    <div className="col-sm-5">								    	
-								    	<input ref="mobilephone" name="mobilephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mobilephone}/>
-								    </div>								   
-								 </div>
-								 <div className="form-group">	
-								    <label className="col-sm-3 control-label">Email</label>							    								   						    
-								    <div className="col-sm-6">								    	
-								    	<input ref="emailadd" name="emailadd" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.emailadd}/>
-								    </div>								   
-								 </div>
-								  <div className="row form-group">							    
-								    <div className="col-sm-3">								    	
-								    </div>
-								    <div className="col-sm-6">								        
-								    	<SaveButton isSaving={isSaving} sStyle="btn btn-success btn-lg" caption="Save" />
-								    </div>
-								 </div>
-							</form>
-					    </div>
+									<label className="control-label">Employee Id<sup className="required_asterisk">*</sup> </label>					    							    						    	
+									<input ref="employeeId" name="employeeId" type="text" className="form-control" style={Id_fldWidth} onChange={this.onValueChanged.bind(this)} value={data.employeeId}/>
+								</div>
+								
+								<div className="form-group">	
+									<label className="control-label">First Name<sup className="required_asterisk">*</sup> </label>					    							    						    	
+									<input ref="fname" name="fname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.fname}/>
+								</div>
 
-					    
-					</div>						 	
-				</div>	
+								<div className="form-group">	
+									<label className="control-label">Last Name<sup className="required_asterisk">*</sup> </label>					    							    						    	
+									<input ref="lname" name="lname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.lname}/>
+								</div>
 
-				<Notification ref="notify"/>
-			</div>
+								<div className="form-group">	
+									<label className="control-label">Middle Name<sup className="required_asterisk">*</sup> </label>					    							    						    	
+									<input ref="mname" name="mname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mname}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Birthdate<sup className="required_asterisk">*</sup> </label><br/>			    							    						    	
+									<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.birthdate} onChange={this.birthdateChanged.bind(this)}/>
+								</div>
+
+								<div className="col-sm-12">
+									<div className="form-group col-sm-6">	
+										<label className="control-label">Civil Status</label>
+										<div>	
+											 <div className="radio">										  
+											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="0"} value="0"/>
+											    Single										  
+										    </div>			
+										     <div className="radio">										   
+											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="1"} value="1"/>
+											    Married										  
+										    </div>
+										    <div className="radio">						 				   
+											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="2"} value="2"/>
+											    Widowed/Widower										  
+										    </div>	
+										    <div className="radio">										   
+											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="3"} value="3"/>
+											    Separated									  
+										    </div>
+										</div>			    						    									
+									</div>
+
+									<div className="form-group col-sm-6">	
+										<label className="control-label">Gender</label>		
+										<div>			    							    						    	
+											<div className="radio">										  
+											    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="0"} value="0"/>
+											    Male										  
+										    </div>			
+										     <div className="radio">										   
+											    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="1"} value="1"/>
+											    Female										  
+										    </div>		
+										 </div>
+									</div>																
+								</div>									
+							</div>
+
+							<div className="col-md-4">
+								<div className="form-group">	
+									<label className="control-label">Address</label>	
+									<textarea ref="address" name="address" style={textareaStyle} className="form-control" rows="2" onChange={this.onValueChanged.bind(this)} defaultValue={data.address}></textarea>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">City</label>	
+									<input ref="city" name="city" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.city}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Province</label>	
+									<input ref="province" name="province" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.province}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Zip Code</label>	
+									<input ref="zipcode" name="zipcode" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.zipcode}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Mobile Phone</label>	
+									<input ref="mobilephone" name="mobilephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mobilephone}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Home Phone</label>	
+									<input ref="homephone" name="homephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.homephone}/>
+								</div>
+
+								<div className="form-group">	
+									<label className="control-label">Email Address</label>	
+									<input ref="emailadd" name="emailadd" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.emailadd}/>
+								</div>									
+							</div>
+
+							<div className="row form-group">							    																							        
+								<SaveButton isSaving={isSaving} sStyle="btn btn-success btn-lg" caption="Save" />								
+							</div>
+						</form>
+						
+					</div>
+
+					<Notification ref="notify"/>
+				</div>
+			
 		)
 	}
 }

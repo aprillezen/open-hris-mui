@@ -2,46 +2,12 @@ import React, {Component} from 'react'
 import { Link } from 'react-router'
 import Alert from '../../shared/Alert'
 import Notification from 'react-notification-system'
-import {Table, Column, Cell} from 'fixed-data-table'
-import Avatar from 'material-ui/Avatar'
-import IconButton from 'material-ui/IconButton';
-import EditIco from 'material-ui/svg-icons/editor/mode-edit'
-import { tableIcon } from '../../styles'
-
-class TextCell extends Component {
-  render() {
-    const {rowIndex, field, data} = this.props
-    return (
-      <Cell>
-        {data[rowIndex][field]}
-      </Cell>
-    )
-  }
-}
-
-class ImageCell extends React.Component {
-  render() {
-    const {rowIndex, field, data} = this.props    
-    return (
-      <Cell>
-        <Avatar size={32}>A</Avatar>
-      </Cell>
-    )
-  }
-}
-
-class ButtonCell extends React.Component {
-  render() {
-    const {rowIndex, data} = this.props 
-    return (
-      <Cell>
-      	 <IconButton style={tableIcon.smallIcon}>
-         	<EditIco/>
-         </IconButton>
-      </Cell>
-    )
-  }
-}
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import FlatButton from 'material-ui/FlatButton'
+import CreateIco from 'material-ui/svg-icons/social/person-add'
+import FontIcon from 'material-ui/FontIcon'
+import List from './list'
+import { emp_headerStyle, emp_iconHeaderStyle, emp_iconStyle} from '../../styles'
 
 class index extends Component{
 
@@ -66,37 +32,15 @@ class index extends Component{
 		
 	}
 
+	handleCreate(e){
+		this.context.router.push('/employees/add')
+	}
+
 	render(){
 
 		const { isFetching, isFetchFailed, errorMessage, data, hasError } = this.props 	
 
-		let body =  <Table
-						rowsCount={data.length}
-				        rowHeight={50}
-				        headerHeight={40}
-				        width={800}
-<<<<<<< HEAD
-				        height={550}>	
-						<Column
-							header={<Cell>Name</Cell>}
-							cell={props => (
-							<Cell {...props}>
-							  {data[props.rowIndex].fname + " " + data[props.rowIndex].lname}
-							</Cell>
-							)}
-							width={200}	
-						/>	       
-
-=======
-				        maxHeight ={800}>					       
-						<Column width={50} header={<Cell></Cell>} cell={<ImageCell data={data} field="id"/>} />	  				        
-						<Column width={100} header={<Cell>Employee Id</Cell>} cell={<TextCell data={data} field="employeeId" />} />	  
-				        <Column width={150}	header={<Cell>First Name</Cell>} cell={<TextCell data={data} field="fname"/>}/>	   
-				        <Column width={150}	header={<Cell>Last Name</Cell>} cell={<TextCell data={data} field="lname"/>}/>	   
-				        <Column width={150}	header={<Cell>Middle Name</Cell>} cell={<TextCell data={data} field="mname"/>}/>	   
-				        	   
->>>>>>> 5569a9c64b14ff03f80138146a301688125c866a
-					</Table>
+		let body =  <List data={data}/>
 
 		if (isFetching){
 			body = <div>
@@ -104,13 +48,44 @@ class index extends Component{
         		   </div>
 		}
 
-		return(
-			<div>
-				{ body }	
-				<Notification ref="notify"/>
-			</div>																	
+		return(			
+				<div className="child-content">			         
+					<div className="child-content-header">
+						<Toolbar style={emp_headerStyle}>
+							 <ToolbarGroup>							 	
+							 	<FlatButton 
+							 		label="CREATE" 
+							 		primary={true} 
+							 		style={emp_iconStyle} 
+							 		onClick={this.handleCreate.bind(this)} 
+							 		icon={<CreateIco/>}
+							 	/>
+							 	<FlatButton 
+							 		label="EDIT" 
+							 		disabled={true} 
+							 		primary={true}
+							 		style={emp_iconStyle} 
+							 		icon={<FontIcon className="fa fa-pencil" style={emp_iconHeaderStyle}/>} 
+							 	/>
+							 </ToolbarGroup>
+						</Toolbar>											
+					</div>		
+
+					<div className="child-main-content">
+						{ body }	
+					</div>
+
+					<Notification ref="notify"/>
+				</div>
 		)
 	}
 }
 
+index.contextTypes = {
+	router : React.PropTypes.object
+}
+
+
 export default index
+
+

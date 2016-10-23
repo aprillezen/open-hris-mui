@@ -20,7 +20,7 @@ class Dashboard extends Component{
 			          	  <Divider/>
 			          </div>		
 
-			          <div className="child-content-contents">
+			          <div className="child-main-content">
 			          	  <Lorem title="Flex box"/>
 			          </div>
 
