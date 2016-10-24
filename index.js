@@ -64,7 +64,7 @@ const rootReducer = combineReducers({
 //,window.devToolsExtension && window.devToolsExtension()
 const store = createStore(
 				rootReducer,
-				compose(applyMiddleware(thunkMiddleware, routermiddleware))
+				compose(applyMiddleware(thunkMiddleware, routermiddleware),window.devToolsExtension && window.devToolsExtension())
 			  )
 
 const history = syncHistoryWithStore(browserHistory, store)

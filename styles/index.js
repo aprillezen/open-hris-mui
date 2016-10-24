@@ -48,9 +48,11 @@ export const emp_headerStyle = {
 
 export const emp_headerTitleStyle = {
   fontFamily: 'Roboto', 
-  fontWeight: 200,
+  fontWeight: 400,
   fontSize: 18,
-  color: 'black'
+  color: 'black',
+  marginTop: 2,
+  paddingLeft: 10
 }
 
 export const emp_iconHeaderStyle = {   
@@ -58,12 +60,23 @@ export const emp_iconHeaderStyle = {
 }
 
 export const emp_iconStyle = { 
-  marginLeft: -10,
+  marginLeft: -15,  
 }
 
-export const emp_iconDoneStyle = { 
-  marginRight: 0
+export const emp_iconAddStyle = { 
+  marginLeft: -15,  
+  marginTop: 5
 }
 
+
+export const uncheckedStyle= {
+  color: '#acadaf',
+  fontSize: 18
+}
+
+export const checkedStyle= {
+  color: '#00b8d4',
+  fontSize: 18
+}
 
 

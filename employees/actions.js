@@ -26,6 +26,13 @@ export function loadFailedEmployeeList(message){
 		message
 	}
 }
+
+export function listCheckedChanged(id){
+	return{
+		type: ACT.EMP_LIST_CHECKED_CHANGED,
+		id
+	}
+}
 export function load(){     
 	return dispatch=>{
 		dispatch(loadEmployeeList())		

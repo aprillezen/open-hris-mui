@@ -54,7 +54,7 @@ class index extends Component{
 						<Toolbar style={emp_headerStyle}>
 							 <ToolbarGroup>							 	
 							 	<FlatButton 
-							 		label="CREATE" 
+							 		label="ADD EMPLOYEE" 
 							 		primary={true} 
 							 		style={emp_iconStyle} 
 							 		onClick={this.handleCreate.bind(this)} 

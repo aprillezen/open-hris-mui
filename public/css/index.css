@@ -204,6 +204,12 @@ fieldset[disabled] .form-control{
   color: #cdcdcd;
 }
 
+.btn{
+  border-radius: 1px;
+  font-family:'Roboto'; 
+  padding: 2px 15px;
+}
+
 .input-group-addon{
   border: 1px solid #c9c9c9;
   border-radius: 0px;
@@ -214,11 +220,34 @@ fieldset[disabled] .form-control{
   box-shadow:none;
 }
 
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: 0px;
+}
+
 .radio, .checkbox{
   font-family:'Roboto'; 
   font-size:13px; 
+  margin-top: 0px;
 }
 
 
+.radio-flex{
+  display:flex;
+  display: -webkit-flex;
+  flex-direction: row nowrap;
+  -webkit-flex-direction: row nowrap;  
+}
+
+.radio-flex-el{
+  width: 100px;
+}
+
+.save-container{
+  border-top: 1px solid #e5e5e5;
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
 
 
