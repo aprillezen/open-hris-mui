@@ -27,9 +27,11 @@ const deleteData=(data, id)=>{
 	return newdata
 }
 
-const checkedData = (data, id)=>{
+const checkedData = (data, id, value)=>{
 	var newdata = Object.assign([], data)
-	newdata[id].selected=1
+	var b = 0
+	if (value==true) b=1
+	newdata[id].selected= b
 	return newdata
 }
 export const emp_list_reducer = (state = initialState, action)=>{
@@ -111,7 +113,7 @@ export const emp_list_reducer = (state = initialState, action)=>{
 			})
 		case ACT.EMP_LIST_CHECKED_CHANGED:
 			return Object.assign({}, state,{				
-				data: checkedData(action.data)
+				data: checkedData(state.data, action.id, action.value)
 			})
 		default:
 			return state
@@ -138,7 +140,7 @@ const dataForm_initvalue = {
 								"homephone":'',
 								"mobilephone":'',
 								"emailadd":'',
-								"selected": 0
+								"selected": false
 							}
 const employee_initialState = {								
 								data: dataForm_initvalue,									

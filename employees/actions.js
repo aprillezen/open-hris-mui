@@ -27,10 +27,11 @@ export function loadFailedEmployeeList(message){
 	}
 }
 
-export function listCheckedChanged(id){
+export function listCheckedChanged(id,value){
 	return{
 		type: ACT.EMP_LIST_CHECKED_CHANGED,
-		id
+		id,
+		value
 	}
 }
 export function load(){     

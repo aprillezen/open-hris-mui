@@ -3,6 +3,8 @@ import {Cell} from 'fixed-data-table'
 import FontIcon from 'material-ui/FontIcon'
 import {checkedStyle, uncheckedStyle} from '../../../styles'
 import Checkbox from 'material-ui/Checkbox'
+import { connect } from 'react-redux'
+import { listCheckedChanged } from '../../actions'
 
 class CheckCell extends Component {
   constructor(props){
@@ -15,26 +17,23 @@ class CheckCell extends Component {
   }
   
   onselect(value){
-    console.log(this.props.rowIndex)
+   // console.log(this.props.rowIndex)
+    this.props.dispatch(listCheckedChanged(this.props.rowIndex, value))
   }
 
 
   render() {
-    const {rowIndex, field, data, check, ...props} = this.props    
-    var selected=false
-    if (data[rowIndex][field]==1) selected=true
+    const {rowIndex, field, data} = this.props   
+    const selected = data[rowIndex][field]==1?true:false
     return (
-            <Cell {...props} >
-               <Checkbox onCheck={this.checkedChanged.bind(this)} checkedIcon={<FontIcon className="fa fa-check-square" style={checkedStyle} />} uncheckedIcon={<FontIcon className="fa fa-square-o" style={uncheckedStyle} />}/>      
-            </Cell>
+            <div className="fixed-dt-checkbox">
+               <Checkbox checked={selected} onCheck={this.checkedChanged.bind(this)} checkedIcon={<FontIcon className="fa fa-check-square" style={checkedStyle} />} uncheckedIcon={<FontIcon className="fa fa-square-o" style={uncheckedStyle} />}/>      
+            </div>
           )
   }
 }
 
-CheckCell.propTypes = {
-  check: PropTypes.func 
-}
-
+CheckCell  = connect()(CheckCell)
 export default CheckCell
 
 

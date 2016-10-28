@@ -88,6 +88,12 @@ header {
   }
 }
 
+@media (min-width: 1300px) {
+  .child-main-content {
+    width: 1120px;
+  }
+}
+
 footer {
   flex: 0 0 auto;
   -webkit-flex: 0 0 auto;
@@ -250,4 +256,10 @@ fieldset[disabled] .form-control{
   margin-left: 10px;
 }
 
+.row{
+  margin-right: 0px;
+}
+.fixed-dt-checkbox{
+  margin: 5px;
+}
 

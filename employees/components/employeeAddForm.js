@@ -214,6 +214,9 @@ class EmployeeAddForm extends Component{
 								&nbsp;&nbsp;<button type="button" className="btn btn-default" onClick = {this.handleBack.bind(this)}>Cancel</button>
 							</div>
 						</form>
+
+						<br/>
+						<br/>
 						
 					</div>
 
