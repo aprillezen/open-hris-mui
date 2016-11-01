@@ -1,64 +1,63 @@
 import React, {Component} from 'react'
-import EmploymentView from './employment_view'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
 import Alert from '../../shared/Alert'
-import Notification from 'react-notification-system'
+import EmploymentView from './employment_view'
 import { EmployeeEmploymentFormContainer }from '../container'
+import Snackbar from 'material-ui/Snackbar'
 
 class EmployeeEmployment extends Component{
 	
 	constructor(props){
 		super(props)	
-		props.load(props.params.id)
+		this.state = { sbIsOpen: false }	
+		props.load(props.employeeId)
 	}
-	showNotif(msg){
-		this.refs.notify.addNotification({
-			message: msg,
-			level: 'success',
-			position: 'tc',
-			autoDismiss: 3
-		})
+	
+	handleRequestClose(e){
+		this.setState({ sbIsOpen: false })
 	}
+
 	onEdit(e){
-		this.props.edit(this.props.params.id)
+		this.props.edit(this.props.employeeId)
 	}
 	componentWillReceiveProps(nextProps){
 		if (nextProps.updateSuccess){
-			this.showNotif("Changes successfully saved.")				
-			setTimeout(()=>{
-				this.props.load(this.props.data.id)
-			},1000)		
+			this.setState({ sbIsOpen: true })	
 		}
 	}
 
 	render(){
 
-		const { data, withdata, isFetching, isFetchFailed, hasError, errorMessage, isLoadEdit} = this.props
+		const { data, withdata, isFetching, isFetchFailed, hasError, errorMessage, editMode} = this.props
 		let body = <EmploymentView data={data} withdata={withdata} onEdit={this.onEdit.bind(this)} />
 
-		if (isFetching){
-			body = <div>
-        			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
-        		   </div>
-		}else if(isLoadEdit){
-			
+		if (editMode){	
 			body = <EmployeeEmploymentFormContainer/>
-		}
+		}else{
+			if (isFetching){
+				body = <div>
+	        			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
+	        		   </div>			
+			}
 
-		if (isFetchFailed){
-			body = <Alert hasError={isFetchFailed} message={errorMessage}/>
+			if (isFetchFailed){
+				body = <Alert hasError={isFetchFailed} message={errorMessage}/>
+			}
 		}
 
 		return(
 				<div>
 					{body}
-					<Notification ref="notify"/>
+					<Snackbar
+			          open={this.state.sbIsOpen}
+			          message="Changes successfully saved."
+			          autoHideDuration={4000}
+			          onRequestClose={this.handleRequestClose.bind(this)}
+			        />	
 				</div>
 			)
 	}
 }
 
-
-
 export default EmployeeEmployment
+

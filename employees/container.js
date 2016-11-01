@@ -2,8 +2,6 @@ import EmployeesIndex from './components/index'
 import EmployeeAddForm from './components/employeeAddForm'
 import EmployeeGeneral from './components/EmployeeGeneral'
 import EmployeeGeneralEdit_PI from './components/general_pi_form'
-import EmployeeGeneralEdit_CI from './components/general_ci_form'
-
 import EmployeeEmployment from './components/EmployeeEmployment'
 import EmployeeEmployment_Form from './components/employment_form'
 
@@ -15,11 +13,10 @@ import { load, loadEmployeeForm, valueChangeEmployeeForm,
 		 loadEmployeeGeneral, loadEmployeeGeneralEdit, valueChangeEmployeeGeneralEdit, 
 		 civilStatus_ValueChangedGeneralEdit, gender_ValueChangedGeneralEdit,
 		 birthdate_ValueChangedGeneralEdit, loadEmployeeGeneralEditCancel,
-		 loadEmployeeGeneralEditCI, loadEmployeeGeneralEditCICancel, 
-		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,
-		 updateEmployeeGeneral_CI, saveFailedEmployeeGeneral_CI,
+		 updateEmployeeGeneral_PI, saveFailedEmployeeGeneral_PI,		 
 		 loadEmployeeEmployment, loadEmploymentForm,loadEmployeeEmploymentEditCancel, 
-		 employmentDateChanged, employmentValueChanged, employmentSaveFailed, saveEmployment} from './actions'
+		 employmentDateChanged, employmentValueChanged, employmentSaveFailed, saveEmployment,
+		 loadDeleteDialog,cancelDelete} from './actions'
 
 // ********************************************************************************
 // EMPLOYEE LISTS
@@ -31,14 +28,23 @@ const mapStateToProps = (state)=>{
 		hasError: state.employees.hasError,
 		errorMessage: state.employees.errorMessage,
 		data: state.employees.data,
-		deleteSuccess: state.employees.deleteSuccess
+		deleteSuccess: state.employees.deleteSuccess,
+		editDisabled: state.employees.editDisabled,
+		deleteDisabled: state.employees.deleteDisabled,
+		isDeleteDialogOpen: state.employees.isDeleteDialogOpen
 	}
 }
 const mapDispatchToProps = (dispatch)=>{
 	return{
 		fetch: ()=> {
 			dispatch(load())
-		}		
+		},
+		delete:()=>{
+			dispatch(loadDeleteDialog())
+		},
+		cancelDelete:()=>{
+			dispatch(cancelDelete())
+		}
 	}
 }
 export const EmployeesListContainer = connect(mapStateToProps, mapDispatchToProps)(EmployeesIndex)
@@ -94,8 +100,7 @@ const mapStateToPropsGeneral = (state)=>{
 		hasError: state.employeeGeneral.hasError,
 		errorMessage: state.employeeGeneral.errorMessage,
 		data: state.employeeGeneral.data,
-		isGeneralEdit: state.employeeGeneral.isGeneralEdit,
-		isGeneralEditCI: state.employeeGeneral.isGeneralEditCI,
+		editMode: state.employeeGeneral.editMode,		
 		updateSuccess: state.employeeGeneral.updateSuccess
 	}
 }
@@ -106,11 +111,7 @@ const mapDispatchToPropsGeneral = (dispatch)=>{
 		},
 		loadGeneralEdit: ()=>{
 			dispatch(loadEmployeeGeneralEdit())
-		},
-		loadGeneralEditCI: ()=>{
-			dispatch(loadEmployeeGeneralEditCI())
-		}
-
+		}		
 	}
 }
 export const EmployeeGeneralContainer = connect(mapStateToPropsGeneral,mapDispatchToPropsGeneral)(EmployeeGeneral)
@@ -120,7 +121,7 @@ export const EmployeeGeneralContainer = connect(mapStateToPropsGeneral,mapDispat
 // ********************************************************************************
 const mapStateToPropsGeneralEdit = (state)=>{
 	return { 
-		isGeneralEdit: state.employeeGeneral.isGeneralEdit,		
+		editMode: state.employeeGeneral.editMode,		
 		hasError: state.employeeGeneral.hasError,
 		errorMessage: state.employeeGeneral.errorMessage,
 		data: state.employeeGeneral.data,
@@ -159,41 +160,6 @@ const mapDispatchToPropsGeneralEdit= (dispatch)=>{
 export const EmployeeGeneralEditContainer = connect(mapStateToPropsGeneralEdit,mapDispatchToPropsGeneralEdit)(EmployeeGeneralEdit_PI)
 
 // ********************************************************************************
-// EMPLOYEE GENERAL CONTACT
-// ********************************************************************************
-const mapStateToPropsGeneralEdit_CI = (state)=>{
-	return { 
-		isGeneralEditCI: state.employeeGeneral.isGeneralEdit,		
-		hasError: state.employeeGeneral.hasError,
-		errorMessage: state.employeeGeneral.errorMessage,
-		data: state.employeeGeneral.data,
-		isSaving: state.employeeGeneral.isSaving,
-		updateSuccess: state.employeeGeneral.updateSuccess,
-		updateError: state.employeeGeneral.updateError
-	}
-}
-const mapDispatchToPropsGeneralEdit_CI= (dispatch)=>{
-	return{		
-		valueChanged: (field, value)=>{
-			dispatch(valueChangeEmployeeGeneralEdit(field,value))
-		},
-		cancelEdit: (id)=>{
-			dispatch(loadEmployeeGeneralEditCICancel())
-			dispatch(loadEmployeeGeneral(id))
-		},
-		update: (data)=>{
-			dispatch(updateEmployeeGeneral_CI(data))
-		},
-		saveFailed: (message)=>{
-			dispatch(saveFailedEmployeeGeneral_CI(message))
-		}
-
-	}
-}
-export const EmployeeGeneralEditCIContainer = connect(mapStateToPropsGeneralEdit_CI,mapDispatchToPropsGeneralEdit_CI)(EmployeeGeneralEdit_CI)
-
-
-// ********************************************************************************
 // EMPLOYEE EMPLOYMENT VIEW
 // ********************************************************************************
 const mapStateToPropsEmployment = (state)=>{
@@ -206,7 +172,7 @@ const mapStateToPropsEmployment = (state)=>{
 				isSaving: state.employeeEmployment.isSaving,
 				updateSuccess: state.employeeEmployment.updateSuccess,
 				updateError: state.employeeEmployment.updateError,
-				isLoadEdit: state.employeeEmployment.isLoadEdit,
+				editMode: state.employeeEmployment.editMode,
 				withdata: state.employeeEmployment.withdata
 			}
 }

@@ -10,15 +10,12 @@ import DateCell from './cell/DateCell'
 import DropdownCell from './cell/DropdownCell'
 import TextCell from './cell/TextCell'
 import ImageCell from './cell/ImageCell'
+import ColumnCheckCell from './cell/ColumnCheckCell'
 
 const civilStatus = [ "Single","Married","Widowed/Widower","Separated"]
 const gender = [ "Male","Female"]
 
-class List extends Component{
-
-	checkedChange(e){
-		console.log(e)
-	}
+class List extends Component{	
 
 	render(){
 		const {data} = this.props
@@ -32,13 +29,10 @@ class List extends Component{
 			        <Column 
 			        	width={35} 
 			        	header={<Cell>
-			        				 <Checkbox 
-			        				 	checkedIcon={<FontIcon className="fa fa-check-square" style={checkedStyle} />} 
-			        				 	uncheckedIcon={<FontIcon className="fa fa-square-o" style={uncheckedStyle} />}
-			        				 /> 
+			        				 <ColumnCheckCell/>
 			        			</Cell>
 			        			} 
-			        	cell={<CheckCell data={data} check={this.checkedChange.bind(this)} field="selected"/>} 
+			        	cell={<CheckCell data={data} field="selected"/>} 
 			        />
               <Column width={50} header={<Cell>Photo</Cell>} cell={<ImageCell data={data} field="id"/>} />
               <Column width={100} header={<Cell>Employee Id</Cell>} cell={<TextCell data={data} field="employeeId" />} />	  

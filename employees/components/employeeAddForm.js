@@ -12,9 +12,11 @@ import IconButton from 'material-ui/IconButton'
 import BackIco from 'material-ui/svg-icons/navigation/arrow-back'
 import DoneIco from 'material-ui/svg-icons/action/done'
 import FontIcon from 'material-ui/FontIcon'
-import { emp_headerStyle, emp_iconAddStyle,emp_headerTitleStyle,paper_profile} from '../../styles'
+import { emp_headerStyle, emp_iconAddStyle,emp_headerTitleStyle} from '../../styles'
 import Divider from 'material-ui/Divider'
 import Paper from 'material-ui/Paper'
+import Select from 'react-select'
+import { CIVIL_STATUS_DROPDOWN } from '../../shared/Const'
 
 const Id_fldWidth = {
 	width: 150
@@ -42,6 +44,10 @@ class EmployeeAddForm extends Component{
 
 	birthdateChanged(e){		
 		this.props.birthChanged(e)
+	}
+
+	onSelectChanged(field, val){			
+		this.props.valueChanged(this.props.data, field, val.value)		
 	}
 
 	handleSubmit(e){
@@ -131,24 +137,7 @@ class EmployeeAddForm extends Component{
 									
 									<div className="form-group">	
 										<label className="control-label">Civil Status</label>
-										<div className="radio-flex">	
-											 <div className="radio radio-flex-el">										  
-											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="0"} value="0"/>
-											    Single										  
-										    </div>			
-										     <div className="radio radio-flex-el">										   
-											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="1"} value="1"/>
-											    Married										  
-										    </div>
-										    <div className="radio radio-flex-el">						 				   
-											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="2"} value="2"/>
-											    Widow/er										  
-										    </div>	
-										    <div className="radio radio-flex-el">										   
-											    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="3"} value="3"/>
-											    Separated									  
-										    </div>
-										</div>			    						    									
+										<Select name="civilstat" value={data.civilstat} options={CIVIL_STATUS_DROPDOWN} onChange={this.onSelectChanged.bind(this,'civilstat')} clearable={false} searchable={false} />		    						    									
 									</div>
 
 									<div className="form-group">	

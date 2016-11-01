@@ -1,78 +1,60 @@
 import React, {Component} from 'react'
-import General_PI from './general_pi_view'
-import General_CI from './general_ci_view'
 import Alert from '../../shared/Alert'
+import General_PI from './general_pi_view'
 import {EmployeeGeneralEditContainer} from '../container'
-import {EmployeeGeneralEditCIContainer} from '../container'
-import Notification from 'react-notification-system'
+import Snackbar from 'material-ui/Snackbar'
 
 class EmployeeGeneral extends Component{
 
 	constructor(props){
 		super(props)
-		this.props.load(props.params.id)
+		this.state = { sbIsOpen: false }	
+		this.props.load(props.employeeId)
 	}
 
 	onEdit(e){
 		this.props.loadGeneralEdit()
 	}
 
-	onEditCI(e){
-		this.props.loadGeneralEditCI()
+	handleRequestClose(e){
+		this.setState({ sbIsOpen: false })
 	}
 
-	showNotif(msg){
-		this.refs.notify.addNotification({
-			message: msg,
-			level: 'success',
-			position: 'tc',
-			autoDismiss: 3
-		})
-	}
 	componentWillReceiveProps(nextProps){
-		if (nextProps.updateSuccess){
-			this.showNotif("Changes successfully saved.")			
+		if (nextProps.updateSuccess){	
+			this.setState({ sbIsOpen: true })								
 		}
 	}
+
 	render(){
-		const { data,isFetching, isFetchFailed, hasError, errorMessage, isGeneralEdit, isGeneralEditCI} = this.props
 
-		let body = <General_PI data={data} onEdit={this.onEdit.bind(this)} />
-		let content =  <General_CI data={data} onEdit={this.onEditCI.bind(this)}/>
+		const { data,isFetching, isFetchFailed, hasError, errorMessage, editMode } = this.props
+		let body = <General_PI data={data} onEdit={this.onEdit.bind(this)} />	
 
-
-		if (isGeneralEdit || isGeneralEditCI){			
-			if (isGeneralEdit){
-				body = <EmployeeGeneralEditContainer/>
-			}
-			if (isGeneralEditCI){
-				content = <EmployeeGeneralEditCIContainer/>
-			}
+		if (editMode){			
+			body = <EmployeeGeneralEditContainer/>
 		}else{
 			if (isFetching){
 				body = <div>
 	        			  <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
 	        		   </div>
 			}
-
 			if (isFetchFailed){
 				body = <Alert hasError={isFetchFailed} message={errorMessage}/>
 			}
 		}
 		
 		return(<div>
-				  {body}	
-				  <br/>	
-				  {content}
-				  <Notification ref="notify"/>
-				  <br/>
-				  <br/>
-				  <br/>
+				  {body}		
+				  <Snackbar
+			          open={this.state.sbIsOpen}
+			          message="Changes successfully saved."
+			          autoHideDuration={4000}
+			          onRequestClose={this.handleRequestClose.bind(this)}
+			        />			   				 			 				 
 				</div>
 			)
 	}
 }
-
-
 export default EmployeeGeneral
 

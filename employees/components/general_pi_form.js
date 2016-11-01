@@ -4,10 +4,12 @@ import moment from 'moment'
 import ReactDOM from 'react-dom'
 import Alert from '../../shared/Alert'
 import SaveButton from   '../../shared/SaveButton'
+import Select from 'react-select'
+import { CIVIL_STATUS_DROPDOWN } from '../../shared/Const'
 
 class General_PI extends Component{
 
-	onValueChanged(e){			
+	onValueChanged(e){				
 		this.props.valueChanged(e.target.name, e.target.value)		
 	}
 
@@ -26,6 +28,9 @@ class General_PI extends Component{
 	cancel(e){
 		this.props.cancelEdit(this.props.data.id)
 	}
+	onSelectChanged(field, val){			
+		this.props.valueChanged(field, val.value)		
+	}
 
 	handleSubmit(e){
 		const invalid_msg="Please enter required (*) fields."
@@ -41,93 +46,102 @@ class General_PI extends Component{
 
 	render(){
 
+		const textareaStyle = {
+		  width: '100%'
+		}
+
 		const { data, isSaving, isGeneralEdit, updateSuccess, updateError, errorMessage} = this.props
 
 		return(
-				<div className="col-md-12">
-					<Alert hasError={updateError} message={errorMessage}/>
-					<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-						 <h3>Personal Information</h3>	
-						 <hr/>		
-						 <div className="editForm">											 
-							 <div className="form-group">	
-							 	<label className="col-sm-3 control-label">Employee Id<sup className="required_asterisk">*</sup> </label>					    
-							    <div className="col-sm-4">								    	
-							    	<input ref="employeeId" name="employeeId" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.employeeId}/>
-							    </div>								   
-							 </div>
-							 <div className="form-group">		
-								<label className="col-sm-3 control-label">First Name<sup className="required_asterisk">*</sup></label>						    					    
-							    <div className="col-sm-6">								    	
-							    	<input ref="fname" name="fname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.fname}/>
-							    </div>								  
-							 </div>
-							 <div className="form-group">	
-							    <label className="col-sm-3 control-label">Last Name<sup className="required_asterisk">*</sup></label>							    								   
-							    <div className="col-sm-6">								    	
-							    	<input ref="lname" name="lname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.lname}/>
-							    </div>								    
-							 </div>
-							 <div className="form-group">	
-							    <label className="col-sm-3 control-label">Middle Name<sup className="required_asterisk">*</sup></label>							    								   
-							    <div className="col-sm-6">								    	
-							    	<input ref="mname" name="mname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mname}/>
-							    </div>
-							 </div>
-							  <div className="form-group">	
-							    <label className="col-sm-3 control-label">Birthdate<sup className="required_asterisk">*</sup></label>							    								   						    
-							    <div className="col-sm-5">								    	
-							    	
-							    	<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.birthdate} onChange={this.birthdateChanged.bind(this)}/>
-							    </div>								   
-							 </div>
-							 <div className="form-group">	
-							    <label className="col-sm-3 control-label">Civil Status</label>									  	
-							    <div className="col-sm-4">								    	
-								    <div className="radio">										  
-									    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="0"} value="0"/>
-									    Single										  
-								    </div>			
-								     <div className="radio">										   
-									    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="1"} value="1"/>
-									    Married										  
-								    </div>
-								    <div className="radio">						 				   
-									    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="2"} value="2"/>
-									    Widowed/Widower										  
-								    </div>	
-								    <div className="radio">										   
-									    <input type="radio" name="civilstat" onChange={this.civilValueChanged.bind(this)} checked={data.civilstat=="3"} value="3"/>
-									    Separated									  
-								    </div>
-								 </div>						   
-							 </div>
-							 <div className="form-group">	
-							    <label className="col-sm-3 control-label">Gender</label>									  	
-							    <div className="col-sm-4">								    	
-								    <div className="radio">										  
+				<form onSubmit={this.handleSubmit.bind(this)}>
+				    <Alert hasError={updateError} message={errorMessage}/>
+					<div className="row col-md-12">
+						<div className="form-category-title">
+							<h4>General Information</h4>							
+						</div>
+						<div className="col-md-4">	
+							<div className="form-group">	
+								<label className="control-label">Employee Id</label>					    							    						    	
+								<input ref="employeeId" name="employeeId" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.employeeId}/>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">First Name</label>					    							    						    	
+								<input ref="fname" name="fname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.fname}/>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Last Name</label>					    							    						    									
+								<input ref="lname" name="lname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.lname}/>
+							</div>
+							<div className="form-group">	
+								<label className="control-label">Middle Name</label>					    							    						    									
+								<input ref="mname" name="mname" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mname}/>
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Birthdate</label><br/>				    							    						    									
+								<DatePicker openToDate={moment('1993-09-28')} className="form-control" showYearDropdown selected={data.birthdate} onChange={this.birthdateChanged.bind(this)}/>
+							</div>		
+							<div className="form-group">	
+								<label className="control-label">Civil Status</label>					    							    						    									
+								<Select name="civilstat" value={data.civilstat} options={CIVIL_STATUS_DROPDOWN} onChange={this.onSelectChanged.bind(this,'civilstat')} clearable={false} searchable={false} />
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Gender</label>					    							    						    	
+								<div className="radio-flex">	    							    						    	
+									<div className="radio radio-flex-el">										  
 									    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="0"} value="0"/>
 									    Male										  
 								    </div>			
-								     <div className="radio">										   
+								     <div className="radio radio-flex-el">										   
 									    <input type="radio" name="gender" onChange={this.genderValueChanged.bind(this)} checked={data.gender=="1"} value="1"/>
 									    Female										  
-								    </div>									   
-								 </div>						   
-							 </div>
-							  <br/>
-							  <div className="row form-group">							    
-							    <div className="col-sm-3">								    	
-							    </div>
-							    <div className="col-sm-6">								        
-							    	<SaveButton isSaving={isSaving} sStyle="btn btn-success" caption="Save Changes" />
-							    	&nbsp;<button className="btn btn-default" type="button" onClick={this.cancel.bind(this)}>Cancel</button>
-
-							    </div>
-							 </div>
+								    </div>		
+								 </div>								
+							</div>																																									
 						</div>
-					</form>
-			    </div>
+
+						<div className="col-md-4">
+							<div className="form-group">	
+								<label className="control-label">Adress</label>					    							    						    	
+								<textarea ref="address" name="address" style={textareaStyle} className="form-control" rows="2" onChange={this.onValueChanged.bind(this)} defaultValue={data.address}></textarea>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">City</label>					    							    						    	
+								<input ref="city" name="city" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.city}/>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Province</label>					    							    						    	
+								<input ref="province" name="province" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.province}/>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Zip</label>					    							    						    	
+								<input ref="zipcode" name="zipcode" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.zipcode}/>								
+							</div>
+							<div className="form-group">	
+								<label className="control-label">Home Phone</label>					    							    						    	
+								<input ref="homephone" name="homephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.homephone}/>
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Mobile Phone</label>					    							    						    	
+								<input ref="mobilephone" name="mobilephone" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.mobilephone}/>
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Email Address</label>					    							    						    	
+								<input ref="emailadd" name="emailadd" type="text" className="form-control" onChange={this.onValueChanged.bind(this)} value={data.emailadd}/>								
+							</div>							
+						</div>
+						<div className="col-md-4">
+							<div className="form-group">	
+								<label className="control-label">Photo</label><br/>				    							    						    	
+								<img src="/images/nopic.png"  className="img-thumbnail"/>
+							</div>
+						</div>	
+					</div>	
+					<div className="row col-md-12">
+						<SaveButton isSaving={isSaving} sStyle="btn btn-primary" caption="Save Changes" />&nbsp;
+						<button className="btn btn-default" type="button" onClick={this.cancel.bind(this)}>Cancel</button>
+					</div>				
+				</form>
+
 
 			)
 	}

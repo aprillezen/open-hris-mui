@@ -79,4 +79,17 @@ export const checkedStyle= {
   fontSize: 18
 }
 
+export const tabItemContainerStyle = {
+  backgroundColor: '#fff',
+}
+
+export const tabItemStyle = {
+  color: '#000'
+}
+
+export const inkBarStyle = {
+  backgroundColor: '#03A9F4'
+}
+
+
 

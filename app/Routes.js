@@ -40,7 +40,7 @@ import {Lt_List_Container,Lt_Form_Container} from '../leave/setup/lt/container'
 import Employees from './Employees'
 import {EmployeesListContainer,EmployeeAddFormContainer } from '../employees/container'
 import EmployeeProfile from '../employees/components/EmployeeProfile'
-import { EmployeeGeneralContainer, EmployeeEmploymentContainer } from '../employees/container'
+import { EmployeeEmploymentContainer } from '../employees/container'
 import EmployeeBC from '../employees/components/employeeBC'
 import EmployeeTA from '../employees/components/employeeTA'
 import EmployeeLoan from '../employees/components/employeeLoan'
@@ -70,15 +70,7 @@ module.exports = (
             <IndexRedirect to="/employees/list" />
             <Route path='/employees/list' component={EmployeesListContainer} />
             <Route path='/employees/add' component={EmployeeAddFormContainer} />
-            <Route path='/employees/profile/:id' component={EmployeeProfile}>
-                <IndexRedirect to="/employees/profile/:id/general" />
-                <Route path='/employees/profile/:id/general' component={EmployeeGeneralContainer} />
-                <Route path='/employees/profile/:id/employment' component={EmployeeEmploymentContainer} />
-                <Route path='/employees/profile/:id/bc' component={EmployeeBC} />
-                <Route path='/employees/profile/:id/ta' component={EmployeeTA} />
-                <Route path='/employees/profile/:id/loan' component={EmployeeLoan} />
-                <Route path='/employees/profile/:id/payroll' component={EmployeePY} />
-            </Route>
+            <Route path='/employees/profile/:id' component={EmployeeProfile} />
         </Route>
         <Route path='/ta' component={Timekeeping}>
             <IndexRedirect to="/ta/setup" />

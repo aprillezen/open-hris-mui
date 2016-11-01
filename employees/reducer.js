@@ -13,11 +13,10 @@ const initialState = {
 	data: [],
 	isDeleteDialogOpen: false,
 	isDeleting: false,
-	deleteHasError: false,
-	deleteErrorMsg:'',
-	deletemsg:'',
-	deleteId:0,
+	deleteHasError: false,			
 	deleteSuccess: false,
+	editDisabled: true,
+	deleteDisabled: true,
 }
 
 const deleteData=(data, id)=>{	
@@ -29,11 +28,37 @@ const deleteData=(data, id)=>{
 
 const checkedData = (data, id, value)=>{
 	var newdata = Object.assign([], data)
-	var b = 0
-	if (value==true) b=1
+	var b = value==true?1:0	
 	newdata[id].selected= b
 	return newdata
 }
+
+const checkedUcheckedAll=(data, value)=>{
+	var newdata = data.map((obj)=>{			
+		obj.selected = value==true?1:0	 
+		return obj
+	})	
+	return newdata
+}
+
+const editIsEnable= (data)=>{
+	var newdata = data.filter((obj)=>{							
+		if (obj.selected == true){			
+			return obj
+		}
+	})			
+	return newdata.length==1?false:true
+}
+
+const deleteIsEnable= (data)=>{
+	var newdata = data.filter((obj)=>{							
+		if (obj.selected == true){			
+			return obj
+		}
+	})			
+	return newdata.length>=1?false:true
+}
+
 export const emp_list_reducer = (state = initialState, action)=>{
 	switch(action.type){
 		case ACT.EMP_LOAD_LIST:
@@ -44,10 +69,7 @@ export const emp_list_reducer = (state = initialState, action)=>{
 				hasError: false,
 				isDeleteDialogOpen: false,
 				isDeleting: false,
-				deleteHasError: false,
-				deleteErrorMsg:'',
-				deletemsg:'',
-				deleteId:0,
+				deleteHasError: false,												
 				deleteSuccess: false
 			})
 		case ACT.EMP_LOAD_SUCCESS_LIST:
@@ -56,7 +78,9 @@ export const emp_list_reducer = (state = initialState, action)=>{
 				isFetchFailed: false,
 				errorMessage: '',				
 				hasError: false,
-				data: action.data
+				data: action.data,
+				editDisabled: true,
+				deleteDisabled: true
 
 			})
 		case ACT.EMP_LOAD_FAILED_LIST:
@@ -70,50 +94,48 @@ export const emp_list_reducer = (state = initialState, action)=>{
 			return Object.assign({}, state,{
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
-				deleteHasError: action.deleteHasError,
-				deleteErrorMsg: action.deleteErrorMsg,
-				deleteSuccess: false,
-				deleteId: action.id,
-				deletemsg: action.msg
+				deleteHasError: action.deleteHasError,				
+				deleteSuccess: false				
 			})
 		case ACT.EMP_CANCEL_DELETE:
 			return Object.assign({}, state,{
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
-				deleteHasError: action.deleteHasError,
-				deleteErrorMsg: action.deleteErrorMsg,
-				deleteSuccess: false,
-				deleteId: action.deleteId
+				deleteHasError: action.deleteHasError,				
+				deleteSuccess: false				
 			})
 		case ACT.EMP_DELETE_ATTEMPT:
 			return Object.assign({}, state,{
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
-				deleteSuccess: action.deleteSuccess,
-				deleteErrorMsg: action.deleteErrorMsg			
+				deleteSuccess: action.deleteSuccess
 			})
 		case ACT.EMP_DELETE_FAILED:
 			return Object.assign({}, state,{				
 				isDeleting: action.isDeleting,
 				deleteHasError: action.deleteHasError,
-				deleteSuccess: action.deleteSuccess,
-				deleteErrorMsg: action.message			
+				deleteSuccess: action.deleteSuccess				
 			})
 		case ACT.EMP_DELETE_SUCCESS:
 			return Object.assign({}, state,{				
 				isDeleteDialogOpen: action.isDeleteDialogOpen,
 				isDeleting: action.isDeleting,
-				deleteHasError: action.deleteHasError,
-				deleteSuccess: action.deleteSuccess,
-				deleteErrorMsg: action.deleteErrorMsg,
+				deleteHasError: action.deleteHasError,								
 				deleteSuccess: action.deleteSuccess,
 				updateSuccess: action.updateSuccess,				
-				data: deleteData(state.data, action.id),
-				deleteId: 0
+				data: deleteData(state.data, action.id)				
 			})
 		case ACT.EMP_LIST_CHECKED_CHANGED:
-			return Object.assign({}, state,{				
-				data: checkedData(state.data, action.id, action.value)
+			return Object.assign({}, state,{					
+				data: checkedData(state.data, action.id, action.value),
+				editDisabled: editIsEnable(state.data),
+				deleteDisabled: deleteIsEnable(state.data)
+			})
+		case ACT.EMP_LIST_CHECKED_UNCHECKED_ALL:
+			return Object.assign({}, state,{	
+				editDisabled: true,		
+				deleteDisabled: action.value==true?false:true,
+				data: checkedUcheckedAll(state.data, action.value)
 			})
 		default:
 			return state
@@ -131,7 +153,7 @@ const dataForm_initvalue = {
 								"lname":'',
 								"mname":'',
 								"birthdate": null,
-								"civilstat": '0',
+								"civilstat": 0,
 								"gender":'0',
 								"address":'',
 								"city":'',
@@ -258,6 +280,8 @@ const fieldvalues=(data, field, value)=>{
 			break
 		case "emailadd":newdata.emailadd = value
 			break
+		case "civilstat":newdata.civilstat = value
+			break
 		default:
 			break
 	}
@@ -275,7 +299,7 @@ const dataForm_general_initvalue = {
 								"lname":'',
 								"mname":'',
 								"birthdate": null,
-								"civilstat":"0",
+								"civilstat": 0,
 								"gender":'0',
 								"address":'',
 								"city":'',
@@ -290,8 +314,7 @@ const emp_general_initialState = {
 								isFetching: false,
 								isFetchFailed: false,
 								hasError: false,
-								isGeneralEdit: false,
-								isGeneralEditCI:false,
+								editMode: false,								
 								errorMessage:'',
 								isSaving: false,
 								updateSuccess: false,
@@ -306,8 +329,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				isFetching: action.isFetching,
 				isFetchFailed: false,
 				hasError:false,
-				isGeneralEdit: false,
-				isGeneralEditCI:false,
+				editMode: false,				
 				isSaving: false,
 				errorMessage:'',
 				updateSuccess: false,
@@ -332,8 +354,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_PI:
 			return Object.assign({}, state,{
-				isGeneralEdit: action.isGeneralEdit,
-				isGeneralEditCI: action.isGeneralEditCI,
+				editMode: action.editMode,				
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,
@@ -343,27 +364,12 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 			})	
 		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI:
 			return Object.assign({}, state,{
-				isGeneralEdit: action.isGeneralEdit,
+				editMode: action.editMode,
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,
 				updateError: false			
-			})	
-		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI:
-			return Object.assign({}, state,{
-				isGeneralEditCI: action.isGeneralEditCI,
-				isGeneralEdit: action.isGeneralEdit,
-				isSaving: false,		
-				errorMessage: '',
-				updateSuccess: false,
-				updateError: false,
-				saveSuccess: false,
-				saveError: false
-			})	
-		case ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL:
-			return Object.assign({}, state,{
-				isGeneralEditCI: action.isGeneralEditCI				
-			})	
+			})			
 		case ACT.EMP_PROFILE_GENERAL_VALUE_CHANGED:			 	
 			return Object.assign({}, state,{						
 				hasError: false,			
@@ -371,15 +377,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				updateSuccess: false,
 				updateError: false,
 				data : fieldvalues(state.data, action.field, action.value)
-			})
-		case ACT.EMP_PROFILE_GENERAL_CIVIL_CHANGED:			
-			return Object.assign({}, state,{						
-				hasError: false,				
-				errorMessage: '',
-				updateSuccess: false,
-				updateError: false,
-				data : civilstatus(state.data, action.value)
-			})
+			})	
 		case ACT.EMP_PROFILE_GENERAL_GENDER_CHANGED:			
 			return Object.assign({}, state,{						
 				hasError: false,				
@@ -409,7 +407,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				errorMessage: action.errorMessage,
 				updateSuccess: action.updateSuccess,
 				updateError: action.updateError,
-				isGeneralEdit: false,
+				editMode: false,
 				data: action.data
 			})
 		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_PI:			
@@ -418,30 +416,7 @@ export const emp_general_reducer = (state = emp_general_initialState, action)=>{
 				errorMessage: action.message,
 				updateSuccess: action.updateSuccess,
 				updateError: action.updateError
-			})
-		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_CI:			
-			return Object.assign({}, state,{						
-				isSaving: action.isSaving,		
-				errorMessage: action.errorMessage,
-				updateSuccess: action.updateSuccess,
-				updateError: action.updateError
-			})
-		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_CI:					
-			return Object.assign({}, state,{						
-				isSaving: action.isSaving,		
-				errorMessage: action.errorMessage,
-				updateSuccess: action.updateSuccess,
-				updateError: action.updateError,
-				isGeneralEditCI: false,
-				data: action.data
-			})
-		case ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_CI:			
-			return Object.assign({}, state,{						
-				isSaving: action.isSaving,		
-				errorMessage: action.message,
-				updateSuccess: action.updateSuccess,
-				updateError: action.updateError
-			})
+			})		
 		default:
 			return state
 
@@ -478,7 +453,7 @@ const emp_employment_initialState = {
 								hasError: false,
 								errorMessage:'',
 								isSaving: false,
-								isLoadEdit: false,
+								editMode: false,
 								updateSuccess: false,								
 								jobtitles: [],
 								branches: [],
@@ -543,7 +518,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 				isSaving: false,
 				errorMessage:'',
 				updateSuccess: false,				
-				isLoadEdit: false
+				editMode: false
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_SUCCESS_LOAD_VIEW:
 			return Object.assign({}, state,{
@@ -577,7 +552,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
 				isFetchFailed: false,
-				isLoadEdit: action.isLoadEdit,
+				editMode: action.editMode,
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,							
@@ -587,7 +562,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
 				isFetchFailed: false,
-				isLoadEdit: true,
+				editMode: true,
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,								
@@ -602,7 +577,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 			return Object.assign({}, state,{
 				isFetching: action.isFetching,
 				isFetchFailed: action.isFetchFailed,
-				isLoadEdit: action.isLoadEdit,
+				editMode: action.editMode,
 				isSaving: false,		
 				errorMessage: '',
 				updateSuccess: false,				
@@ -610,7 +585,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 			})	
 		case ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL:
 			return Object.assign({}, state,{
-				isLoadEdit: action.isLoadEdit,
+				editMode: action.editMode,
 				isSaving: false,		
 				errorMessage: action.errorMessage,
 				updateSuccess: false,
@@ -647,6 +622,7 @@ export const emp_employment_reducer = (state = emp_employment_initialState, acti
 				isSaving: action.isSaving,		
 				hasError: action.hasError,
 				updateSuccess: action.updateSuccess,
+				editMode: false,
 				errorMessage: ''
 			})		
 		default:

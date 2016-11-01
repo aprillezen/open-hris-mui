@@ -4,8 +4,14 @@ export const EMPLOYEE_CATEGORY = [ "Monthly", "Daily"]
 export const PAY_SCHEDULE = [ "Once a month", "Twice a month","Every week","Everday"]
 export const PAY_MODE = [ "Bank", "Cash"]
 export const EMPLOYMENT_STATUS = [ "Regular", "Contractual","Probationary","Resigned","Terminated","Temporary","End of Contract"]
-
 export const HOLIDAY_TYPE = [ "Legal Holiday", "Special Holiday","Other Holiday","Work Suspension"]
+
+export const CIVIL_STATUS_DROPDOWN = [ 
+			{ value: 0, label: 'Single' },
+			{ value: 1, label: 'Married' },
+			{ value: 2, label: 'Widowed/Widower' },
+			{ value: 3, label: 'Separated' }
+		]
 
 export const HOLIDAY_TYPE_DROPDOWN = [ 
 			{ value: 0, label: 'Legal Holiday' },

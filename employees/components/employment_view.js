@@ -32,107 +32,82 @@ class Employment_View extends Component{
 		}
 
 		return(
-				<div className="col-md-12">
-					<div className="form-horizontal">
-						 <h3>Employment</h3>	
-						 <hr/>		
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Start of Employment</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{startdate}</label>
-						    </div>
-						    <div className="col-sm-3">								    	
-						    	<button type="button" className="btn btn-default pull-right" onClick={this.props.onEdit}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">
-						 	<label className="col-sm-3 control-label">Job Title</label>					    
-						    <div className="col-sm-5">								    	
-						    	<label className="field_value">{data.jobtitle}</label>
-						    </div>								 									  
-						 </div>	
-						 <div className="form-group form-group-view">
-						 	<label className="col-sm-3 control-label">Job Level</label>					    
-						    <div className="col-sm-5">								    	
-						    	<label className="field_value">{joblevel}</label>
-						    </div>								 									  
-						 </div>	
-						  <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Employee Category</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{category}</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Payroll Schedule</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{schedule}</label>
-						    </div>								   
-						 </div>		
-						  <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Employment Status</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{empstatus}</label>
-						    </div>								   
-						 </div>		
-						<div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Separation Date</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{separationdate}</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Mode of Payment</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{paymentmode}</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Assignment/Branch</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.branch}</label>
-						    </div>								   
-						 </div>		
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Department</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.department}</label>
-						    </div>								   
-						 </div>							 
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">S.S.S #</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.sssno}</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">PhilHealth #</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.philhealthno}</label>
-						    </div>								   
-						 </div>							 
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">PagIbig #</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.pagibigno}</label>
-						    </div>								   
-						 </div>		
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">T.I.N.</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.tin}</label>
-						    </div>								   
-						 </div>	
-						 <div className="form-group form-group-view">	
-						 	<label className="col-sm-3 control-label">Tax Status</label>					    
-						    <div className="col-sm-4">								    	
-						    	<label className="field_value">{data.taxstatus}</label>
-						    </div>								   
-						 </div>						 
-						 <br/>						
-						 <br/>				 							 						
-					</div>
-			    </div>
+				<div className="form">
+					<div className="row col-md-12">
+						<div className="form-category-title">
+							<h4>Job Information</h4>
+							<button type="button" className="btn btn-primary btn-xs" onClick={this.props.onEdit}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>														
+						</div>
+						<div className="col-md-4">	
+							<div className="form-group">	
+								<label className="control-label">Start of Employment</label>					    							    						    	
+								<div className="field_value">{startdate}</div>								
+							</div>
+							<div className="form-group">	
+								<label className="control-label">Job Title</label>					    							    						    	
+								<div className="field_value">{data.jobtitle}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Job Level</label>					    							    						    	
+								<div className="field_value">{joblevel}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Employee Category</label>					    							    						    	
+								<div className="field_value">{category}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Payroll Schedule</label>					    							    						    	
+								<div className="field_value">{schedule}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Employment Status</label>					    							    						    	
+								<div className="field_value">{empstatus}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Separation Date</label>					    							    						    	
+								<div className="field_value">{separationdate}</div>								
+							</div>	
+							<div className="form-group">	
+								<label className="control-label">Mode of Payment</label>					    							    						    	
+								<div className="field_value">{paymentmode}</div>								
+							</div>	
+						</div>
+
+						<div className="col-md-4">
+							<div className="form-group">	
+								<label className="control-label">Assignment/Branch</label>					    							    						    	
+								<div className="field_value">{data.branch}</div>								
+							</div>	
+							<div className="form-group">
+								<label className="control-label">Department</label>					    							    						    	
+								<div className="field_value">{data.department}</div>								
+							</div>	
+							<div className="form-group">
+								<label className="control-label">S.S.S. No.</label>					    							    						    	
+								<div className="field_value">{data.sssno}</div>								
+							</div>	
+							<div className="form-group">
+								<label className="control-label">PhilHealth No.</label>					    							    						    	
+								<div className="field_value">{data.philhealthno}</div>								
+							</div>
+							<div className="form-group">
+								<label className="control-label">PagIbig No.</label>					    							    						    	
+								<div className="field_value">{data.pagibigno}</div>								
+							</div>	
+							<div className="form-group">
+								<label className="control-label">TIN No.</label>					    							    						    	
+								<div className="field_value">{data.tin}</div>								
+							</div>	
+							<div className="form-group">
+								<label className="control-label">Tax Status</label>					    							    						    	
+								<div className="field_value">{data.taxstatus}</div>								
+							</div>					
+						</div>
+						<div className="col-md-4">
+							
+						</div>	
+					</div>					
+				</div>
 
 			)
 	}

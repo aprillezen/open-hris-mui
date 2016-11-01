@@ -34,6 +34,14 @@ export function listCheckedChanged(id,value){
 		value
 	}
 }
+
+export function listCheckedUnCheckedAll(value){
+	return{
+		type: ACT.EMP_LIST_CHECKED_UNCHECKED_ALL,		
+		value
+	}
+}
+
 export function load(){     
 	return dispatch=>{
 		dispatch(loadEmployeeList())		
@@ -53,16 +61,13 @@ export function load(){
 	}
 }
 
-export function loadDeleteDialog(id, msg){
+export function loadDeleteDialog(){
 	return{
 		type: ACT.EMP_LOAD_DELETE_DIALOG,
 		isDeleteDialogOpen: true,
 		isDeleting: false,
-		deleteHasError: false,
-		deleteErrorMsg: '',
-		deleteSuccess: false,
-		id,
-		msg		
+		deleteHasError: false,		
+		deleteSuccess: false		
 	}
 }
 
@@ -72,9 +77,7 @@ export function cancelDelete(){
 		isDeleteDialogOpen: false,
 		isDeleting: false,
 		deleteHasError: false,
-		deleteSuccess: false,
-		deleteErrorMsg:'',
-		deleteId: 0
+		deleteSuccess: false		
 	}
 }
 
@@ -83,9 +86,7 @@ export function deleteAttempt(){
 		type: ACT.EMP_DELETE_ATTEMPT,
 		isDeleting: true,
 		deleteHasError: false,
-		deleteSuccess: false,
-		deleteErrorMsg:''
-		
+		deleteSuccess: false
 	}
 }
 export function deleteFailed(message){
@@ -98,16 +99,13 @@ export function deleteFailed(message){
 	}
 }
 
-export function deleteSuccess(id){
+export function deleteSuccess(){
 	return{
 		type: ACT.EMP_DELETE_SUCCESS,
 		isDeleteDialogOpen: false,
 		isDeleting: false,
-		deleteHasError: false,
-		deleteSuccess: true,
-		deleteErrorMsg:'',
-		deleteSuccess: true,
-		id
+		deleteHasError: false,				
+		deleteSuccess: true		
 	}
 }
 
@@ -272,29 +270,16 @@ export function loadEmployeeGeneral(id){
 export function loadEmployeeGeneralEdit(){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_PI,
-		isGeneralEdit: true,
-		isGeneralEditCI: false
+		editMode: true		
 	}
 }
 export function loadEmployeeGeneralEditCancel(){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CANCEL_PI,
-		isGeneralEdit: false
+		editMode: false
 	}
 }
-export function loadEmployeeGeneralEditCI(){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI,
-		isGeneralEditCI: true,
-		isGeneralEdit: false
-	}
-}
-export function loadEmployeeGeneralEditCICancel(){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_LOAD_EDIT_CI_CANCEL,
-		isGeneralEditCI: false
-	}
-}
+
 export function valueChangeEmployeeGeneralEdit(field, value){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_VALUE_CHANGED,		
@@ -302,12 +287,7 @@ export function valueChangeEmployeeGeneralEdit(field, value){
 		value
 	}
 }
-export function civilStatus_ValueChangedGeneralEdit(value){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_CIVIL_CHANGED,		
-		value
-	}
-}
+
 export function gender_ValueChangedGeneralEdit(value){
 	return{
 		type: ACT.EMP_PROFILE_GENERAL_GENDER_CHANGED,		
@@ -378,67 +358,6 @@ export function updateEmployeeGeneral_PI(data){
 		 })
 		.catch(error => { 					
 			dispatch(saveFailedEmployeeGeneral_PI(error))			
-		})		
-	}
-}
-export function savingEmployeeGeneral_CI(){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_CI,
-		isSaving: true,		
-		errorMessage: '',
-		updateSuccess: false,
-		updateError: false
-	}
-}
-export function saveSuccessEmployeeGeneral_CI(data){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_SUCCESS_CI,
-		isSaving: false,		
-		errorMessage: '',
-		updateSuccess: true,
-		updateError: false,
-		data
-	}
-}
-export function saveFailedEmployeeGeneral_CI(message){
-	return{
-		type: ACT.EMP_PROFILE_GENERAL_EDIT_SAVE_FAILED_CI,
-		isSaving: false,				
-		updateSuccess: false,
-		updateError: true,
-		message
-	}
-}
-export function updateEmployeeGeneral_CI(data){	
-	data.birthdate =  data.birthdate.format('YYYY/MM/DD HH:mm:ss')	
-	let url = 'http://localhost:8081/employee/update'
-	let dataForm = {
-		    method: 'POST',
-		    headers: { 
-		    	 'Accept': 'application/json',
-	        	 'Content-Type': 'application/json',
-		    },
-		    body: JSON.stringify(data)
-  		}	  	
-   	data.birthdate = moment(data.birthdate,'YYYY/MM/DD')     	
-	return dispatch=>{
-		dispatch(savingEmployeeGeneral_CI())
-		// return setTimeout(()=>{			
-		// 	dispatch(saveSuccessEmployeeGeneral_CI(data))
-		// 	//dispatch(saveFailedEmployeeGeneral_CI("test error"))
-		// }, 2000)
-		fetch(url, dataForm)
-		.then(response=>response.json()
-			.then(ret=>({ ret, response }))
-		 ).then(({ ret, response })=>{		 	
-		 	if (parseInt(ret.status)==1){			 		
-		 		dispatch(saveSuccessEmployeeGeneral_CI(data))	 				 				
-		 	}else{
-		 		dispatch(saveFailedEmployeeGeneral_CI(ret.message))		 			 		
-		 	}		 	
-		 })
-		.catch(error => { 					
-			dispatch(saveFailedEmployeeGeneral_CI(error))			
 		})		
 	}
 }
@@ -567,7 +486,7 @@ export function loadEmployeeEmploymentEdit(){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT,
 		isFetching: true,
-		isLoadEdit: true
+		editMode: true
 	}
 }
 export function loadEmployeeEmploymentEditSuccess(data){
@@ -589,7 +508,7 @@ export function loadEmployeeEmploymentEditFailed(message){
 export function loadEmployeeEmploymentEditCancel(){
 	return{
 		type: ACT.EMP_PROFILE_EMPLOYMENT_LOAD_EDIT_CANCEL,
-		isLoadEdit: false
+		editMode: false
 	}
 }
 
