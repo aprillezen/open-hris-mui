@@ -46,13 +46,11 @@ import EmployeeTA from '../employees/components/employeeTA'
 import EmployeeLoan from '../employees/components/employeeLoan'
 import EmployeePY from '../employees/components/employeePayroll'
 
-import Company from '../settings/company'
 import CompanySetup from '../settings/company/setup'
 import Profile from '../settings/company/profile/container'
 import Settings from './settings'
 import Orgunit from '../settings/orgunit'
 
-import JobContainer from '../settings/company/jobtitles/components'
 import {Job_List_Container, Job_Form_Container} from '../settings/company/jobtitles/container'
 
 import DeptContainer from '../settings/orgunit/department/components'
@@ -66,6 +64,26 @@ module.exports = (
         <IndexRoute component={Dashboard}/>         
         <Route path='/' component={Dashboard}/>
         <Route path='/dashboard' component={Dashboard}/>
+        <Route path='/settings' component={Settings}>
+            <IndexRedirect to="/settings/profile" />
+            <Route path='/settings/profile' component={Profile}/>
+            <Route path='/settings/setup' component={CompanySetup}/>
+            <Route path='/settings/jobtitle' component={Job_List_Container}/>        
+            <Route path='/settings/unit' component={Orgunit}>
+                <IndexRedirect to="/settings/unit/branch" />    
+                <Route path='/settings/unit/branch' component={BranchContainer}>
+                    <IndexRedirect to='/settings/unit/branch/list'/>   
+                    <Route path='/settings/unit/branch/list' component={Branch_List_Container}/>
+                    <Route path='/settings/unit/branch/:id' component={Branch_Form_Container}/>
+                </Route> 
+                <Route path='/settings/unit/department' component={DeptContainer}>
+                    <IndexRedirect to='/settings/unit/department/list'/>   
+                    <Route path='/settings/unit/department/list' component={Dept_List_Container}/>
+                    <Route path='/settings/unit/department/:id' component={Dept_Form_Container}/>
+                </Route> 
+            </Route>  
+        </Route>  
+
         <Route path='/employees' component={Employees}>
             <IndexRedirect to="/employees/list" />
             <Route path='/employees/list' component={EmployeesListContainer} />
@@ -95,7 +113,6 @@ module.exports = (
                 </Route>                                                            
             </Route>       
              <Route path='/ta/schedule' component={TmSched} />   
-
              <Route path='/ta/attendance' component={TmAttendance}>
                 <IndexRedirect to="/ta/attendance/daily" />                     
                 <Route path='/ta/attendance/daily' component={TmDailyContainer}>

@@ -194,12 +194,13 @@ pre {
 }
 
 .form-category-title{
+  margin-left: 10px;
   border-bottom: 1px dotted #e5e5e5;
   margin-bottom: 12px;
   display: flex;
   display: -webkit-flex;  
 }
-.form-category-title > h4{
+.form-category-title > h4{ 
   font-family: 'Roboto';
   font-size: 15px;
   font-weight: 500px;

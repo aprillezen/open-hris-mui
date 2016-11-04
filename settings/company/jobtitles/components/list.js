@@ -4,7 +4,8 @@ import Grid from 'griddle-react'
 import { cols, colmetadata} from './colConfig'
 import Alert from '../../../../shared/Alert'
 import Notification from 'react-notification-system'
-
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar'
+import { emp_headerStyle, emp_headerTitleStyle} from '../../../../styles'
 
 class List extends Component{
 
@@ -57,10 +58,20 @@ class List extends Component{
         		   </div>
 		}
 
-		return(<div>
-			 		{ body }	
-			 		<Notification ref="notify"/>
-			  </div>
+		return(
+				<div className="child-content">		
+					<div className="child-content-header">
+						<Toolbar style={emp_headerStyle}>
+							 <ToolbarGroup>							 						 	
+							 	<ToolbarTitle style={emp_headerTitleStyle} text="" />							 	
+							 </ToolbarGroup>							 
+						</Toolbar>
+					</div>
+					<div className="child-main-content">
+						{ body }
+					</div>	
+					<Notification ref="notify"/>						
+				</div>				
 			)
 	}
 }

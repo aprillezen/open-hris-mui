@@ -82,7 +82,7 @@ class Appnav extends React.Component{
 				    <Divider/>	
 				    <List>				    	
 				    	<ListItem style={menuStyle} href="/dashboard" leftIcon={ <People/>}><div style={menuLabel}>Dashboard</div></ListItem>
-				    	 <ListItem style={menuStyle} leftIcon={ <LeaveIco/>}><div style={menuLabel}>Company</div></ListItem>
+				    	 <ListItem style={menuStyle} href="/settings" leftIcon={ <LeaveIco/>}><div style={menuLabel}>Company</div></ListItem>
 				        <ListItem style={menuStyle} href="/employees" leftIcon={ <People/>}><div style={menuLabel}>Employees</div></ListItem>				        				        
 				    </List>		
 				    <Divider/>		

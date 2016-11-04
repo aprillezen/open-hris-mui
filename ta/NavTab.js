@@ -23,4 +23,4 @@ class NavTab extends Component{
 	}
 }
 
-export default NavTab
+export default NavTab	

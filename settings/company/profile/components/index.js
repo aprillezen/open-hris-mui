@@ -3,7 +3,8 @@ import Alert from '../../../../shared/Alert'
 import SaveButton from   '../../../../shared/SaveButton'
 import _ from 'lodash'
 import Notification from 'react-notification-system'
-
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar'
+import { emp_headerStyle, emp_headerTitleStyle} from '../../../../styles'
 
 class index extends Component {
 
@@ -57,7 +58,7 @@ class index extends Component {
 
 		const {isFetching,isFailed, message, hasError, isSaving, profile} = this.props
 
-		let body = <div>						
+		let body = 					
 						<div className="col-sm-12">
 							<Alert hasError={hasError} message={message}/>
 							<form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>							
@@ -140,20 +141,26 @@ class index extends Component {
 								    </div>								   
 								 </div>
 					    	</form>
-					    </div>
-					</div>
-
+					    </div>					
 		if (isFetching){
 			body = <div>
         			   <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i><span>&nbsp;Loading...</span>
         			</div>
 		}
 		return(
-			<div>
+			<div className="child-content">		
+				<div className="child-content-header">
+					<Toolbar style={emp_headerStyle}>
+						 <ToolbarGroup>							 						 	
+						 	<ToolbarTitle style={emp_headerTitleStyle} text="Company Profile" />							 	
+						 </ToolbarGroup>							 
+					</Toolbar>
+				</div>
+				<div className="child-main-content">
+					{ body }	
+				</div>
+				<br/>
 				<Notification ref="notify"/>
-				<br/>
-				{body}
-				<br/>
 			</div>
 		)
 	}

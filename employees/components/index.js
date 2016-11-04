@@ -41,7 +41,12 @@ class index extends Component{
 	}
 
 	handleDeleteNow(e){
-		//this.props.cancelDelete()
+		var newdata = this.props.data.filter((obj)=>{							
+			if (obj.selected == true){			
+				alert(obj.fname)
+				return obj
+			}
+		})		
 	}
 
 	render(){
